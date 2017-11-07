@@ -1,4 +1,4 @@
-#ifdef _DEBUG
+﻿#ifdef _DEBUG
 #include "main.h"
 #include "scene.h"
 #include "texture.h"

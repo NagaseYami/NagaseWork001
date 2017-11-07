@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 
 #define MAPMOUSE(x) {map.MapBool(x,mouseId,gainput::x);}
 #define MAPKEYBOARD(x) {map.MapBool(x,keyboardId,gainput::x);}

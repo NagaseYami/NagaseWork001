@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 #include "renderer.h"
 #include "object.h"
 #include "manager.h"
@@ -10,13 +10,13 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 {
 	//Renderer
 	Renderer::Init(hWnd);
-	//Input	
+	//Input
 	Input::Init();
 	//Scene
 #ifdef _DEBUG
 	TestScene *Scene1 = new TestScene;
 	Scene::ToNextScene(Scene1);
-#endif // _DEBUG	
+#endif // _DEBUG
 }
 
 void Manager::Uninit()

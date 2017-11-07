@@ -1,4 +1,4 @@
-#include "main.h"
+ï»¿#include "main.h"
 #include "renderer.h"
 #include "texture.h"
 
@@ -19,7 +19,7 @@ LPDIRECT3DTEXTURE9 Texture::LoadTexture(LPCSTR fileName)
 			D3DXCreateTextureFromFile(pDevice, fileName, &pTex)
 		))
 		{
-			MessageBox(NULL, "ƒtƒ@ƒCƒ‹‚©‚çƒeƒNƒXƒ`ƒƒ‚ğ“Ç‚İ‚Ş‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ERROR from texture.cpp", MB_OK | MB_DEFBUTTON1);
+			MessageBox(NULL, "ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚€ã“ã¨ãŒã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "ERROR from texture.cpp", MB_OK | MB_DEFBUTTON1);
 			return NULL;
 		}
 		Manager[name] = pTex;
@@ -50,7 +50,7 @@ LPDIRECT3DTEXTURE9 Texture::GetTexture(string name)
 	}
 	else 
 	{
-		MessageBox(NULL, "ƒeƒNƒXƒ`ƒƒƒ‰ƒCƒuƒ‰ƒŠ‚©‚çæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B", "ERROR from texture.cpp", MB_OK | MB_DEFBUTTON1);
+		MessageBox(NULL, "ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‹ã‚‰å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚", "ERROR from texture.cpp", MB_OK | MB_DEFBUTTON1);
 		return NULL;
 	}
 	

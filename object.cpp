@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 #include "object.h"
 
 list<Object*> Object::m_pManager;

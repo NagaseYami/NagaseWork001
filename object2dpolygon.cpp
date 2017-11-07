@@ -1,24 +1,24 @@
-#include "main.h"
+ï»¿#include "main.h"
 #include "renderer.h"
 #include "object.h"
 #include "object2dpolygon.h"
 
 void Object2DPolygon::Init()
 {
-	//ƒfƒoƒCƒXŽæ“¾
+	//ãƒ‡ãƒã‚¤ã‚¹å–å¾—
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
-	//’¸“_ì¬*******************************************************************************
+	//é ‚ç‚¹ä½œæˆ*******************************************************************************
 
 	if (FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D) * 4,	//ì¬‚µ‚½‚¢’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒYiˆêŒÂ‚ÌƒTƒCƒY*’¸“_”j
-		D3DUSAGE_WRITEONLY,				//VertexBuffer‚ÌŽg—p•û–@
-		FVF_VERTEX_2D,					//‘‚©‚È‚­‚Ä‚à‘åä•v
-		D3DPOOL_MANAGED,				//ƒƒ‚ƒŠŠÇ—•û–@(ƒfƒoƒCƒX‚É‚¨”C‚¹)
+		sizeof(VERTEX_2D) * 4,	//ä½œæˆã—ãŸã„é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºï¼ˆä¸€å€‹ã®ã‚µã‚¤ã‚º*é ‚ç‚¹æ•°ï¼‰
+		D3DUSAGE_WRITEONLY,				//VertexBufferã®ä½¿ç”¨æ–¹æ³•
+		FVF_VERTEX_2D,					//æ›¸ã‹ãªãã¦ã‚‚å¤§ä¸ˆå¤«
+		D3DPOOL_MANAGED,				//ãƒ¡ãƒ¢ãƒªç®¡ç†æ–¹æ³•(ãƒ‡ãƒã‚¤ã‚¹ã«ãŠä»»ã›)
 		&m_pVtxBuff,
 		NULL
 	))) {
-		MessageBox(NULL, "’¸“_ƒoƒbƒtƒ@‚Ì¶¬‚É–â‘è‚ª”­¶‚µ‚Ü‚µ‚½", "ERROR from object2dpolygon.cpp", MB_OK | MB_ICONWARNING);
+		MessageBox(NULL, "é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆã«å•é¡ŒãŒç™ºç”Ÿã—ã¾ã—ãŸ", "ERROR from object2dpolygon.cpp", MB_OK | MB_ICONWARNING);
 	}
 }
 
@@ -42,37 +42,37 @@ void Object2DPolygon::Update()
 
 void Object2DPolygon::LateUpdate()
 {
-	// ƒ|ƒŠƒSƒ“‚ÌˆÊ’u‚ðÝ’è**************************************************************************************
+	// ãƒãƒªã‚´ãƒ³ã®ä½ç½®ã‚’è¨­å®š**************************************************************************************
 	VERTEX_2D* pVtx;
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒƒbƒN‚µ‚Ä‰¼‘zƒAƒhƒŒƒX‚ðŽæ“¾‚·‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ­ãƒƒã‚¯ã—ã¦ä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—ã™ã‚‹
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-	//¶ã
+	//å·¦ä¸Š
 	pVtx[0].pos = Vector3(m_Pos.x, m_Pos.y, 0.0f);
 	pVtx[1].pos = Vector3(m_Pos.x + m_Size.x, m_Pos.y, 0.0f);
 	pVtx[2].pos = Vector3(m_Pos.x, m_Pos.y + m_Size.y, 0.0f);
 	pVtx[3].pos = Vector3(m_Pos.x + m_Size.x, m_Pos.y + m_Size.y, 0.0f);
 
-	//rhw‚ÌÝ’è(•K‚¸1.0f)
+	//rhwã®è¨­å®š(å¿…ãš1.0f)
 	pVtx[0].rhw = 1.0f;
 	pVtx[1].rhw = 1.0f;
 	pVtx[2].rhw = 1.0f;
 	pVtx[3].rhw = 1.0f;
 
-	//’¸“_ƒJƒ‰[‚ÌÝ’è(0~255‚Ì®”’l)
+	//é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š(0~255ã®æ•´æ•°å€¤)
 	pVtx[0].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 	pVtx[1].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 	pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 	pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-	//’¸“_ƒf[ƒ^‚ÖUVƒf[ƒ^‚Ì’Ç‰Á
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã¸UVãƒ‡ãƒ¼ã‚¿ã®è¿½åŠ 
 	pVtx[0].tex = Vector2(0.0f, 0.0f);
 	pVtx[1].tex = Vector2(1.0f, 0.0f);
 	pVtx[2].tex = Vector2(0.0f, 1.0f);
 	pVtx[3].tex = Vector2(1.0f, 1.0f);
 
-	//ƒƒbƒN‰ðœ
+	//ãƒ­ãƒƒã‚¯è§£é™¤
 	m_pVtxBuff->Unlock();
 }
 
@@ -80,19 +80,19 @@ void Object2DPolygon::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, m_pTexture);
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«è¨­å®š
 	pDevice->SetStreamSource(0,
 		m_pVtxBuff,
 		0,
 		sizeof(VERTEX_2D));
 
-	//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	//ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,
 		0,
 		2);
