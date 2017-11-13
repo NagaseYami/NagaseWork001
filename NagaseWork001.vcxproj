@@ -166,6 +166,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2dpolygon.cpp" />
     <ClCompile Include="object3dpolygon.cpp" />
+    <ClCompile Include="objectXModel.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="testscene.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="object2dpolygon.h" />
     <ClInclude Include="object3dpolygon.h" />
+    <ClInclude Include="objectXModel.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="testscene.h" />

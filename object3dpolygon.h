@@ -59,7 +59,9 @@ public:
 	void SetSca(Vector3 value) {
 		m_Sca = value;
 	}
-
+	void SetLight(bool value) {
+		m_bLight = value;
+	}
 private:
 	LPDIRECT3DTEXTURE9		m_pTexture = NULL;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
@@ -78,4 +80,6 @@ private:
 	Vector2					m_Uv = Vector2(0.0f, 0.0f);
 	Vector2					m_UvSize = Vector2(1.0f, 1.0f);
 	Vector4					m_Color = Vector4(255.0f, 255.0f, 255.0f, 255.0f);
+
+	bool m_bLight = true;
 };

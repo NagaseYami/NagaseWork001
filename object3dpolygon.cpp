@@ -69,7 +69,7 @@ void Object3DPolygon::LateUpdate()
 void Object3DPolygon::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	
 	D3DXMatrixIdentity(&m_mtxWorld);
 	D3DXMatrixScaling(&m_mtxSca, m_Sca.x, m_Sca.y, m_Sca.z);
 	D3DXMatrixRotationYawPitchRoll(&m_mtxRot, m_Rot.y, m_Rot.x, m_Rot.z);
@@ -92,7 +92,10 @@ void Object3DPolygon::Draw()
 		0,
 		sizeof(VERTEX_3D));
 
-	
+	if (!m_bLight)
+	{
+		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	}
 
 	//ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,
