@@ -49,6 +49,12 @@
     <Filter Include="ソース ファイル\Scenes">
       <UniqueIdentifier>{00969313-768b-448f-a921-8957f705260b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Camera">
+      <UniqueIdentifier>{10057691-3a0d-40c1-b559-4870e58b4a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{54d0a1cc-20b3-4e1c-9ff0-62412af80ae2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -85,6 +91,18 @@
       <Filter>ソース ファイル\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="object3dpolygon.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="tpscamera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="dxinput.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,6 +144,21 @@
       <Filter>ヘッダー ファイル\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="object3dpolygon.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダー ファイル\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="tpscamera.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="includeallcameras.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="dxinput.h">
       <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
   </ItemGroup>

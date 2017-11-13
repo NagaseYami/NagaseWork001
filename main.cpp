@@ -157,10 +157,37 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(uMsg)
-	{
+	{	
 	case WM_CREATE:
 		break;
+	case WM_ACTIVATE:
+	
+		switch (wParam)
+		{
+		case WA_ACTIVE:
+		{
+			// ウィンドウのクライアント領域を取得する
+			RECT rc;
+			GetClientRect(hWnd, &rc);
 
+			// クライアント領域を画面座標に変換する
+			POINT pt = { rc.left, rc.top };
+			POINT pt2 = { rc.right, rc.bottom };
+			ClientToScreen(hWnd, &pt);
+			ClientToScreen(hWnd, &pt2);
+			SetRect(&rc, pt.x, pt.y, pt2.x, pt2.y);
+
+			// カーソルの動作範囲を制限する
+			//ClipCursor(&rc);
+			break;
+		}
+		case WA_INACTIVE:
+			ClipCursor(NULL);
+		default:
+			break;
+		}
+		break;
+	
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;

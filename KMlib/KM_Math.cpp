@@ -1,4 +1,4 @@
-#include <math.h>
+ï»¿#include <math.h>
 #include <time.h>
 #include "d3dx9.h"
 #include "KM_Math.h"
@@ -16,6 +16,10 @@ namespace Kuma {
 	{
 		srand((unsigned int)time(NULL));
 		return l_nMin + (rand() % (l_nMax - l_nMin));
+	}
+	float AngletoRadian(float l_value)
+	{
+		return 3.14159265f / 180.0f * l_value ;
 	}
 	double Noise(int x, int y)
 	{
@@ -107,7 +111,7 @@ namespace Kuma {
 	}
 	float AngleBetween2Vector2(Vector2 & l_vec1, Vector2 & l_vec2)
 	{
-		//DXŒn
+		//DXç³»
 		float cross,dot;
 		Vector2Cross(&cross, &l_vec1, &l_vec2);
 		dot = Vector2Dot(&l_vec1, &l_vec2);
@@ -139,10 +143,10 @@ namespace Kuma {
 	void btMatrix3x3toAngle(const btMatrix3x3 & Mat, Vector3 * l_output)
 	{
 		float threshold = 0.001f;
-		if (abs(Mat.getRow(2).y() - 1.0) < threshold) { // R(2,1) = sin(x) = 1‚ÌŽž
+		if (abs(Mat.getRow(2).y() - 1.0) < threshold) { // R(2,1) = sin(x) = 1ã®æ™‚
 			*l_output = Vector3(3.141592653f / 2.0f, 0.0f, atan2(Mat.getRow(1).x(), Mat.getRow(0).x()));
 		}
-		else if (abs(Mat.getRow(2).y() + 1.0) < threshold) { // R(2,1) = sin(x) = -1‚ÌŽž
+		else if (abs(Mat.getRow(2).y() + 1.0) < threshold) { // R(2,1) = sin(x) = -1ã®æ™‚
 			*l_output = Vector3(-3.141592653f / 2.0f, 0.0f, atan2(Mat.getRow(1).x(), Mat.getRow(0).x()));
 		}
 		else {

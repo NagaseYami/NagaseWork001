@@ -2,7 +2,7 @@
 class Scene {
 public:
 	virtual void Init() = 0;
-	static void UpdateThis();
+	static void UpdateMainScene();
 	virtual void Update() = 0;
 	virtual void Uninit();
 	static void ToNextScene(Scene * nextscene);

@@ -61,16 +61,16 @@ void Object2DPolygon::LateUpdate()
 	pVtx[3].rhw = 1.0f;
 
 	//頂点カラーの設定(0~255の整数値)
-	pVtx[0].col = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[1].col = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[0].col = D3DCOLOR_RGBA((int)m_Color.x, (int)m_Color.y, (int)m_Color.z, (int)m_Color.w);
+	pVtx[1].col = D3DCOLOR_RGBA((int)m_Color.x, (int)m_Color.y, (int)m_Color.z, (int)m_Color.w);
+	pVtx[2].col = D3DCOLOR_RGBA((int)m_Color.x, (int)m_Color.y, (int)m_Color.z, (int)m_Color.w);
+	pVtx[3].col = D3DCOLOR_RGBA((int)m_Color.x, (int)m_Color.y, (int)m_Color.z, (int)m_Color.w);
 
 	//頂点データへUVデータの追加
-	pVtx[0].tex = Vector2(0.0f, 0.0f);
-	pVtx[1].tex = Vector2(1.0f, 0.0f);
-	pVtx[2].tex = Vector2(0.0f, 1.0f);
-	pVtx[3].tex = Vector2(1.0f, 1.0f);
+	pVtx[0].tex = Vector2(m_Uv.x, m_Uv.y);
+	pVtx[1].tex = Vector2(m_Uv.x + m_UvSize.x, m_Uv.y);
+	pVtx[2].tex = Vector2(m_Uv.x, m_Uv.y + m_UvSize.y);
+	pVtx[3].tex = Vector2(m_Uv.x + m_UvSize.x, m_Uv.y + m_UvSize.y);
 
 	//ロック解除
 	m_pVtxBuff->Unlock();

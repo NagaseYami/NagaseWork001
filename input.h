@@ -2,7 +2,7 @@
 #include <gainput\gainput.h>
 class Input {
 public:
-	enum KEYBOARD
+	enum USERBUTTON
 	{
 		KeyEscape, KeyF1, KeyF2, KeyF3,
 		KeyF4, KeyF5, KeyF6, KeyF7,
@@ -47,20 +47,17 @@ public:
 		KeyOdiaeresis, KeySection, KeyAring, KeyDiaeresis,
 		KeyTwosuperior, KeyRightParenthesis, KeyDollar, KeyUgrave,
 		KeyAsterisk, KeyColon, KeyExclam, KeyBraceLeft,
-		KeyBraceRight, KeySysRq, KeyCount_
-	};
-	enum MOUSE {
-		MouseButton0 = 0, MouseButtonLeft = MouseButton0, MouseButton1, MouseButtonMiddle = MouseButton1,
+		KeyBraceRight, KeySysRq, 
+
+		MouseButton0, MouseButtonLeft = MouseButton0, MouseButton1, MouseButtonMiddle = MouseButton1,
 		MouseButton2, MouseButtonRight = MouseButton2, MouseButton3, MouseButtonWheelUp = MouseButton3,
 		MouseButton4, MouseButtonWheelDown = MouseButton4, MouseButton5, MouseButton6,
 		MouseButton7, MouseButton8, MouseButton9, MouseButton10,
 		MouseButton11, MouseButton12, MouseButton13, MouseButton14,
 		MouseButton15, MouseButton16, MouseButton17, MouseButton18,
 		MouseButton19, MouseButton20, MouseButtonMax = MouseButton20, MouseButtonCount,
-		MouseAxisX = MouseButtonCount, MouseAxisY, MouseButtonCount_, MouseAxisCount = MouseButtonCount_ - MouseAxisX
-	};
+		MouseAxisX = MouseButtonCount, MouseAxisY,
 
-	enum GAMEPAD {
 		PadButtonLeftStickX, PadButtonLeftStickY, PadButtonRightStickX, PadButtonRightStickY,
 		PadButtonAxis4, PadButtonAxis5, PadButtonAxis6, PadButtonAxis7,
 		PadButtonAxis8, PadButtonAxis9, PadButtonAxis10, PadButtonAxis11,
@@ -80,15 +77,19 @@ public:
 		PadButton19, PadButton20, PadButton21, PadButton22,
 		PadButton23, PadButton24, PadButton25, PadButton26,
 		PadButton27, PadButton28, PadButton29, PadButton30,
-		PadButton31, PadButtonMax_, PadButtonCount_ = PadButtonMax_ - PadButtonAxisCount_
+		PadButton31
 	};
-	static void Init();
+	static void Init(HINSTANCE hInst, HWND hWnd);
 	static void Update();
+	static void Uninit();
 	static void HandleMessage(MSG msg);
 
-	static bool GetKeyPress(KEYBOARD key);
-	static bool GetKeyDown(KEYBOARD key);
-	static bool GetKeyRelease(KEYBOARD key);
+	static bool IsPress(USERBUTTON key);
+	static bool IsDown(USERBUTTON key);
+	static bool IsRelease(USERBUTTON key);
+
+	static float GetAxis(USERBUTTON mouse);//return 0.0f~1.0f
+	static float GetAxisDelta(USERBUTTON mouse);
 	
 private:
 	static gainput::InputManager manager;

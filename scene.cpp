@@ -4,7 +4,7 @@
 
 Scene* Scene::ThisScene = nullptr;
 
-void Scene::UpdateThis()
+void Scene::UpdateMainScene()
 {
 	if (ThisScene)
 	{
