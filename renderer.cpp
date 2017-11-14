@@ -31,14 +31,13 @@ HRESULT Renderer::Init(HWND hWnd)
 	d3dpp.BackBufferFormat = d3ddm.Format;									// バックバッファのピクセルフォーマット。D3DFORMAT 列挙型のメンバ
 	d3dpp.BackBufferCount = 1;												// バックバッファの数。0 は 1 とみなされる
 	d3dpp.EnableAutoDepthStencil = TRUE;									// Zバッファ、ステンシルバッファを使用する場合はTRUE。普通は使用しますね
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;								// デプスバッファとして16bitを使う
-																			//d3dpp.Flags						 = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;  // D3DPRESENTFLAG_LOCKABLE_BACKBUFFER を指定するとバックバッファがロック可能になります
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;							// 24ビットZバッファ8ビットステンシルバッファ作成
+	//d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;						 // D3DPRESENTFLAG_LOCKABLE_BACKBUFFER を指定するとバックバッファがロック可能になります
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;								// 映像信号に同期してフリップする	
 	d3dpp.MultiSampleType = D3DMULTISAMPLE_8_SAMPLES;						// マルチサンプリングのタイプ。ビデオボードによっては対応している
 	d3dpp.hDeviceWindow = NULL;												// ターゲットウィンドウ。NULLにすればフォーカスウィンドウになるので、普通はNULLでいいです
-	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;					// リフレッシュレート
+	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;				// リフレッシュレート
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;				// インターバル	
-
 
 	// デバイスの生成
 	// ディスプレイアダプタを表すためのデバイスを作成
@@ -91,10 +90,12 @@ HRESULT Renderer::Init(HWND hWnd)
 	m_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);		// テクスチャＶ値の繰り返し設定
 	m_pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大時の補間設定
 	m_pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ縮小時の補間設定
-																				// テクスチャステージステートの設定
+
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);		// アルファブレンディング処理(初期値はD3DTOP_SELECTARG1)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);		// 最初のアルファ引数(初期値はD3DTA_TEXTURE、テクスチャがない場合はD3DTA_DIFFUSE)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);		// ２番目のアルファ引数(初期値はD3DTA_CURRENT)
+
+	
 
 	return S_OK;
 }
@@ -124,7 +125,7 @@ void Renderer::Update()
 void Renderer::DrawBegin()
 {
 	// バックバッファ＆Ｚバッファのクリア
-	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(127, 127, 127, 255), 1.0f, 0);
+	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(127, 127, 127, 255), 1.0f, 0);
 	// Direct3Dによる描画の開始
 	m_pD3DDevice->BeginScene();
 }

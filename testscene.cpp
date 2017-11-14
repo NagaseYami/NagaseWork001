@@ -5,6 +5,7 @@
 #include "object2dpolygon.h"
 #include "object3dpolygon.h"
 #include "objectXModel.h"
+#include "objectstencilshadow.h"
 #include "camera.h"
 #include "includeallcameras.h"
 #include "scene.h"
@@ -27,14 +28,17 @@ void TestScene::Init()
 	polygon3d->Init();
 	polygon3d->SetLight(false);
 
+	ObjectStencilShadow * shadow = new ObjectStencilShadow();
+	shadow->Init();
+
 	ObjectXModel * model = new ObjectXModel("data/Model/47/47.x");
 	model->Init();
 	model->SetLight(false);
-	model->SetTexture(Texture::LoadTexture("data/Model/47/47_1.jpg"),0);
-	model->SetTexture(Texture::LoadTexture("data/Model/47/47_2.jpg"),1);
-	model->SetTexture(Texture::LoadTexture("data/Model/47/47_2.jpg"),2);
-	model->SetTexture(Texture::LoadTexture("data/Model/47/47_1.jpg"),3);
-	model->SetTexture(Texture::LoadTexture("data/Model/47/47_3.jpg"),4);
+	model->SetTexture(Texture::LoadTexture("data/Model/47/47_1.jpg"), 0);
+	model->SetTexture(Texture::LoadTexture("data/Model/47/47_2.jpg"), 1);
+	model->SetTexture(Texture::LoadTexture("data/Model/47/47_2.jpg"), 2);
+	model->SetTexture(Texture::LoadTexture("data/Model/47/47_1.jpg"), 3);
+	model->SetTexture(Texture::LoadTexture("data/Model/47/47_3.jpg"), 4);
 	model->SetTra(Vector3(0.0f, 0.65f, 0.0f));
 }																	
 

@@ -25,7 +25,7 @@ void ObjectXModel::Init()
 		&m_pMesh
 	))) {
 		//エラーメッセージ
-		MessageBox(NULL, "モデルが取得できませんでした。", "ERROR from xModel.cpp", MB_OK | MB_DEFBUTTON1);
+		MessageBox(NULL, "モデルが取得できませんでした。", "ERROR from objectXModel.cpp", MB_OK | MB_DEFBUTTON1);
 	}
 
 	for (int i = 0; i < (int)m_nNumMat; i++)
@@ -39,6 +39,7 @@ void ObjectXModel::Init()
 
 void ObjectXModel::Uninit()
 {
+	m_pTextureList.clear();
 	if (m_pMesh)
 	{
 		m_pMesh->Release();

@@ -9,6 +9,7 @@ public:
 	enum OBJECT_LAYER
 	{
 		BACKGROUND_LAYER = 0,
+		SHADOW_LAYER,
 		UNKNOW_LAYER
 	};
 

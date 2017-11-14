@@ -24,6 +24,12 @@ void Object3DPolygon::Init()
 
 void Object3DPolygon::Uninit()
 {
+	m_pTexture = NULL;
+	if (m_pVtxBuff != NULL)
+	{
+		m_pVtxBuff->Release();
+		m_pVtxBuff = NULL;
+	}
 }
 
 void Object3DPolygon::FixedUpdate()
