@@ -88,12 +88,6 @@ void DXInput::Update(void)
 		hr = m_pDIDevice->Acquire();
 		hr = m_pDIDevice->GetDeviceState(sizeof(DIMOUSESTATE2), &m_pMouseState);
 	}
-	else 
-	{
-#ifdef _DEBUG
-		LOG("Mouse: %f, %f\n", (float)m_pMouseState.lX, (float)m_pMouseState.lY);
-#endif // _DEBUG	
-	}
 }
 
 DIMOUSESTATE2 * DXInput::GetMouseState(void)

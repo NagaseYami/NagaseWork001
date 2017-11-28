@@ -55,6 +55,12 @@
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{54d0a1cc-20b3-4e1c-9ff0-62412af80ae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Light">
+      <UniqueIdentifier>{97abd5e3-67b2-49a8-9ef4-084d629939ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Light">
+      <UniqueIdentifier>{a3356c14-b189-4a01-9f7c-ae64f10c6f87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="objectstencilshadow.cpp">
       <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>ソース ファイル\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="objectstencilshadow.h">
       <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>ヘッダー ファイル\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -95,7 +95,10 @@ HRESULT Renderer::Init(HWND hWnd)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);		// 最初のアルファ引数(初期値はD3DTA_TEXTURE、テクスチャがない場合はD3DTA_DIFFUSE)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);		// ２番目のアルファ引数(初期値はD3DTA_CURRENT)
 
-	
+	D3DCAPS9 caps;
+	m_pD3DDevice->GetDeviceCaps(&caps);
+	string str = "MaxActiveLights : " + to_string(caps.MaxActiveLights) + "\n";
+	LOG(str.c_str());
 
 	return S_OK;
 }

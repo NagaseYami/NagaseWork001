@@ -161,6 +161,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="KMlib\KM_Logic.cpp" />
     <ClCompile Include="KMlib\KM_Math.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="object.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="KMlib\KM_Logic.h" />
     <ClInclude Include="KMlib\KM_Math.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="object.h" />

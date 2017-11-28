@@ -7,6 +7,7 @@
 #include "objectXModel.h"
 #include "objectstencilshadow.h"
 #include "camera.h"
+#include "light.h"
 #include "includeallcameras.h"
 #include "scene.h"
 #include "includeallscenes.h"
@@ -14,6 +15,11 @@
 void TestScene::Init()
 {
 	Camera::SetMainCamera(&m_Camera);
+	D3DLIGHT9 light;
+	light.Type = D3DLIGHT_DIRECTIONAL;
+	light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
+	Light::CreateLight(light);
 
 	Object2DPolygon * polygon2d = new Object2DPolygon;
 	polygon2d->SetTexture(Texture::LoadTexture("data/Texture/Test/test1.png"));
@@ -26,14 +32,9 @@ void TestScene::Init()
 	polygon3d->SetPosbyCenter(Vector3(0.0f,0.0f,0.0f));
 	polygon3d->SetRot(Vector3(AngletoRadian(90.0f), 0.0f, 0.0f));
 	polygon3d->Init();
-	polygon3d->SetLight(false);
-
-	ObjectStencilShadow * shadow = new ObjectStencilShadow();
-	shadow->Init();
 
 	ObjectXModel * model = new ObjectXModel("data/Model/47/47.x");
 	model->Init();
-	model->SetLight(false);
 	model->SetTexture(Texture::LoadTexture("data/Model/47/47_1.jpg"), 0);
 	model->SetTexture(Texture::LoadTexture("data/Model/47/47_2.jpg"), 1);
 	model->SetTexture(Texture::LoadTexture("data/Model/47/47_2.jpg"), 2);
