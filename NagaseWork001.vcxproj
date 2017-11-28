@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="blur.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="dxinput.cpp" />
     <ClCompile Include="input.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="objectstencilshadow.cpp" />
     <ClCompile Include="objectXModel.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="RenderTargetDemo.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="testscene.cpp" />
     <ClCompile Include="testscene2.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="tpscamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="blur.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="dxinput.h" />
     <ClInclude Include="includeallcameras.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="object3dpolygon.h" />
     <ClInclude Include="objectXModel.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="RenderTargetDemo.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="objectstencilshadow.h" />
     <ClInclude Include="testscene.h" />

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class Object2DPolygon : public Object{
 public:
@@ -24,8 +24,14 @@ public:
 	}
 
 	//Setter
-	void SetTexture(LPDIRECT3DTEXTURE9 value) {
-		m_pTexture = value;
+	void AddTexture(Texture * value) {
+		m_TextureList.push_back(value);
+	}
+	void SetTexture(int value) {
+		if (value < m_TextureList.size())
+		{
+			m_TexNum = value;
+		}		
 	}
 	void SetPos(Vector2 value) {
 		m_Pos = value;
@@ -43,11 +49,11 @@ public:
 		m_UvSize = value;
 	}
 private:
-	LPDIRECT3DTEXTURE9			m_pTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9		m_pVtxBuff = NULL;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	LPDIRECT3DVERTEXBUFFER9		m_pVtxBuff = NULL;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	Vector2						m_Pos = Vector2(0.0f, 0.0f);
 	Vector2						m_Size = Vector2(100.0f, 100.0f);
 	Vector2						m_Uv = Vector2(0.0f, 0.0f);
 	Vector2						m_UvSize = Vector2(1.0f, 1.0f);
 	Vector4						m_Color = Vector4(255.0f, 255.0f, 255.0f, 255.0f);
+	int							m_TexNum = 0;
 };

@@ -1,5 +1,6 @@
 ﻿#include "main.h"
 #include "renderer.h"
+#include "texture.h"
 #include "object.h"
 #include "objectXModel.h"
 
@@ -16,7 +17,7 @@ void ObjectXModel::Init()
 	//xファイル読み込み*******************************************************************************************
 	if (FAILED(D3DXLoadMeshFromX(
 		m_xFileName,
-		D3DXMESH_MANAGED,
+		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
 		&m_BuffMat,
@@ -30,8 +31,8 @@ void ObjectXModel::Init()
 
 	for (int i = 0; i < (int)m_nNumMat; i++)
 	{
-		LPDIRECT3DTEXTURE9 voidvalue = NULL;
-		m_pTextureList.push_back(voidvalue);
+		m_TextureList.push_back(new Texture);
+		m_TextureList[i]->SetDXTexture(NULL);
 	}
 
 	D3DXQuaternionIdentity(&m_Quaternion);
@@ -39,7 +40,7 @@ void ObjectXModel::Init()
 
 void ObjectXModel::Uninit()
 {
-	m_pTextureList.clear();
+	m_TextureList.clear();
 	if (m_pMesh)
 	{
 		m_pMesh->Release();
@@ -96,7 +97,7 @@ void ObjectXModel::Draw()
 		pDevice->SetMaterial(&pMat[i].MatD3D);
 
 		//テクスチャ配置
-		pDevice->SetTexture(0, m_pTextureList[i]);
+		pDevice->SetTexture(0, m_TextureList[i]->GetDXTexture());
 
 		//メッシュの描画
 		m_pMesh->DrawSubset(i);

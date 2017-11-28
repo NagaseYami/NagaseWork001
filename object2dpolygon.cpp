@@ -1,5 +1,6 @@
 ﻿#include "main.h"
 #include "renderer.h"
+#include "texture.h"
 #include "object.h"
 #include "object2dpolygon.h"
 
@@ -24,7 +25,7 @@ void Object2DPolygon::Init()
 
 void Object2DPolygon::Uninit()
 {
-	m_pTexture = NULL;
+	m_TextureList.clear();
 	if (m_pVtxBuff != NULL)
 	{
 		m_pVtxBuff->Release();
@@ -81,7 +82,7 @@ void Object2DPolygon::Draw()
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
 	//テクスチャの設定
-	pDevice->SetTexture(0, m_pTexture);
+	pDevice->SetTexture(0, m_TextureList[m_TexNum]->GetDXTexture());
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);

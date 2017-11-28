@@ -20,8 +20,8 @@ public:
 		return m_Sca;
 	}
 	//Setter
-	void SetTexture(LPDIRECT3DTEXTURE9 value, int number) {
-		m_pTextureList[number] = value;
+	void SetTexture(Texture * value, int number) {
+		m_TextureList[number] = value;
 	}
 	void SetRot(Vector3 value) {
 		m_Rot = value;
@@ -40,7 +40,6 @@ private:
 	LPD3DXMESH m_pMesh = NULL;											//メッシュ情報
 	LPD3DXBUFFER m_BuffMat = NULL;										//マテリアル情報
 	DWORD m_nNumMat = TexNum;											//マテリアル情報の数
-	vector<LPDIRECT3DTEXTURE9> m_pTextureList;							//テクスチャ、テクスチャインターフェース
 	LPCSTR m_xFileName;
 	D3DXQUATERNION m_Quaternion;
 	D3DXMATRIX m_mtxWorld;

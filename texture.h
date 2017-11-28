@@ -1,9 +1,37 @@
 #pragma once
+class Object;
 class Texture {
 public:
-	static LPDIRECT3DTEXTURE9 LoadTexture(LPCSTR fileName);
+	Texture();
+	static Texture * LoadTextureFromFile(LPCSTR fileName);
+	static Texture * CreateEmptyTexture(string name);
+	static void AddObjectToRenderTargetTexture(Object *obj, string name);
+	static void DrawAllRenderTargetTexture();
 	static void DestoryAllTexture();
-	static LPDIRECT3DTEXTURE9 GetTexture(string name);
+
+	//Getter
+	static Texture * GetTexture(string name);
+	LPDIRECT3DTEXTURE9 GetDXTexture() {
+		return m_Texture;
+	}
+	LPDIRECT3DSURFACE9 GetDXSurface() {
+		return m_Surface;
+	}
+
+	//Setter
+	void SetDXTexture(LPDIRECT3DTEXTURE9 tex) {
+		m_Texture = tex;
+	}
+	void SetDXSurface(LPDIRECT3DSURFACE9 sur) {
+		m_Surface = sur;
+	}
 private:
-	static map<string, LPDIRECT3DTEXTURE9> Manager;
+	static void DrawRenderTargetTextureRecursion(Texture * tex);
+
+	static map<string, Texture*> m_Manager;
+
+	bool isRenderTargetTexture = false;
+	LPDIRECT3DTEXTURE9 m_Texture = NULL;
+	LPDIRECT3DSURFACE9 m_Surface = NULL;
+	list<Object*> m_RenderTargetObj;
 };

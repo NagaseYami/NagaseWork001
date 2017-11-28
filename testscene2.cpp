@@ -11,7 +11,7 @@
 void TestScene2::Init()
 {
 	Object2DPolygon * test = new Object2DPolygon;
-	test->SetTexture(Texture::LoadTexture("data/Texture/Test/test2.png"));
+	test->AddTexture(Texture::LoadTextureFromFile("data/Texture/Test/test2.png"));
 	test->SetSize(Vector2(128.0f, 72.0f));
 	test->Init();
 }

@@ -1,5 +1,6 @@
 ﻿#include "main.h"
 #include "renderer.h"
+#include "texture.h"
 #include "object.h"
 #include "object3dpolygon.h"
 
@@ -24,7 +25,7 @@ void Object3DPolygon::Init()
 
 void Object3DPolygon::Uninit()
 {
-	m_pTexture = NULL;
+	m_TextureList.clear();
 	if (m_pVtxBuff != NULL)
 	{
 		m_pVtxBuff->Release();
@@ -90,7 +91,7 @@ void Object3DPolygon::Draw()
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	//MESHFIELDの描画をする寸前
-	pDevice->SetTexture(0, m_pTexture);
+	pDevice->SetTexture(0, m_TextureList[0]->GetDXTexture());
 
 	//パイプラインの設定
 	pDevice->SetStreamSource(0,
