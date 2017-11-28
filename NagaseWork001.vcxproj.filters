@@ -78,9 +78,6 @@
     <ClCompile Include="manager.cpp">
       <Filter>ソース ファイル\Main</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>ソース ファイル\Main</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
     <ClCompile Include="object3dpolygon.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル\Main</Filter>
-    </ClCompile>
     <ClCompile Include="tpscamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
@@ -110,6 +104,18 @@
     </ClCompile>
     <ClCompile Include="objectstencilshadow.cpp">
       <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTargetDemo.cpp">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="blur.cpp">
+      <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +140,6 @@
     <ClInclude Include="manager.h">
       <Filter>ヘッダー ファイル\Main</Filter>
     </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>ヘッダー ファイル\Main</Filter>
-    </ClInclude>
     <ClInclude Include="texture.h">
       <Filter>ヘッダー ファイル\Renderer</Filter>
     </ClInclude>
@@ -155,23 +158,32 @@
     <ClInclude Include="object3dpolygon.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル\Main</Filter>
-    </ClInclude>
     <ClInclude Include="tpscamera.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
     <ClInclude Include="includeallcameras.h">
       <Filter>ヘッダー ファイル\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="dxinput.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
-    </ClInclude>
     <ClInclude Include="objectXModel.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="objectstencilshadow.h">
       <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>ヘッダー ファイル\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="dxinput.h">
+      <Filter>ヘッダー ファイル\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTargetDemo.h">
+      <Filter>ヘッダー ファイル\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="blur.h">
+      <Filter>ヘッダー ファイル\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

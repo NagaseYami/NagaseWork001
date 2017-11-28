@@ -32,8 +32,8 @@ public:
 		return m_Sca;
 	}
 	//Setter
-	void SetTexture(LPDIRECT3DTEXTURE9 value) {
-		m_pTexture = value;
+	void SetTexture(Texture * value) {
+		m_TextureList.push_back(value);
 	}
 	void SetPos(Vector3 value) {
 		m_Pos = value;
@@ -63,7 +63,6 @@ public:
 		m_bLight = value;
 	}
 private:
-	LPDIRECT3DTEXTURE9		m_pTexture = NULL;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
 
 	D3DXMATRIX				m_mtxWorld;

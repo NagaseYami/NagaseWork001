@@ -1,4 +1,6 @@
 ﻿#include "main.h"
+#include "renderer.h"
+#include "texture.h"
 #include "object.h"
 
 list<Object*> Object::m_pManager;
@@ -65,16 +67,23 @@ void Object::LateUpdateAll()
 	}
 }
 
-void Object::DrawAll()
+void Object::DrawAllBackBufferObject()
 {
+	auto pDevice = Renderer::GetDevice();
 	list<Object*>copy = m_pManager;
 	copy.sort();
 
+
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);		
 	for (auto itr = copy.begin(); itr != copy.end(); itr++)
 	{
 		Object * pObj = *itr;
-		pObj->Draw();
+		if (!pObj->m_isRenderTarget)
+		{
+			pObj->Draw();
+		}		
 	}
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);				
 }
 
 void Object::UninitAll()

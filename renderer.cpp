@@ -3,6 +3,7 @@
 
 LPDIRECT3D9				Renderer::m_pD3D = NULL;
 LPDIRECT3DDEVICE9		Renderer::m_pD3DDevice = NULL;
+LPDIRECT3DSURFACE9		Renderer::m_BackBufferSurface = NULL;
 
 HRESULT Renderer::Init(HWND hWnd)
 {
@@ -96,6 +97,7 @@ HRESULT Renderer::Init(HWND hWnd)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);		// ２番目のアルファ引数(初期値はD3DTA_CURRENT)
 
 	
+	m_pD3DDevice->GetRenderTarget(0, &m_BackBufferSurface);
 
 	return S_OK;
 }
@@ -115,6 +117,12 @@ void Renderer::Uninit()
 		m_pD3D->Release();
 		m_pD3D = NULL;
 	}
+
+	if (m_BackBufferSurface)
+	{
+		m_BackBufferSurface->Release();
+		m_BackBufferSurface = NULL;
+	}
 }
 
 void Renderer::Update()
@@ -122,20 +130,35 @@ void Renderer::Update()
 
 }
 
-void Renderer::DrawBegin()
+void Renderer::DrawRenderTargetBegin(LPDIRECT3DSURFACE9 surface)
 {
+	m_pD3DDevice->SetRenderTarget(0, surface);
 	// バックバッファ＆Ｚバッファのクリア
-	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(127, 127, 127, 255), 1.0f, 0);
+	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 0, 0, 255), 1.0f, 0);
 	// Direct3Dによる描画の開始
 	m_pD3DDevice->BeginScene();
 }
 
-void Renderer::DrawEnd()
+void Renderer::DrawRenderTargetEnd()
+{
+	// Direct3Dによる描画の終了
+	m_pD3DDevice->EndScene();	
+}
+
+void Renderer::DrawBackBufferBegin()
+{
+	m_pD3DDevice->SetRenderTarget(0, m_BackBufferSurface);
+	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(127, 127, 127, 255), 1.0f, 0);
+	m_pD3DDevice->BeginScene();
+}
+
+void Renderer::DrawBackBufferEnd()
 {
 	// Direct3Dによる描画の終了
 	m_pD3DDevice->EndScene();
 	// バックバッファとフロントバッファの入れ替え
 	m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+	
 }
 
 LPDIRECT3DDEVICE9 Renderer::GetDevice()
