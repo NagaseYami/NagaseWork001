@@ -16,6 +16,15 @@ public:
 		return xz; 
 	}
 
+	static Vector3 GetMainCameraLookat(void) {
+		return MainCamera->m_Lookat;
+	}
+	static Vector3 GetMainCameraEye(void) {
+		return MainCamera->m_Eye;
+	}
+	static float GetMainCameraxz(void) {
+		return MainCamera->xz;
+	}
 	//Setter
 	static void SetMainCamera(Camera * camera) {
 		MainCamera = camera;

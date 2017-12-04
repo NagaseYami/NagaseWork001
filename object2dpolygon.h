@@ -27,7 +27,7 @@ public:
 	void AddTexture(Texture * value) {
 		m_TextureList.push_back(value);
 	}
-	void SetTexture(int value) {
+	void SetTexture(unsigned int value) {
 		if (value < m_TextureList.size())
 		{
 			m_TexNum = value;

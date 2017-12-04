@@ -165,6 +165,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="motion.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2dpolygon.cpp" />
     <ClCompile Include="object3dpolygon.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="RenderTargetDemo.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="effect.cpp" />
     <ClCompile Include="testscene.cpp" />
     <ClCompile Include="testscene2.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -190,6 +192,7 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="motion.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2dpolygon.h" />
     <ClInclude Include="object3dpolygon.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="RenderTargetDemo.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="objectstencilshadow.h" />
+    <ClInclude Include="effect.h" />
     <ClInclude Include="testscene.h" />
     <ClInclude Include="testscene2.h" />
     <ClInclude Include="texture.h" />

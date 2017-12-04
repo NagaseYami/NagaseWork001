@@ -22,7 +22,7 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	Input::Init(hInst,hWnd);
 	//Scene
 #ifdef _DEBUG
-	RenderTargetDemo *Scene1 = new RenderTargetDemo;
+	TestScene *Scene1 = new TestScene;
 	Scene::ToNextScene(Scene1);
 	
 #endif // _DEBUG
@@ -60,5 +60,5 @@ void Manager::Draw()
 	Renderer::DrawBackBufferBegin();
 	Object::DrawAllBackBufferObject();
 	Renderer::DrawBackBufferEnd();
-	Blur::ChangeTexture();
+	//bBlur::ChangeTexture();
 }

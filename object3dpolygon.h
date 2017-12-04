@@ -32,8 +32,14 @@ public:
 		return m_Sca;
 	}
 	//Setter
-	void SetTexture(Texture * value) {
+	void AddTexture(Texture * value) {
 		m_TextureList.push_back(value);
+	}
+	void SetTexture(unsigned int value) {
+		if (value < m_TextureList.size())
+		{
+			m_TexNum = value;
+		}
 	}
 	void SetPos(Vector3 value) {
 		m_Pos = value;
@@ -80,5 +86,6 @@ private:
 	Vector2					m_UvSize = Vector2(1.0f, 1.0f);
 	Vector4					m_Color = Vector4(255.0f, 255.0f, 255.0f, 255.0f);
 
+	int						m_TexNum = 0;
 	bool m_bLight = true;
 };

@@ -61,6 +61,18 @@
     <Filter Include="ソース ファイル\Light">
       <UniqueIdentifier>{a3356c14-b189-4a01-9f7c-ae64f10c6f87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Motion">
+      <UniqueIdentifier>{8054181a-0850-4692-ba79-2e8f85975ffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Motion">
+      <UniqueIdentifier>{9d96b85c-692b-4fe0-84fa-ec543f0fbe8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Shader">
+      <UniqueIdentifier>{eab877dd-d7b6-44b8-b347-c3ed3561057a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Shader">
+      <UniqueIdentifier>{4e96f467-744d-473b-a060-9be470d868bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -84,9 +96,6 @@
     <ClCompile Include="manager.cpp">
       <Filter>ソース ファイル\Main</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>ソース ファイル\Main</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
@@ -102,9 +111,6 @@
     <ClCompile Include="object3dpolygon.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル\Main</Filter>
-    </ClCompile>
     <ClCompile Include="tpscamera.cpp">
       <Filter>ソース ファイル\Camera</Filter>
     </ClCompile>
@@ -119,6 +125,24 @@
     </ClCompile>
     <ClCompile Include="light.cpp">
       <Filter>ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="blur.cpp">
+      <Filter>ソース ファイル\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTargetDemo.cpp">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="motion.cpp">
+      <Filter>ソース ファイル\Motion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +208,18 @@
     </ClInclude>
     <ClInclude Include="light.h">
       <Filter>ヘッダー ファイル\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="blur.h">
+      <Filter>ヘッダー ファイル\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTargetDemo.h">
+      <Filter>ヘッダー ファイル\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="motion.h">
+      <Filter>ヘッダー ファイル\Motion</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
