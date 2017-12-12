@@ -6,6 +6,8 @@
 
 void Object3DPolygon::Init()
 {
+	m_Layer = Object::POLYGON3D_LAYER;
+
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
 	//頂点バッファ作成******************************************************************************************************

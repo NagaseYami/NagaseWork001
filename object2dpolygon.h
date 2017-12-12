@@ -1,7 +1,14 @@
 ﻿#pragma once
-
+struct VERTEX_2D
+{
+	Vector3 pos;	// 頂点座標
+	float rhw;			// 座標変換用係数(1.0fで固定)
+	D3DCOLOR col;		// 頂点カラー
+	Vector2 tex;	// テクスチャ座標
+};
 class Object2DPolygon : public Object{
 public:
+	
 	virtual void Init();
 	virtual void Uninit();
 	virtual void FixedUpdate();

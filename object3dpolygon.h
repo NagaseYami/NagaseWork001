@@ -1,7 +1,14 @@
 ﻿#pragma once
+struct VERTEX_3D
+{
+	Vector3 pos;
+	Vector3 normal;
+	D3DCOLOR color;
+	Vector2 tex;
+};
 class Object3DPolygon : public Object {
 public:
-
+	
 	void Init();
 	void Uninit();
 	void FixedUpdate();

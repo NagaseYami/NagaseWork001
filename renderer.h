@@ -19,22 +19,6 @@ D3DFVF_TEX0 ～ D3DFVF_TEX8		テクスチャ（UV）座標。使用する数だ�
 //*****************************************************************************
 // 上記頂点フォーマットに合わせた構造体を定義
 
-struct VERTEX_2D 
-{
-	Vector3 pos;	// 頂点座標
-	float rhw;			// 座標変換用係数(1.0fで固定)
-	D3DCOLOR col;		// 頂点カラー
-	Vector2 tex;	// テクスチャ座標
-} ;
-
-struct VERTEX_3D 
-{
-	Vector3 pos;
-	Vector3 normal;
-	D3DCOLOR color;
-	Vector2 tex;
-};
-
 class Renderer 
 {
 public:

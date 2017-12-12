@@ -1,10 +1,12 @@
 ﻿#include "main.h"
 #include "renderer.h"
 #include "object.h"
+#include "object2dpolygon.h"
 #include "objectstencilshadow.h"
 
 void ObjectStencilShadow::Init()
 {
+	m_Layer = Object::STENCILSHADOW_LAYER;
 
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();

@@ -1,6 +1,8 @@
 ﻿#include "main.h"
 #include "texture.h"
 #include "renderer.h"
+#include "object.h"
+#include "object2dpolygon.h"
 #include "blur.h"
 
 LPDIRECT3DVERTEXBUFFER9 Blur::m_pVtxBuff = NULL;

@@ -17,7 +17,7 @@ void Camera::SetMtxProjection(void)
 		D3DX_PI / 3.0f,							//視野角
 		(float)SCREEN_WIDTH / SCREEN_HEIGHT,	//アスペクト比
 		0.1f,									//near(必ず0.0fより大きい数字を入れてください)
-		500.0f								//far
+		1000.0f									//far
 	);
 
 	pDevice->SetTransform(D3DTS_PROJECTION, &mtxProj);

@@ -3,7 +3,7 @@
 #include "texture.h"
 #include "object.h"
 
-list<Object*> Object::m_pManager;
+vector<Object*> Object::m_pManager;
 
 Object::Object()
 {
@@ -70,11 +70,9 @@ void Object::LateUpdateAll()
 void Object::DrawAllBackBufferObject()
 {
 	auto pDevice = Renderer::GetDevice();
-	list<Object*>copy = m_pManager;
-	copy.sort();
+	auto copy = m_pManager;
+	sort(copy.begin(), copy.end(), [](Object* const &a, Object* const &b) { return a->m_Layer < b->m_Layer; });
 
-
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);		
 	for (auto itr = copy.begin(); itr != copy.end(); itr++)
 	{
 		Object * pObj = *itr;
@@ -83,7 +81,7 @@ void Object::DrawAllBackBufferObject()
 			pObj->Draw();
 		}		
 	}
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);				
+			
 }
 
 void Object::UninitAll()
@@ -95,16 +93,6 @@ void Object::UninitAll()
 		delete pObj;
 	}
 	m_pManager.clear();
-}
-
-bool Object::operator<(const Object & right) const
-{
-	return m_Layer < right.m_Layer;
-}
-
-bool Object::operator>(const Object & right) const
-{
-	return m_Layer > right.m_Layer;
 }
 
 bool Object::isDestory() const

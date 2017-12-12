@@ -36,13 +36,14 @@ Texture * Texture::LoadTextureFromFile(LPCSTR fileName)
 	
 }
 
-Texture * Texture::CreateEmptyTexture(string name)
+Texture * Texture::CreateEmptyTexture(string name, Vector2 size, bool COLORWRITEENABLE)
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	Texture * Tex = new Texture;
-	D3DXCreateTexture(pDevice, SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &Tex->m_Texture);
+	D3DXCreateTexture(pDevice, (UINT)size.x, (UINT)size.y, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &Tex->m_Texture);
 	Tex->m_Texture->GetSurfaceLevel(0, &Tex->m_Surface);
 	Tex->isRenderTargetTexture = true;
+	Tex->ColorWriteEnable = COLORWRITEENABLE;
 	m_Manager[name] = Tex;
 	return m_Manager[name];
 }
@@ -110,6 +111,7 @@ Texture * Texture::GetTexture(string name)
 
 void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 {
+	auto pDevice = Renderer::GetDevice();
 	//RenderTargetObj
 	for (auto itr = tex->m_RenderTargetObj.begin(); itr != tex->m_RenderTargetObj.end(); itr++)
 	{
@@ -128,7 +130,13 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 	for (auto itr = tex->m_RenderTargetObj.begin(); itr != tex->m_RenderTargetObj.end(); itr++)
 	{
 		Object * obj = *itr;
+
+		if (!tex->ColorWriteEnable)
+		{
+			pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
+		}
 		obj->Draw();
+		pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 	}
 	Renderer::DrawRenderTargetEnd();
 }

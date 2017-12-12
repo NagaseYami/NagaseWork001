@@ -132,15 +132,23 @@ namespace Kuma {
 		float x, y, z;
 
 		Vector3() :x(0.0f), y(0.0f), z(0.0f) {}
+
 		Vector3(float l_x, float l_y, float l_z) {
 			this->x = l_x;
 			this->y = l_y;
 			this->z = l_z;
 		}
 
+		Vector3(float value) {
+			this->x = value;
+			this->y = value;
+			this->z = value;
+		}
+
 		float Length(void) {
 			return sqrtf(x*x + y*y + z*z);
 		}
+
 		Vector3 Normalize(void) {
 			return (Vector3(x, y, z) / Vector3::Length());
 		}
@@ -315,11 +323,30 @@ namespace Kuma {
 			this->w = l_w;
 		}
 
+		Vector4(float value) {
+			this->x = value;
+			this->y = value;
+			this->z = value;
+			this->w = value;
+		}
+
+		Vector4(Vector3 l_v3, float l_w) {
+			this->x = l_v3.x;
+			this->y = l_v3.y;
+			this->z = l_v3.z;
+			this->w = l_w;
+		}
+
 		float Length(void) {
 			return sqrtf(x*x + y*y + z*z + w*w);
 		}
+
 		Vector4 Normalize(void) {
 			return (Vector4(x, y, z, w) / Vector4::Length());
+		}
+
+		Vector3 xyz(void) {
+			return Vector3(x, y, z);
 		}
 
 		operator D3DXVECTOR4() const {
@@ -430,6 +457,43 @@ namespace Kuma {
 			return l_Result;
 		}
 
+		Vector4 operator*(const D3DMATRIX & l_Mtx) const {
+			float vx, vy, vz, vw;			
+			float pF1, pF2, pF3, pF4;
+			Vector4 vec;
+
+			vx = this->x;
+			vy = this->y;
+			vz = this->z;
+			vw = this->w;
+
+			pF1 = l_Mtx._11;
+			pF2 = l_Mtx._21;
+			pF3 = l_Mtx._31;
+			pF4 = l_Mtx._41;
+			vec.x = vx * (pF1) + vy * (pF2) + vz * (pF3) + vw * (pF4);
+
+			pF1 = l_Mtx._12;
+			pF2 = l_Mtx._22;
+			pF3 = l_Mtx._32;
+			pF4 = l_Mtx._42;
+			vec.y = vx * (pF1) + vy * (pF2) + vz * (pF3) + vw * (pF4);
+
+			pF1 = l_Mtx._13;
+			pF2 = l_Mtx._23;
+			pF3 = l_Mtx._33;
+			pF4 = l_Mtx._43;
+			vec.z = vx * (pF1) + vy * (pF2) + vz * (pF3) + vw * (pF4);
+
+			pF1 = l_Mtx._14;
+			pF2 = l_Mtx._24;
+			pF3 = l_Mtx._34;
+			pF4 = l_Mtx._44;
+			vec.w = vx * (pF1) + vy * (pF2) + vz * (pF3) + vw * (pF4);
+
+			return vec;
+		}
+
 		Vector4& operator+=(const Vector4 & l_Vector4) {
 			this->x += l_Vector4.x;
 			this->y += l_Vector4.y;
@@ -512,6 +576,7 @@ namespace Kuma {
 	void VectorQuaternionIdentity(Vector4 * l_pVector4);
 	void VectorQuaterniontoEuler(const Vector4 & l_input, Vector3 * l_output);
 	void btMatrix3x3toAngle(const btMatrix3x3 & Mat, Vector3 * l_output);
+
 	/*--------------------------------------------------------------------------------------------------------------------------------------*/
 	
 

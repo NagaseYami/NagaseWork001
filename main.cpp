@@ -6,6 +6,7 @@
 #include "main.h"
 #include "manager.h"
 #include "input.h"
+#include "imgui_impl_dx9.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -17,6 +18,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+extern LRESULT ImGui_ImplDX9_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //*****************************************************************************
 // グローバル変数:
@@ -156,6 +158,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	ImGui_ImplDX9_WndProcHandler(hWnd, uMsg, wParam, lParam);
 	switch(uMsg)
 	{	
 	case WM_CREATE:

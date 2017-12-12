@@ -13,8 +13,11 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <array>
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <functional>
 #include <time.h>
 #include <windows.h>
 #include <math.h>
@@ -22,6 +25,7 @@
 #include "KMlib\KM_Math.h"
 #include "KMlib\KM_Logic.h"
 #include "input.h"
+#include "imgui.h"
 
 
 using namespace Kuma;

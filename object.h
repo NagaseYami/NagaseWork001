@@ -10,7 +10,10 @@ public:
 	enum OBJECT_LAYER
 	{
 		BACKGROUND_LAYER = 0,
-		SHADOW_LAYER,
+		POLYGON3D_LAYER,
+		STENCILSHADOW_LAYER,
+		XMODEL_LAYER,
+		POLYGON2D_LAYER,
 		UNKNOW_LAYER
 	};
 
@@ -29,9 +32,6 @@ public:
 	static void DrawAllBackBufferObject();
 	static void UninitAll();
 
-	bool operator<(const Object & right) const;
-	bool operator>(const Object & right) const;
-
 	bool isDestory() const;
 
 	//Getter
@@ -49,5 +49,5 @@ protected:
 	bool m_isRenderTarget = false;
 	bool m_bDestory = false;
 private:
-	static list<Object*> m_pManager;
+	static vector<Object*> m_pManager;
 };

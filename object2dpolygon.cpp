@@ -6,6 +6,8 @@
 
 void Object2DPolygon::Init()
 {
+	m_Layer = Object::POLYGON2D_LAYER;
+
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 

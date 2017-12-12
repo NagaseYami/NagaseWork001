@@ -13,6 +13,8 @@ ObjectXModel::ObjectXModel(LPCSTR filepath)
 
 void ObjectXModel::Init()
 {
+	m_Layer = Object::XMODEL_LAYER;
+
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	
@@ -39,7 +41,7 @@ void ObjectXModel::Init()
 			(DWORD*)AdjacencyBuffer->GetBufferPointer(),NULL,NULL,NULL)))
 	{
 		MessageBox(NULL, "メッシュの最適化が失敗しました。", "ID3DMesh::OptimizeInplaces", MB_OK | MB_DEFBUTTON1);
-	}
+	}	
 	AdjacencyBuffer->Release();
 	AdjacencyBuffer = NULL;
 	
@@ -58,7 +60,7 @@ void ObjectXModel::Init()
 
 
 	if (FAILED(
-		OldMesh->CloneMesh(D3DXMESH_MANAGED, decl, pDevice, &m_pMesh)
+		OldMesh->CloneMesh(OldMesh->GetOptions(), decl, pDevice, &m_pMesh)
 	))
 	{
 		MessageBox(NULL, "メッシュのクローンが失敗しました。", "ID3DMesh::CloneMesh", MB_OK | MB_DEFBUTTON1);
@@ -67,6 +69,9 @@ void ObjectXModel::Init()
 
 	//各頂点の法線ベクトルを計算
 	//D3DXComputeNormals(m_pMesh, NULL);
+	//D3DXComputeTangent(m_pMesh, D3DX_DEFAULT, D3DDECLUSAGE_TANGENT, D3DDECLUSAGE_BINORMAL, 0, NULL);
+	
+	
 
 	//テクスチャリストに空のテクスチャを入れる
 	for (int i = 0; i < (int)m_nNumMat; i++)
@@ -168,16 +173,16 @@ void ObjectXModel::Draw()
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
-			pEffect->SetTechnique("TexterTech");
+			pEffect->SetTechnique("ToonShader_TexterTech");
 			break;
 		}
 		else
 		{
-			pEffect->SetTechnique("NoTexterTech");
+			pEffect->SetTechnique("ToonShader_NoTexterTech");
 		}
 	}
 
-	m_RFP.y += 0.01f;
+	//m_RFP.y += 0.01f;
 
 	UINT numPass;
 	pEffect->Begin(&numPass, 0);
@@ -192,22 +197,23 @@ void ObjectXModel::Draw()
 	{
 		pEffect->BeginPass(iPass);
 		for (int i = 0; i < (int)m_nNumMat; i++) {
-			D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
+			//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
 			D3DXVECTOR4 dif = D3DXVECTOR4(pMat[i].MatD3D.Diffuse.r, pMat[i].MatD3D.Diffuse.g, pMat[i].MatD3D.Diffuse.b, pMat[i].MatD3D.Diffuse.a);
 			//D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 			//D3DXVECTOR4 spc = D3DXVECTOR4(pMat[i].MatD3D.Specular.r, pMat[i].MatD3D.Specular.g, pMat[i].MatD3D.Specular.b, pMat[i].MatD3D.Specular.a);
 			D3DXVECTOR4 spc = D3DXVECTOR4(1.0f,1.0f,1.0f,1.0f);
-			
+			D3DXVECTOR4 amb = D3DXVECTOR4(0.2f, 0.2f, 0.2f,1.0f);
+			pEffect->SetMatrix("World", &m_mtxWorld);
+			pEffect->SetMatrix("WorldViewProj", &WVP);
+			pEffect->SetMatrix("WorldInverse", &WI);
+			pEffect->SetMatrix("WorldInverseTranspose", &WIT);
+			pEffect->SetVector("LightDirW", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 0.0f));
+			pEffect->SetVector("EyePosW", &D3DXVECTOR4(Camera::GetMainCameraEye().x, Camera::GetMainCameraEye().y, Camera::GetMainCameraEye().z, 1.0f));
 			pEffect->SetVector("Diffuse", &dif);
 			pEffect->SetVector("Specular", &spc);
 			pEffect->SetVector("Ambient", &amb);
 			pEffect->SetTexture("Tex", m_TextureList[i]->GetDXTexture());	
-			pEffect->SetMatrix("World",&m_mtxWorld);
-			pEffect->SetMatrix("WorldViewProj", &WVP);
-			pEffect->SetMatrix("WorldInverseTranspose", &WIT);
-			pEffect->SetVector("LightPos", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
-			pEffect->SetVector("LightDir", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 0.0f));
-			pEffect->SetVector("CameraPos", &D3DXVECTOR4(Camera::GetMainCameraEye().x, Camera::GetMainCameraEye().y, Camera::GetMainCameraEye().z, 1.0f));
+			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());			
 			pEffect->CommitChanges();
 			m_pMesh->DrawSubset(i);
 		}

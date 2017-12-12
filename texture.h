@@ -4,7 +4,7 @@ class Texture {
 public:
 	Texture();
 	static Texture * LoadTextureFromFile(LPCSTR fileName);
-	static Texture * CreateEmptyTexture(string name);
+	static Texture * CreateEmptyTexture(string name, Vector2 size = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT),bool COLORWRITEENABLE = true);
 	static void AddObjectToRenderTargetTexture(Object *obj, string name);
 	static void DrawAllRenderTargetTexture();
 	static void DestoryAllTexture();
@@ -31,6 +31,7 @@ private:
 	static map<string, Texture*> m_Manager;
 
 	bool isRenderTargetTexture = false;
+	bool ColorWriteEnable = true;
 	LPDIRECT3DTEXTURE9 m_Texture = NULL;
 	LPDIRECT3DSURFACE9 m_Surface = NULL;
 	list<Object*> m_RenderTargetObj;

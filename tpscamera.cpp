@@ -18,7 +18,7 @@ void TPSCamera::Update()
 	}
 	if (DXInput::GetMouseState()->lZ != 0)
 	{
-		lengthmovespeed = 0.0005f * (float)DXInput::GetMouseState()->lZ;
+		lengthmovespeed = 0.00025f * (float)DXInput::GetMouseState()->lZ;
 	}
 	length += lengthmovespeed;
 	lengthmovespeed *= 0.9f;

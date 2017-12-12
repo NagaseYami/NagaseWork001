@@ -9,6 +9,7 @@
 #include "includeallcameras.h"
 #include "scene.h"
 #include "includeallscenes.h"
+#include "imgui_impl_dx9.h"
 
 
 void Manager::Init(HINSTANCE hInst, HWND hWnd)
@@ -16,14 +17,16 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	//Renderer
 	Renderer::Init(hWnd);
 	Blur::Init();
+	//ImGui
+	ImGui_ImplDX9_Init(hWnd,Renderer::GetDevice());
 	//Camera
 	Camera::SetMtxProjection();
 	//Input
 	Input::Init(hInst,hWnd);
 	//Scene
 #ifdef _DEBUG
-	TestScene *Scene1 = new TestScene;
-	Scene::ToNextScene(Scene1);
+	RenderTargetDemo *Scene = new RenderTargetDemo;
+	Scene::ToNextScene(Scene);
 	
 #endif // _DEBUG
 }
@@ -33,12 +36,21 @@ void Manager::Uninit()
 	Object::UninitAll();
 	Texture::DestoryAllTexture();
 	Blur::Uninit();
+	ImGui_ImplDX9_Shutdown();
 	Renderer::Uninit();
-	DXInput::Uninit();
+	DXInput::Uninit();	
 }
 
 void Manager::Update()
 {
+	//ImGui
+	ImGui_ImplDX9_NewFrame();
+#ifdef _DEBUG
+	ImGui::Begin("FPS",nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize);
+	ImGui::Text("%.3f ms (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::End();
+#endif // _DEBUG
+
 	//Input
 	Input::Update();
 	//Scene
@@ -59,6 +71,7 @@ void Manager::Draw()
 	Blur::DrawRenderTargetTexture();
 	Renderer::DrawBackBufferBegin();
 	Object::DrawAllBackBufferObject();
+	ImGui::Render();
 	Renderer::DrawBackBufferEnd();
 	//bBlur::ChangeTexture();
 }
