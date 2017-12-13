@@ -35,7 +35,7 @@ HRESULT Renderer::Init(HWND hWnd)
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;							// 24ビットZバッファ8ビットステンシルバッファ作成
 	//d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;						 // D3DPRESENTFLAG_LOCKABLE_BACKBUFFER を指定するとバックバッファがロック可能になります
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;								// 映像信号に同期してフリップする	
-	d3dpp.MultiSampleType = D3DMULTISAMPLE_8_SAMPLES;						// マルチサンプリングのタイプ。ビデオボードによっては対応している
+	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;						// マルチサンプリングのタイプ。ビデオボードによっては対応している
 	d3dpp.hDeviceWindow = NULL;												// ターゲットウィンドウ。NULLにすればフォーカスウィンドウになるので、普通はNULLでいいです
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;				// リフレッシュレート
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;				// インターバル	

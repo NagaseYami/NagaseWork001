@@ -156,12 +156,7 @@ void ObjectXModel::Draw()
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_pParent->GetWorldMtx());
 	}
 
-	//pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	D3DMATERIAL9 matDef;
-	pDevice->GetMaterial(&matDef);//現在デバイスに設定されてるマテリアル情報を取得
-	D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_BuffMat->GetBufferPointer();
-	
+	//pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);	
 	if (!m_bLight)
 	{
 		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -173,16 +168,14 @@ void ObjectXModel::Draw()
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
-			pEffect->SetTechnique("ToonShader_TexterTech");
+			pEffect->SetTechnique("BasicShader_TexterTech");
 			break;
 		}
 		else
 		{
-			pEffect->SetTechnique("ToonShader_NoTexterTech");
+			pEffect->SetTechnique("BasicShader_NoTexterTech");
 		}
 	}
-
-	//m_RFP.y += 0.01f;
 
 	UINT numPass;
 	pEffect->Begin(&numPass, 0);
@@ -197,24 +190,26 @@ void ObjectXModel::Draw()
 	{
 		pEffect->BeginPass(iPass);
 		for (int i = 0; i < (int)m_nNumMat; i++) {
-			//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
-			D3DXVECTOR4 dif = D3DXVECTOR4(pMat[i].MatD3D.Diffuse.r, pMat[i].MatD3D.Diffuse.g, pMat[i].MatD3D.Diffuse.b, pMat[i].MatD3D.Diffuse.a);
-			//D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+			D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_BuffMat->GetBufferPointer();
+			pDevice->SetMaterial(&pMat->MatD3D);			
+			//D3DXVECTOR4 dif = D3DXVECTOR4(pMat[i].MatD3D.Diffuse.r, pMat[i].MatD3D.Diffuse.g, pMat[i].MatD3D.Diffuse.b, pMat[i].MatD3D.Diffuse.a);			
 			//D3DXVECTOR4 spc = D3DXVECTOR4(pMat[i].MatD3D.Specular.r, pMat[i].MatD3D.Specular.g, pMat[i].MatD3D.Specular.b, pMat[i].MatD3D.Specular.a);
+			//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
+			D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 			D3DXVECTOR4 spc = D3DXVECTOR4(1.0f,1.0f,1.0f,1.0f);
 			D3DXVECTOR4 amb = D3DXVECTOR4(0.2f, 0.2f, 0.2f,1.0f);
 			pEffect->SetMatrix("World", &m_mtxWorld);
 			pEffect->SetMatrix("WorldViewProj", &WVP);
 			pEffect->SetMatrix("WorldInverse", &WI);
 			pEffect->SetMatrix("WorldInverseTranspose", &WIT);
-			pEffect->SetVector("LightDirW", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 0.0f));
+			pEffect->SetVector("LightDirW", &D3DXVECTOR4(0.0f, -1.0f, 1.0f, 0.0f));
 			pEffect->SetVector("EyePosW", &D3DXVECTOR4(Camera::GetMainCameraEye().x, Camera::GetMainCameraEye().y, Camera::GetMainCameraEye().z, 1.0f));
 			pEffect->SetVector("Diffuse", &dif);
 			pEffect->SetVector("Specular", &spc);
 			pEffect->SetVector("Ambient", &amb);
 			pEffect->SetTexture("Tex", m_TextureList[i]->GetDXTexture());	
 			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());			
-			pEffect->CommitChanges();
+			pEffect->CommitChanges();			
 			m_pMesh->DrawSubset(i);
 		}
 		pEffect->EndPass();
@@ -222,7 +217,7 @@ void ObjectXModel::Draw()
 
 	pEffect->End();
 
-	pDevice->SetMaterial(&matDef);
+	
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 

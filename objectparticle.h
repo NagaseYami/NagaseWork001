@@ -1,11 +1,12 @@
 ﻿#pragma once
-#define VERTEX_POINT_FVF (D3DFVF_XYZ | D3DFVF_PSIZE | D3DFVF_DIFFUSE)
+
 class ObjectParticle :public Object {
 public:
 	struct VERTEX_POINT{
 		Vector3 pos;
-		float size;
-		DWORD color;
+		D3DCOLOR color;
+		float size;		
+		Vector3 dir;
 	};
 
 	void Init();
@@ -50,6 +51,7 @@ public:
 private:
 
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
+	LPDIRECT3DVERTEXDECLARATION9 m_pVertexDeclaration = NULL;
 
 	D3DXMATRIX				m_mtxWorld;
 	D3DXMATRIX				m_mtxRot;
@@ -60,11 +62,11 @@ private:
 	Vector3					m_Tra = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3					m_Sca = Vector3(1.0f, 1.0f, 1.0f);
 
-	array<Vector4, 80000>	m_Pos;
-	array<Vector3, 80000>	m_Dir;
-	array<Vector4, 80000>	m_Color;
+	array<Vector4, 3000000>	m_Pos;
+	array<Vector3, 3000000>	m_Dir;
+	array<Vector4, 3000000>	m_Color;
 
 	int						m_TexNum = 0;
-	bool m_bLight = true;
-
+	bool					m_bLight = true;
+	static float			m_Timer;
 };

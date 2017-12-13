@@ -153,7 +153,7 @@ float4 BumpMapShader_PixelShader_Texture_Main(BUMPMAPSHADER_OUT_VERTEX ip) : COL
     float3 normalT = normalize(tex2D(BumpSampler, ip.UV).xyz * 2.0f - 1.0f);
     float3 reflectLightT = normalize(reflect(ip.LightDirT, normalT));
 
-    float4 diff = Diffuse * max(dot(normalT, -ip.LightDirT), 0.0f);
+    float4 diff = float4(Diffuse.xyz * max(dot(normalT, -ip.LightDirT), 0.0f), Diffuse.w);
     float4 spec = Specular * pow(max(dot(reflectLightT, ip.toEyeT), 0.0f), 25);
     float4 ambi = Ambient;
 
@@ -168,7 +168,7 @@ float4 BumpMapShader_PixelShader_NoTexture_Main(BUMPMAPSHADER_OUT_VERTEX ip) : C
     float3 normalT = normalize(tex2D(BumpSampler, ip.UV).xyz * 2.0f - 1.0f);
     float3 reflectLightT = normalize(reflect(ip.LightDirT, normalT));
 
-    float4 diff = Diffuse * max(dot(normalT, -ip.LightDirT), 0.0f);
+    float4 diff = float4(Diffuse.xyz * max(dot(normalT, -ip.LightDirT), 0.0f), Diffuse.w);
     float4 spec = Specular * pow(max(dot(reflectLightT, ip.toEyeT), 0.0f), 25);
     float4 ambi = Ambient;
 
