@@ -30,6 +30,7 @@ public:
 	static void UpdateAll();
 	static void LateUpdateAll();
 	static void DrawAllBackBufferObject();
+	static void UninitNotBeingUsedObject();
 	static void UninitAll();
 
 	bool isDestory() const;

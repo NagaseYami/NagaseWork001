@@ -117,17 +117,22 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 	{
 		Object * obj = *itr;
 
-		//RenderTargetObj's tex
-		for (auto i = 0; i < obj->GetTexture().size(); i++)
+		if (!obj->isDestory())
 		{
-			//RenderTargetTexture
-			if (obj->GetTexture().at(i)->isRenderTargetTexture)
+			//RenderTargetObj's tex
+			for (auto i = 0; i < obj->GetTexture().size(); i++)
 			{
-				DrawRenderTargetTextureRecursion(obj->GetTexture().at(i));
+				//RenderTargetTexture
+				if (obj->GetTexture().at(i)->isRenderTargetTexture)
+				{
+					DrawRenderTargetTextureRecursion(obj->GetTexture().at(i));
+				}
 			}
 		}
-
-				
+		else
+		{
+			tex->m_RenderTargetObj.erase(itr);
+		}
 	}
 	Renderer::DrawRenderTargetBegin(tex->m_Surface);
 	for (auto itr = tex->m_RenderTargetObj.begin(); itr != tex->m_RenderTargetObj.end(); itr++)
@@ -139,8 +144,15 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
 		}
 		
-		obj->Draw();
-			
+		if (!obj->isDestory())
+		{
+			obj->Draw();
+		}	
+		else
+		{
+			tex->m_RenderTargetObj.erase(itr);
+		}
+
 		pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 	}
 	Renderer::DrawRenderTargetEnd();

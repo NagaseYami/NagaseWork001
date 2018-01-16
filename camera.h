@@ -6,16 +6,6 @@ public:
 	virtual void Update() = 0;
 
 	//Getter
-	Vector3 GetLookat(void) { 
-		return m_Lookat; 
-	}
-	Vector3 GetEye(void) { 
-		return m_Eye; 
-	}
-	float Getxz(void) { 
-		return xz; 
-	}
-
 	static Vector3 GetMainCameraLookat(void) {
 		return MainCamera->m_Lookat;
 	}
@@ -29,10 +19,24 @@ public:
 	static void SetMainCamera(Camera * camera) {
 		MainCamera = camera;
 	}
+	static void SetmainCameraxz(float value) {
+		MainCamera->xz = value;
+	}
 	void SetLookat(Vector3 l_Lookat) {
 		m_Lookat = l_Lookat;
 	}
 protected:
+	//Getter
+	Vector3 GetLookat(void) {
+		return m_Lookat;
+	}
+	Vector3 GetEye(void) {
+		return m_Eye;
+	}
+	float Getxz(void) {
+		return xz;
+	}
+
 	D3DXMATRIX m_MtxView;
 	Vector3 m_Lookat = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 m_Eye = Vector3(0.0f, 0.0f, 10.0f);

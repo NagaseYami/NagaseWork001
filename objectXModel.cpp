@@ -109,18 +109,76 @@ void ObjectXModel::Update()
 
 void ObjectXModel::LateUpdate()
 {
+	static bool once = true;
+	if (m_FrameTimer >= 30)
+	{
+		m_isChanging = false;
+		once = true;
+	}
+	if (m_isChanging)
+	{		
+		if (m_KeyList.size() > 1)
+		{
+			static Vector3 R, T, S;
+			static Vector3 OR, OT, OS;
+			if (once)
+			{
+				for (int i = m_KeyList.size() - 2; i > -1; --i)
+				{
+					if (m_KeyList.at(i).Frame <= 20)
+					{
+						OR = m_Rot;
+						OT = m_Tra;
+						OS = m_Sca;
+
+						R = m_KeyList.at(i).Rot + (m_KeyList.at(i + 1).Rot - m_KeyList.at(i).Rot) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(20 - m_KeyList.at(i).Frame);
+						T = m_KeyList.at(i).Pos + (m_KeyList.at(i + 1).Pos - m_KeyList.at(i).Pos) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(20 - m_KeyList.at(i).Frame);
+						S = m_KeyList.at(i).Sca + (m_KeyList.at(i + 1).Sca - m_KeyList.at(i).Sca) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(20 - m_KeyList.at(i).Frame);
+						if (20 >= m_KeyList.at(m_KeyList.size() - 1).Frame)
+						{
+							R = m_KeyList.at(m_KeyList.size() - 1).Rot;
+							T = m_KeyList.at(m_KeyList.size() - 1).Pos;
+							S = m_KeyList.at(m_KeyList.size() - 1).Sca;
+						}
+						once = false;
+					}
+				}
+			}
+			m_Rot = OR + (R - OR) / 20.0f*m_FrameTimer;
+			m_Tra = OT + (T - OT) / 20.0f*m_FrameTimer;
+			m_Sca = OS + (S - OS) / 20.0f*m_FrameTimer;
+			return;
+		}
+		else if (m_KeyList.size() == 1)
+		{
+			m_Rot = m_KeyList.at(0).Rot;
+			m_Tra = m_KeyList.at(0).Pos;
+			m_Sca = m_KeyList.at(0).Sca;
+		}
+		else if (m_KeyList.size() == 0)
+		{
+			m_Rot = Vector3(0.0f, 0.0f, 0.0f);
+			m_Tra = Vector3(0.0f, 0.0f, 0.0f);
+			m_Sca = Vector3(1.0f, 1.0f, 1.0f);
+		}
+		return;
+	}
+
 	if (m_KeyList.size() > 1)
 	{
 		for (int i = m_KeyList.size() - 2; i > -1; --i)
 		{
+			
 			if (m_KeyList.at(i).Frame <= m_FrameTimer)
 			{
 				m_Rot = m_KeyList.at(i).Rot + (m_KeyList.at(i + 1).Rot - m_KeyList.at(i).Rot) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(m_FrameTimer - m_KeyList.at(i).Frame);
 				m_Tra = m_KeyList.at(i).Pos + (m_KeyList.at(i + 1).Pos - m_KeyList.at(i).Pos) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(m_FrameTimer - m_KeyList.at(i).Frame);
+				m_Sca = m_KeyList.at(i).Sca + (m_KeyList.at(i + 1).Sca - m_KeyList.at(i).Sca) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(m_FrameTimer - m_KeyList.at(i).Frame);
 				if (m_FrameTimer >= m_KeyList.at(m_KeyList.size() - 1).Frame)
 				{
 					m_Rot = m_KeyList.at(m_KeyList.size() - 1).Rot;
 					m_Tra = m_KeyList.at(m_KeyList.size() - 1).Pos;
+					m_Sca = m_KeyList.at(m_KeyList.size() - 1).Sca;
 				}
 				break;
 			}
@@ -130,11 +188,13 @@ void ObjectXModel::LateUpdate()
 	{
 		m_Rot = m_KeyList.at(0).Rot;
 		m_Tra = m_KeyList.at(0).Pos;
+		m_Sca = m_KeyList.at(0).Sca;
 	}
 	else if (m_KeyList.size() == 0)
 	{
 		m_Rot = Vector3(0.0f, 0.0f, 0.0f);
 		m_Tra = Vector3(0.0f, 0.0f, 0.0f);
+		m_Sca = Vector3(1.0f, 1.0f, 1.0f);
 	}
 }
 
@@ -144,7 +204,7 @@ void ObjectXModel::Draw()
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
 	D3DXMatrixIdentity(&m_mtxWorld);
-	D3DXMatrixScaling(&m_mtxSca, m_Sca.x, m_Sca.y, m_Sca.z);
+	D3DXMatrixScaling(&m_mtxSca, m_Sca.x * m_SFP.x, m_Sca.y * m_SFP.y, m_Sca.z * m_SFP.z);
 	D3DXMatrixRotationYawPitchRoll(&m_mtxRot, m_Rot.y + m_RFP.y, m_Rot.x + m_RFP.x, m_Rot.z + m_RFP.z);
 	//D3DXMatrixRotationQuaternion(&m_mtxRot, &m_Quaternion);
 	D3DXMatrixTranslation(&m_mtxTra, m_Tra.x + m_TFP.x, m_Tra.y + m_TFP.y, m_Tra.z + m_TFP.z);
@@ -197,7 +257,7 @@ void ObjectXModel::Draw()
 			//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
 			D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 			D3DXVECTOR4 spc = D3DXVECTOR4(1.0f,1.0f,1.0f,1.0f);
-			D3DXVECTOR4 amb = D3DXVECTOR4(0.2f, 0.2f, 0.2f,1.0f);
+			D3DXVECTOR4 amb = D3DXVECTOR4(0.1f, 0.1f, 0.1f,1.0f);
 			pEffect->SetMatrix("World", &m_mtxWorld);
 			pEffect->SetMatrix("WorldViewProj", &WVP);
 			pEffect->SetMatrix("WorldInverse", &WI);
@@ -208,6 +268,7 @@ void ObjectXModel::Draw()
 			pEffect->SetVector("Specular", &spc);
 			pEffect->SetVector("Ambient", &amb);
 			pEffect->SetTexture("Tex", m_TextureList[i]->GetDXTexture());	
+			pEffect->SetTexture("Toon", Texture::LoadTextureFromFile("data/Texture/Toon/gray.png")->GetDXTexture());
 			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());			
 			pEffect->CommitChanges();			
 			m_pMesh->DrawSubset(i);

@@ -53,7 +53,7 @@ void TestScene::Init()
 	model4->Init();
 	model4->SetTexture(Texture::LoadTextureFromFile("data/Model/Sphere/DiffuseMap.dds"), 0);
 	model4->SetTFP(Vector3(0.0f, 0.8f, 0.0f));
-	model4->SetSca(Vector3(0.1f, 0.1f, 0.1f));
+	model4->SetSFP(Vector3(0.1f, 0.1f, 0.1f));
 }																	
 
 void TestScene::Update()

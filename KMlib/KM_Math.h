@@ -130,7 +130,7 @@ namespace Kuma {
 	class Vector3 {
 	public:
 		float x, y, z;
-
+		static Vector3 up,down,left,right,forward,back;
 		Vector3() :x(0.0f), y(0.0f), z(0.0f) {}
 
 		Vector3(float l_x, float l_y, float l_z) {
@@ -569,7 +569,7 @@ namespace Kuma {
 	float Vector3Dot(const Vector3 & l_vec1,const Vector3 & l_vec2);
 	void Vector3Cross(Vector3 * l_output, Vector3 * l_vec1, Vector3 * l_vec2);
 	void Vector3Normalize(Vector3 * l_output, Vector3 * l_input);
-	void Vector3RotationAxis(Vector3 * l_input, const Vector3 & l_axis, const float & l_length);
+	void Vector3RotationAxis(Vector3 * l_input, Vector3 l_axis, const float & l_theta);
 	/*--------------------------------------------------------------------------------------------------------------------------------------*/
 
 	/*--------------------------------------------------------------------------------------------------------------------------------------*/

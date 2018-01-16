@@ -25,7 +25,7 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	Input::Init(hInst,hWnd);
 	//Scene
 #ifdef _DEBUG
-	RenderTargetDemo *Scene = new RenderTargetDemo;
+	GameStage *Scene = new GameStage;
 	Scene::ToNextScene(Scene);
 	
 #endif // _DEBUG
@@ -74,4 +74,6 @@ void Manager::Draw()
 	ImGui::Render();
 	Renderer::DrawBackBufferEnd();
 	//bBlur::ChangeTexture();
+
+	Object::UninitNotBeingUsedObject();
 }

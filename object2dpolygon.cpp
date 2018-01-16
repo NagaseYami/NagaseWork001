@@ -1,6 +1,7 @@
 ﻿#include "main.h"
 #include "renderer.h"
 #include "texture.h"
+#include "effect.h"
 #include "object.h"
 #include "object2dpolygon.h"
 
@@ -95,8 +96,37 @@ void Object2DPolygon::Draw()
 		0,
 		sizeof(VERTEX_2D));
 
-	//ポリゴンの描画
-	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,
-		0,
-		2);
+	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/BasicShader.fx");
+
+	for (int i = 0; i < m_TextureList.size(); i++)
+	{
+		if (m_TextureList[i]->GetDXTexture() != NULL)
+		{
+			pEffect->SetTechnique("ToonShader_2d_TexterTech");
+			break;
+		}
+		else
+		{
+			pEffect->SetTechnique("ToonShader_2d_NoTexterTech");
+		}
+	}
+
+	UINT numPass;
+	pEffect->Begin(&numPass, 0);
+	for (UINT iPass = 0; iPass < numPass; iPass++)
+	{
+		pEffect->BeginPass(iPass);
+		pEffect->SetTexture("Tex", m_TextureList[m_TexNum]->GetDXTexture());
+		pEffect->CommitChanges();
+		//ポリゴンの描画
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,
+			0,
+			2);
+		
+		pEffect->EndPass();
+	}
+
+	pEffect->End();
+
+	
 }

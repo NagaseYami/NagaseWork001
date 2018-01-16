@@ -61,12 +61,6 @@
     <Filter Include="ソース ファイル\Light">
       <UniqueIdentifier>{a3356c14-b189-4a01-9f7c-ae64f10c6f87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Motion">
-      <UniqueIdentifier>{8054181a-0850-4692-ba79-2e8f85975ffe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Motion">
-      <UniqueIdentifier>{9d96b85c-692b-4fe0-84fa-ec543f0fbe8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Shader">
       <UniqueIdentifier>{eab877dd-d7b6-44b8-b347-c3ed3561057a}</UniqueIdentifier>
     </Filter>
@@ -84,6 +78,18 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Kadai">
       <UniqueIdentifier>{0091cdef-2277-4e55-a1a9-67655e72ddce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Player">
+      <UniqueIdentifier>{f4750775-09fc-4af3-a3f2-5abc324bb9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{df74349a-bc86-4c14-806f-4b07f71f0d3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Boss">
+      <UniqueIdentifier>{8c671559-1d5a-4bf9-80a5-923aee89f0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Boss">
+      <UniqueIdentifier>{dee5ed0b-34f5-4f24-99bd-224b01614773}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +159,6 @@
     <ClCompile Include="scene.cpp">
       <Filter>ソース ファイル\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="motion.cpp">
-      <Filter>ソース ファイル\Motion</Filter>
-    </ClCompile>
     <ClCompile Include="imgui_impl_dx9.cpp">
       <Filter>ソース ファイル\ImGui</Filter>
     </ClCompile>
@@ -170,6 +173,15 @@
     </ClCompile>
     <ClCompile Include="objectparticle.cpp">
       <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="gamestage.cpp">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>ソース ファイル\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +254,6 @@
     <ClInclude Include="RenderTargetDemo.h">
       <Filter>ヘッダー ファイル\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="motion.h">
-      <Filter>ヘッダー ファイル\Motion</Filter>
-    </ClInclude>
     <ClInclude Include="effect.h">
       <Filter>ヘッダー ファイル\Shader</Filter>
     </ClInclude>
@@ -274,6 +283,15 @@
     </ClInclude>
     <ClInclude Include="kadaicube.h">
       <Filter>ヘッダー ファイル\Kadai</Filter>
+    </ClInclude>
+    <ClInclude Include="gamestage.h">
+      <Filter>ヘッダー ファイル\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>ヘッダー ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>ヘッダー ファイル\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

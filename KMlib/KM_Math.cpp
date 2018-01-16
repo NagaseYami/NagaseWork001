@@ -7,6 +7,14 @@
 #include "btBulletDynamicsCommon.h"
 #endif
 namespace Kuma {
+
+	Vector3 Vector3::up = Vector3(0.0f, 1.0f, 0.0f);
+	Vector3 Vector3::down = Vector3(0.0f, -1.0f, 0.0f);
+	Vector3 Vector3::left = Vector3(-1.0f, 0.0f, 0.0f);
+	Vector3 Vector3::right = Vector3(1.0f, 0.0f, 0.0f);
+	Vector3 Vector3::forward = Vector3(0.0f, 0.0f, 1.0f);
+	Vector3 Vector3::back = Vector3(0.0f, 0.0f, -1.0f);
+
 	float RandomRange(float l_fMin, float l_fMax)
 	{
 		srand((unsigned int)time(NULL));
@@ -72,7 +80,7 @@ namespace Kuma {
 	{
 		return l_vec1.x*l_vec2.x + l_vec1.y*l_vec2.y + l_vec1.z*l_vec2.z;
 	}
-	void Kuma::Vector3Cross(Vector3 * l_output, Vector3 * l_vec1, Vector3 * l_vec2)
+	void Vector3Cross(Vector3 * l_output, Vector3 * l_vec1, Vector3 * l_vec2)
 	{
 		Vector3 output;
 		output.x = l_vec1->y*l_vec2->z - l_vec1->z * l_vec2->y;
@@ -84,22 +92,16 @@ namespace Kuma {
 	{
 		*l_output = *l_input / l_input->Length();
 	}
-	void Vector3RotationAxis(Vector3 * l_input, const Vector3 & l_axis, const float & l_theta)
+	void Vector3RotationAxis(Vector3 * l_input, Vector3 l_axis, const float & l_theta)
 	{
 		Vector3 output;
-		output.x = l_input->x * l_axis.x*l_axis.x*(1 - cosf(l_theta)) + cosf(l_theta) +
-			l_input->y * l_axis.x*l_axis.y*(1 - cosf(l_theta)) - l_axis.z*sinf(l_theta) +
-			l_input->z * l_axis.z*l_axis.x*(1 - cosf(l_theta)) + l_axis.y*sinf(l_theta);
-
-		output.y = l_input->x * l_axis.x*l_axis.y*(1 - cosf(l_theta)) + l_axis.z*sinf(l_theta) +
-			l_input->y * l_axis.y*l_axis.y*(1 - cosf(l_theta)) + cosf(l_theta) +
-			l_input->z * l_axis.y*l_axis.z*(1 - cosf(l_theta)) - l_axis.x*sinf(l_theta);
-
-		output.z = l_input->x * l_axis.z*l_axis.x*(1 - cosf(l_theta)) - l_axis.y*sinf(l_theta) +
-			l_input->y * l_axis.y*l_axis.z*(1 - cosf(l_theta)) + l_axis.x*sinf(l_theta) +
-			l_input->z * l_axis.z*l_axis.z*(1 - cosf(l_theta)) + cosf(l_theta);
-
-		*l_input = output;
+		float r = l_theta;
+		float c = cosf(r);
+		float s = sinf(r);
+		float new_x = (l_axis.x*l_axis.x*(1 - c) + c) * l_input->x + (l_axis.x*l_axis.y*(1 - c) - l_axis.z*s) * l_input->y + (l_axis.x*l_axis.z*(1 - c) + l_axis.y*s) * l_input->z;
+		float new_y = (l_axis.y*l_axis.x*(1 - c) + l_axis.z*s) * l_input->x + (l_axis.y*l_axis.y*(1 - c) + c) * l_input->y + (l_axis.y*l_axis.z*(1 - c) - l_axis.x*s) * l_input->z;
+		float new_z = (l_axis.x*l_axis.z*(1 - c) - l_axis.y*s) * l_input->x + (l_axis.y*l_axis.z*(1 - c) + l_axis.x*s) * l_input->y + (l_axis.z*l_axis.z*(1 - c) + c) * l_input->z;		 
+		*l_input = Vector3(new_x, new_y, new_z);
 	}
 	float Vector2Dot(Vector2 * l_vec1, Vector2 * l_vec2)
 	{

@@ -37,7 +37,7 @@ void ObjectParticle::Init()
 	
 	for (int i = 0; i < m_Dir.size(); i++)
 	{
-		m_Dir[i] = Vector3(float(rand() % 1000)*0.001f - 0.5f, float(rand() % 1000)*0.001f - 0.5f, float(rand() % 1000)*0.001f - 0.5f).Normalize();
+		m_Dir[i] = Vector3(float(rand() % 1000)*0.001f - 0.5f, float(rand() % 1000)*0.001f, float(rand() % 1000)*0.001f - 0.5f).Normalize()*float(rand() % 10000)*0.0001f;
 		m_Color[i] = Vector4(float(rand() % 255), float(rand() % 255), float(rand() % 255), 255);
 	}	
 
@@ -80,8 +80,10 @@ void ObjectParticle::Update()
 
 void ObjectParticle::LateUpdate()
 {	
-	m_Timer= 1.0f;	
-	
+	if (Input::IsPress(Input::KeySpace))
+	{
+		m_Timer += 1.0f;
+	}	
 }
 
 void ObjectParticle::Draw()

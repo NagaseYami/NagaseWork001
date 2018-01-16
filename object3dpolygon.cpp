@@ -93,7 +93,15 @@ void Object3DPolygon::Draw()
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	//MESHFIELDの描画をする寸前
-	pDevice->SetTexture(0, m_TextureList[m_TexNum]->GetDXTexture());
+	if (m_TextureList.size()>0)
+	{
+		pDevice->SetTexture(0, m_TextureList[m_TexNum]->GetDXTexture());
+	}
+	else
+	{
+		pDevice->SetTexture(0,NULL);
+	}
+	
 
 	//パイプラインの設定
 	pDevice->SetStreamSource(0,

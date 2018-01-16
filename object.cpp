@@ -20,12 +20,7 @@ void Object::FixedUpdateAll()
 			pObj->FixedUpdate();
 			itr++;
 		}
-		else
-		{
-			pObj->Uninit();
-			delete pObj;
-			itr = m_pManager.erase(itr);
-		}
+		
 	}
 }
 
@@ -38,12 +33,6 @@ void Object::UpdateAll()
 		{
 			pObj->Update();
 			itr++;
-		}
-		else
-		{
-			pObj->Uninit();
-			delete pObj;
-			itr = m_pManager.erase(itr);
 		}
 	}
 }
@@ -58,12 +47,6 @@ void Object::LateUpdateAll()
 			pObj->LateUpdate();
 			itr++;
 		}
-		else
-		{
-			pObj->Uninit();
-			delete pObj;
-			itr = m_pManager.erase(itr);
-		}
 	}
 }
 
@@ -76,12 +59,26 @@ void Object::DrawAllBackBufferObject()
 	for (auto itr = copy.begin(); itr != copy.end(); itr++)
 	{
 		Object * pObj = *itr;
-		if (!pObj->m_isRenderTarget)
+		if (!pObj->m_isRenderTarget && !pObj->m_bDestory)
 		{
 			pObj->Draw();
 		}		
 	}
 			
+}
+
+void Object::UninitNotBeingUsedObject()
+{
+	for (auto itr = m_pManager.begin(); itr != m_pManager.end(); itr++)
+	{
+		Object * pObj = *itr;
+		if (pObj->isDestory())
+		{
+			pObj->Uninit();
+			delete pObj;
+			m_pManager.erase(itr);
+		}
+	}
 }
 
 void Object::UninitAll()

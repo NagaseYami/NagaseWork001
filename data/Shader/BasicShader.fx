@@ -26,6 +26,15 @@ sampler BumpSampler = sampler_state
     MagFilter = LINEAR;
 };
 
+texture Toon;
+sampler ToonSampler = sampler_state
+{
+    Texture = (Toon);
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
+};
+
 //BasicShader*****************************************************************************
 
 struct BASICSHADER_IN_VERTEX
@@ -65,7 +74,7 @@ float4 BasicShader_PixelShader_Texture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR0
     float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
 
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
-    float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 50);
+    float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
 
     return (diff + spec + ambi) * tex2D(TexSampler, ip.UV);
@@ -79,7 +88,7 @@ float4 BasicShader_PixelShader_NoTexture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR
     float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
 
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
-    float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 50);
+    float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
 
     return (diff + spec + ambi);    
@@ -195,21 +204,21 @@ technique BumpMapShader_NoTexterTech
 
 //ToonShader**************************************************************************************
 
-struct TOONSHADER_IN_VERTEX
+struct TOONSHADER_2D_IN_VERTEX
 {
     float3 PosL : POSITION0;
     float2 UV : TEXCOORD0;
 };
 
-struct TOONSHADER_OUT_VERTEX
+struct TOONSHADER_2D_OUT_VERTEX
 {
     float4 PosH : POSITION0;
     float2 UV : TEXCOORD0;
 };
 
-TOONSHADER_OUT_VERTEX ToonShader_VertexShader_Main(TOONSHADER_IN_VERTEX iv)
+TOONSHADER_2D_OUT_VERTEX ToonShader_2d_VertexShader_Main(TOONSHADER_2D_IN_VERTEX iv)
 {
-    TOONSHADER_OUT_VERTEX ov;
+    TOONSHADER_2D_OUT_VERTEX ov;
 
     ov.PosH = mul(float4(iv.PosL, 1.0f), WorldViewProj);
 
@@ -218,7 +227,7 @@ TOONSHADER_OUT_VERTEX ToonShader_VertexShader_Main(TOONSHADER_IN_VERTEX iv)
     return ov;
 }
 
-float4 ToonShader_PixelShader_Texture_Main(TOONSHADER_OUT_VERTEX ip) : COLOR0
+float4 ToonShader_2d_PixelShader_Texture_Main(TOONSHADER_2D_OUT_VERTEX ip) : COLOR0
 {
     float2 offsetUV = 1.0f / float2(1920.0f, 1080.0f);
     float4 n1 = tex2D(TexSampler, ip.UV + offsetUV * float2(-1, -1));
@@ -235,7 +244,7 @@ float4 ToonShader_PixelShader_Texture_Main(TOONSHADER_OUT_VERTEX ip) : COLOR0
     return float4((float3) 1.0f - edgeAmount, 1.0f) * tex2D(TexSampler, ip.UV);
 }
 
-float4 ToonShader_PixelShader_NoTexture_Main(TOONSHADER_OUT_VERTEX ip) : COLOR0
+float4 ToonShader_2d_PixelShader_NoTexture_Main(TOONSHADER_2D_OUT_VERTEX ip) : COLOR0
 {
     float2 offsetUV = 1.0f / float2(1280.0f, 720.0f);
     float4 n1 = tex2D(TexSampler, ip.UV + offsetUV * float2(-1, -1));
@@ -252,20 +261,97 @@ float4 ToonShader_PixelShader_NoTexture_Main(TOONSHADER_OUT_VERTEX ip) : COLOR0
     return float4((float3) 1.0f - edgeAmount, 1.0f);
 }
 
-technique ToonShader_TexterTech
+technique ToonShader_2d_TexterTech
 {
     pass Pass0
     {
-        VertexShader = compile vs_3_0 ToonShader_VertexShader_Main();
-        PixelShader = compile ps_3_0 ToonShader_PixelShader_Texture_Main();
+        VertexShader = compile vs_3_0 ToonShader_2d_VertexShader_Main();
+        PixelShader = compile ps_3_0 ToonShader_2d_PixelShader_Texture_Main();
     }
 }
 
-technique ToonShader_NoTexterTech
+technique ToonShader_2d_NoTexterTech
 {
     pass Pass0
     {
-        VertexShader = compile vs_3_0 ToonShader_VertexShader_Main();
-        PixelShader = compile ps_3_0 ToonShader_PixelShader_NoTexture_Main();
+        VertexShader = compile vs_3_0 ToonShader_2d_VertexShader_Main();
+        PixelShader = compile ps_3_0 ToonShader_2d_PixelShader_NoTexture_Main();
+    }
+}
+
+//ToonShader**************************************************************************************
+
+struct TOONSHADER_MODEL_IN_VERTEX
+{
+    float3 PosL : POSITION0;
+    float3 NormalL : NORMAL0;
+    float2 UV : TEXCOORD0;
+};
+
+struct TOONSHADER_MODEL_OUT_VERTEX
+{
+    float4 PosH : POSITION0;
+    float3 PosW : TEXCOORD1;
+    float3 NormalW : TEXCOORD2;
+    float2 UV : TEXCOORD0;
+};
+
+TOONSHADER_MODEL_OUT_VERTEX ToonShader_Model_VertexShader_Main(TOONSHADER_MODEL_IN_VERTEX iv)
+{
+    TOONSHADER_MODEL_OUT_VERTEX ov;
+
+    ov.PosW = mul(float4(iv.PosL, 1.0f), World).xyz;
+    ov.PosH = mul(float4(iv.PosL, 1.0f), WorldViewProj);
+    ov.NormalW = mul(float4(iv.NormalL, 0.0f), WorldInverseTranspose).xyz;
+    ov.UV = iv.UV;
+
+    return ov;
+}
+
+float4 ToonShader_Model_PixelShader_Texture_Main(TOONSHADER_MODEL_OUT_VERTEX ip) : COLOR0
+{
+    ip.NormalW = normalize(ip.NormalW);
+
+    float3 PostoCamera = normalize(EyePosW - ip.PosW);
+    float3 normalizeLightDir = normalize(LightDirW);
+    float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
+
+    float4 diff = Diffuse * tex2D(ToonSampler, float2(dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f, 0.5f));
+    float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 50);
+    float4 ambi = Ambient;
+
+    return (diff + ambi) * tex2D(TexSampler, ip.UV);
+}
+
+float4 ToonShader_Model_PixelShader_NoTexture_Main(TOONSHADER_MODEL_OUT_VERTEX ip) : COLOR0
+{
+    ip.NormalW = normalize(ip.NormalW);
+
+    float3 PostoCamera = normalize(EyePosW - ip.PosW);
+    float3 normalizeLightDir = normalize(LightDirW);
+    float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
+
+    float4 diff = Diffuse * tex2D(ToonSampler, float2(dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f, 0.5f));
+    float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 50);
+    float4 ambi = Ambient;
+
+    return (diff + ambi);
+}
+
+technique ToonShader_Model_TexterTech
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 ToonShader_Model_VertexShader_Main();
+        PixelShader = compile ps_3_0 ToonShader_Model_PixelShader_Texture_Main();
+    }
+}
+
+technique ToonShader_Model_NoTexterTech
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 ToonShader_Model_VertexShader_Main();
+        PixelShader = compile ps_3_0 ToonShader_Model_PixelShader_NoTexture_Main();
     }
 }
