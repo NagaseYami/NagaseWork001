@@ -10,11 +10,17 @@ public:
 		return m_Tra;
 	}
 private:
+	struct PlayerMotion
+	{
+		bool CanbeBreak;
+		vector<KEY> MotionList[10];
+	};
+
 	static void XModelInit();
 	static void ParentInit();
 	static void TransformInit(); 
 	static void MotionInit();
-	static void LoadMotionFromFile(string filename);
+	static void LoadMotionFromFile(string filename,bool canbebreak);
 	static void ChangeMotion(string motionname);
 
 	static void ControllerUpdate();
@@ -25,7 +31,7 @@ private:
 	static ObjectXModel * pPart[10];
 	static Vector3 m_Tra;
 	static Vector3 m_Dir;
-	static map<string,vector<KEY>[10]> m_Motion;
+	static map<string,PlayerMotion> m_Motion;
 	static string m_PlayingMotion;
 	static int m_Timer;
 	static bool m_EndofMotion;

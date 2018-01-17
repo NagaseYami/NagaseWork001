@@ -64,6 +64,7 @@ public:
 	}
 	void SetKeyList(const vector<KEY> & l_KeyList) { 
 		m_isChanging = true;
+		m_CacheOnce = true;
 		m_KeyList = l_KeyList; 
 	}
 	void ResetKeyList(void) { 
@@ -98,9 +99,18 @@ private:
 	Vector3 m_Tra = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3 m_Sca = Vector3(1.0f, 1.0f, 1.0f);
 
+	Vector3 m_Old_Rot = Vector3(0.0f, 0.0f, 0.0f);
+	Vector3 m_Old_Tra = Vector3(0.0f, 0.0f, 0.0f);
+	Vector3 m_Old_Sca = Vector3(1.0f, 1.0f, 1.0f);
+
+	Vector3 m_Target_Rot = Vector3(0.0f, 0.0f, 0.0f);
+	Vector3 m_Target_Tra = Vector3(0.0f, 0.0f, 0.0f);
+	Vector3 m_Target_Sca = Vector3(1.0f, 1.0f, 1.0f);
+
 	int m_FrameTimer = 0;
 	vector<KEY> m_KeyList;
 
 	bool m_bLight = true;
 	bool m_isChanging = false;
+	bool m_CacheOnce = true;
 };

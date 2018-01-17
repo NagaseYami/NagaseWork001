@@ -266,6 +266,11 @@ namespace Kuma {
 			return l_Result;
 		}
 
+		friend Vector3 operator * (float l_f , const Vector3& l_value) 
+		{
+			return l_value * l_f;
+		}
+
 		Vector3& operator+=(const Vector3 & l_Vector3) {
 			this->x += l_Vector3.x;
 			this->y += l_Vector3.y;
@@ -570,6 +575,8 @@ namespace Kuma {
 	void Vector3Cross(Vector3 * l_output, Vector3 * l_vec1, Vector3 * l_vec2);
 	void Vector3Normalize(Vector3 * l_output, Vector3 * l_input);
 	void Vector3RotationAxis(Vector3 * l_input, Vector3 l_axis, const float & l_theta);
+	float AngleBetween2Vector3(Vector3 & l_vec1, Vector3 & l_vec2);
+	bool Vector3LeftorRight(Vector3 & l_vec1, Vector3 & l_vec2);//vec1 が vec2の左だったら（上から見る）true;
 	/*--------------------------------------------------------------------------------------------------------------------------------------*/
 
 	/*--------------------------------------------------------------------------------------------------------------------------------------*/

@@ -109,44 +109,78 @@ void ObjectXModel::Update()
 
 void ObjectXModel::LateUpdate()
 {
-	static bool once = true;
-	if (m_FrameTimer >= 30)
+	if (m_FrameTimer >= 6)
 	{
 		m_isChanging = false;
-		once = true;
+		m_CacheOnce = true;
 	}
 	if (m_isChanging)
 	{		
 		if (m_KeyList.size() > 1)
 		{
-			static Vector3 R, T, S;
-			static Vector3 OR, OT, OS;
-			if (once)
+			if (m_CacheOnce)
 			{
 				for (int i = m_KeyList.size() - 2; i > -1; --i)
 				{
-					if (m_KeyList.at(i).Frame <= 20)
+					if (m_KeyList.at(i).Frame <= 6)
 					{
-						OR = m_Rot;
-						OT = m_Tra;
-						OS = m_Sca;
+						m_Old_Rot = m_Rot;
+						m_Old_Tra = m_Tra;
+						m_Old_Sca = m_Sca;
 
-						R = m_KeyList.at(i).Rot + (m_KeyList.at(i + 1).Rot - m_KeyList.at(i).Rot) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(20 - m_KeyList.at(i).Frame);
-						T = m_KeyList.at(i).Pos + (m_KeyList.at(i + 1).Pos - m_KeyList.at(i).Pos) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(20 - m_KeyList.at(i).Frame);
-						S = m_KeyList.at(i).Sca + (m_KeyList.at(i + 1).Sca - m_KeyList.at(i).Sca) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(20 - m_KeyList.at(i).Frame);
-						if (20 >= m_KeyList.at(m_KeyList.size() - 1).Frame)
+						m_Target_Rot = m_KeyList.at(i).Rot + (m_KeyList.at(i + 1).Rot - m_KeyList.at(i).Rot) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(6 - m_KeyList.at(i).Frame);
+						m_Target_Tra = m_KeyList.at(i).Pos + (m_KeyList.at(i + 1).Pos - m_KeyList.at(i).Pos) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(6 - m_KeyList.at(i).Frame);
+						m_Target_Sca = m_KeyList.at(i).Sca + (m_KeyList.at(i + 1).Sca - m_KeyList.at(i).Sca) / (float)(m_KeyList.at(i + 1).Frame - m_KeyList.at(i).Frame)*(float)(6 - m_KeyList.at(i).Frame);
+						if (6 >= m_KeyList.at(m_KeyList.size() - 1).Frame)
 						{
-							R = m_KeyList.at(m_KeyList.size() - 1).Rot;
-							T = m_KeyList.at(m_KeyList.size() - 1).Pos;
-							S = m_KeyList.at(m_KeyList.size() - 1).Sca;
+							m_Target_Rot = m_KeyList.at(m_KeyList.size() - 1).Rot;
+							m_Target_Tra = m_KeyList.at(m_KeyList.size() - 1).Pos;
+							m_Target_Sca = m_KeyList.at(m_KeyList.size() - 1).Sca;
 						}
-						once = false;
+						Vector3 Difference_Rot = m_Target_Rot- m_Old_Rot;
+						do
+						{
+							if (Difference_Rot.x > D3DX_PI)
+							{
+								m_Target_Rot.x -= 2 * D3DX_PI;
+							}
+							else if (Difference_Rot.x < -D3DX_PI)
+							{
+								m_Target_Rot.x += 2 * D3DX_PI;
+							}
+							Difference_Rot = m_Target_Rot - m_Old_Rot;
+						} while (Difference_Rot.x > D3DX_PI || Difference_Rot.x < -D3DX_PI);
+						do
+						{
+							if (Difference_Rot.y > D3DX_PI)
+							{
+								m_Target_Rot.y -= 2 * D3DX_PI;
+							}
+							else if (Difference_Rot.y < -D3DX_PI)
+							{
+								m_Target_Rot.y += 2 * D3DX_PI;
+							}
+							Difference_Rot = m_Target_Rot - m_Old_Rot;
+						} while (Difference_Rot.y > D3DX_PI || Difference_Rot.y < -D3DX_PI);
+						do
+						{
+							if (Difference_Rot.z > D3DX_PI)
+							{
+								m_Target_Rot.z -= 2 * D3DX_PI;
+							}
+							else if (Difference_Rot.z < -D3DX_PI)
+							{
+								m_Target_Rot.z += 2 * D3DX_PI;
+							}
+							Difference_Rot = m_Target_Rot - m_Old_Rot;
+						} while (Difference_Rot.z > D3DX_PI || Difference_Rot.z < -D3DX_PI);
+						m_CacheOnce = false;
 					}
 				}
 			}
-			m_Rot = OR + (R - OR) / 20.0f*m_FrameTimer;
-			m_Tra = OT + (T - OT) / 20.0f*m_FrameTimer;
-			m_Sca = OS + (S - OS) / 20.0f*m_FrameTimer;
+			m_Rot = m_Old_Rot + (m_Target_Rot - m_Old_Rot) / 6.0f*m_FrameTimer;
+			m_Tra = m_Old_Tra + (m_Target_Tra - m_Old_Tra) / 6.0f*m_FrameTimer;
+			m_Sca = m_Old_Sca + (m_Target_Sca - m_Old_Sca) / 6.0f*m_FrameTimer;
 			return;
 		}
 		else if (m_KeyList.size() == 1)

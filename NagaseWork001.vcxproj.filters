@@ -135,9 +135,6 @@
     <ClCompile Include="dxinput.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
-    <ClCompile Include="objectXModel.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
     <ClCompile Include="objectstencilshadow.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
@@ -182,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="boss.cpp">
       <Filter>ソース ファイル\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="objectXModel.cpp">
+      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

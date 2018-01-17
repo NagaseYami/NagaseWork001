@@ -103,6 +103,22 @@ namespace Kuma {
 		float new_z = (l_axis.x*l_axis.z*(1 - c) - l_axis.y*s) * l_input->x + (l_axis.y*l_axis.z*(1 - c) + l_axis.x*s) * l_input->y + (l_axis.z*l_axis.z*(1 - c) + c) * l_input->z;		 
 		*l_input = Vector3(new_x, new_y, new_z);
 	}
+	float AngleBetween2Vector3(Vector3 & l_vec1, Vector3 & l_vec2)
+	{
+		float dot = Vector3Dot(l_vec1, l_vec2);
+		float angle = -acosf(dot);
+		return angle;
+	}
+	bool Vector3LeftorRight(Vector3 & l_vec1, Vector3 & l_vec2)
+	{
+		Vector3 out;
+		Vector3Cross(&out, &l_vec1, &l_vec2);
+		if (out.y > 0)
+		{
+			return true;
+		}
+		return false;
+	}
 	float Vector2Dot(Vector2 * l_vec1, Vector2 * l_vec2)
 	{
 		return l_vec1->x*l_vec2->x + l_vec1->y*l_vec2->y;
