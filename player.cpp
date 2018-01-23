@@ -7,7 +7,7 @@
 #include <fstream>
 
 ObjectXModel * Player::pPart[10];
-Vector3 Player::m_Tra = Vector3(0.0f, 5.8f, 0.0f);
+Vector3 Player::m_Tra = Vector3(0.0f, 5.8f, -90.0f);
 Vector3 Player::m_Dir = Vector3(0.0f, 0.0f, 1.0f);
 map<string, Player::PlayerMotion> Player::m_Motion;
 int Player::m_Timer = 0;
@@ -78,14 +78,21 @@ void Player::TransformInit()
 
 void Player::MotionInit()
 {
-	LoadMotionFromFile("data/Motion/Forward.txt",true);
-	LoadMotionFromFile("data/Motion/ForwardRight.txt", true);
-	LoadMotionFromFile("data/Motion/ForwardLeft.txt", true);
-	LoadMotionFromFile("data/Motion/Back.txt", true);
-	LoadMotionFromFile("data/Motion/BackLeft.txt", true);
-	LoadMotionFromFile("data/Motion/BackRight.txt", true);
-	LoadMotionFromFile("data/Motion/Jump.txt",false);
-	LoadMotionFromFile("data/Motion/Neutral.txt",true);
+	LoadMotionFromFile("data/Model/Player/Forward.txt",true);
+	LoadMotionFromFile("data/Model/Player/ForwardRight.txt", true);
+	LoadMotionFromFile("data/Model/Player/ForwardLeft.txt", true);
+	LoadMotionFromFile("data/Model/Player/Left.txt", true);
+	LoadMotionFromFile("data/Model/Player/Right.txt", true);
+	LoadMotionFromFile("data/Model/Player/Back.txt", true);
+	LoadMotionFromFile("data/Model/Player/BackLeft.txt", true);
+	LoadMotionFromFile("data/Model/Player/BackRight.txt", true);
+	LoadMotionFromFile("data/Model/Player/Jump.txt",false);
+	LoadMotionFromFile("data/Model/Player/JumpRight.txt", false);
+	LoadMotionFromFile("data/Model/Player/JumpLeft.txt", false);
+	LoadMotionFromFile("data/Model/Player/JumpBack.txt", false);
+	LoadMotionFromFile("data/Model/Player/Neutral.txt",true);
+	LoadMotionFromFile("data/Model/Player/Attack1.txt", false);
+	LoadMotionFromFile("data/Model/Player/Rotate.txt", true);
 	ChangeMotion("Neutral");
 }
 
@@ -175,78 +182,94 @@ void Player::ChangeMotion(string motionname)
 
 void Player::ControllerUpdate()
 {
-	if (Input::IsPress(Input::KeyW))
+	if (m_PlayingMotion != "Attack1")
 	{
-		m_Tra += m_Dir.Normalize() / 3.0f;
-	}
-	if (Input::IsPress(Input::KeyS))
-	{
-		m_Tra -= m_Dir.Normalize() / 10.0f;
-	}
-	if (Input::IsPress(Input::KeyD))
-	{
-		if (Input::IsPress(Input::MouseButtonRight))
+		if (Input::IsPress(Input::KeyW))
+		{
+			m_Tra += m_Dir.Normalize() / 3.0f;
+		}
+		else if (Input::IsPress(Input::KeyS))
+		{
+			m_Tra -= m_Dir.Normalize() / 10.0f;
+		}
+
+		if (Input::IsPress(Input::KeyD))
+		{
+			if (Input::IsPress(Input::MouseButtonRight))
+			{
+				Vector3 right;
+				Vector3Cross(&right, &m_Dir, &Vector3::down);
+				m_Tra += right.Normalize() / 3.0f;
+			}
+			else
+			{
+				Vector3RotationAxis(&m_Dir, Vector3::up, D3DX_PI / 120.0f);
+				m_Dir.y = 0.0f;
+				m_Dir = m_Dir.Normalize();
+				float angle = AngleBetween2Vector3(m_Dir, Vector3::forward) - D3DX_PI;
+				if (Vector3LeftorRight(m_Dir, Vector3::forward))
+				{
+					if (!Input::IsPress(Input::MouseButtonLeft))
+					{
+						Camera::SetmainCameraxz(-angle + D3DX_PI / 2);
+					}
+					pPart[0]->SetRFP(Vector3(0.0f, angle, 0.0f));
+				}
+				else
+				{
+					if (!Input::IsPress(Input::MouseButtonLeft))
+					{
+						Camera::SetmainCameraxz(angle + D3DX_PI / 2);
+					}
+					pPart[0]->SetRFP(Vector3(0.0f, -angle, 0.0f));
+				}
+			}
+		}
+		else if (Input::IsPress(Input::KeyA))
+		{
+			if (Input::IsPress(Input::MouseButtonRight))
+			{
+				Vector3 left;
+				Vector3Cross(&left, &m_Dir, &Vector3::up);
+				m_Tra += left.Normalize() / 3.0f;
+			}
+			else
+			{
+				Vector3RotationAxis(&m_Dir, Vector3::up, -D3DX_PI / 120.0f);
+				m_Dir.y = 0.0f;
+				m_Dir = m_Dir.Normalize();
+				float angle = AngleBetween2Vector3(m_Dir, Vector3::forward) - D3DX_PI;
+				if (Vector3LeftorRight(m_Dir, Vector3::forward))
+				{
+					if (!Input::IsPress(Input::MouseButtonLeft))
+					{
+						Camera::SetmainCameraxz(-angle + D3DX_PI / 2);
+					}
+					pPart[0]->SetRFP(Vector3(0.0f, angle, 0.0f));
+				}
+				else
+				{
+					if (!Input::IsPress(Input::MouseButtonLeft))
+					{
+						Camera::SetmainCameraxz(angle + D3DX_PI / 2);
+					}
+					pPart[0]->SetRFP(Vector3(0.0f, -angle, 0.0f));
+				}
+			}
+		}
+		if (Input::IsPress(Input::KeyQ))
 		{
 			Vector3 left;
-			Vector3Cross(&left, &m_Dir, &Vector3::down);
-			m_Tra += left.Normalize() / 2.0f;
+			Vector3Cross(&left, &m_Dir, &Vector3::up);
+			m_Tra += left.Normalize() / 3.0f;
 		}
-		else
-		{
-			Vector3RotationAxis(&m_Dir, Vector3::up, D3DX_PI / 60.0f);
-			m_Dir.y = 0.0f;
-			m_Dir = m_Dir.Normalize();
-			float angle = AngleBetween2Vector3(m_Dir, Vector3::forward) - D3DX_PI;
-			if (Vector3LeftorRight(m_Dir,Vector3::forward))
-			{
-				if (!Input::IsPress(Input::MouseButtonLeft))
-				{
-					Camera::SetmainCameraxz(-angle + D3DX_PI / 2);
-				}				
-				pPart[0]->SetRFP(Vector3(0.0f, angle, 0.0f));
-			}
-			else
-			{
-				if (!Input::IsPress(Input::MouseButtonLeft))
-				{
-					Camera::SetmainCameraxz(angle + D3DX_PI / 2);
-				}
-				pPart[0]->SetRFP(Vector3(0.0f, -angle, 0.0f));
-			}
-		}
-	}
-	if (Input::IsPress(Input::KeyA))
-	{
-		if (Input::IsPress(Input::MouseButtonRight))
+		else if (Input::IsPress(Input::KeyE))
 		{
 			Vector3 right;
-			Vector3Cross(&right, &m_Dir, &Vector3::up);
-			m_Tra += right.Normalize() / 2.0f;
+			Vector3Cross(&right, &m_Dir, &Vector3::down);
+			m_Tra += right.Normalize() / 3.0f;
 		}
-		else
-		{
-			Vector3RotationAxis(&m_Dir, Vector3::up, -D3DX_PI / 60.0f);
-			m_Dir.y = 0.0f;
-			m_Dir = m_Dir.Normalize();
-			float angle = AngleBetween2Vector3(m_Dir, Vector3::forward) - D3DX_PI;
-			if (Vector3LeftorRight(m_Dir, Vector3::forward))
-			{
-				if (!Input::IsPress(Input::MouseButtonLeft))
-				{
-					Camera::SetmainCameraxz(-angle + D3DX_PI / 2);
-				}
-				pPart[0]->SetRFP(Vector3(0.0f, angle, 0.0f));
-			}
-			else
-			{
-				if (!Input::IsPress(Input::MouseButtonLeft))
-				{
-					Camera::SetmainCameraxz(angle + D3DX_PI / 2);
-				}
-				pPart[0]->SetRFP(Vector3(0.0f, -angle, 0.0f));
-			}
-		}
-	}
+	}	
 	if (Input::IsPress(Input::MouseButtonRight))
 	{
 		m_Dir = Vector3(0.0f, 0.0f, 1.0f);
@@ -258,17 +281,44 @@ void Player::ControllerUpdate()
 
 void Player::MotionUpdate()
 {
-	if (Input::IsPress(Input::KeyW))
+	if (Input::IsDown(Input::Key1))
 	{
-		if (Input::IsPress(Input::KeySpace))
+		ChangeMotion("Attack1");
+	}
+	else if (Input::IsPress(Input::KeySpace))
+	{
+		if (Input::IsPress(Input::KeyA))
+		{
+			ChangeMotion("JumpLeft");
+		}
+		else if (Input::IsPress(Input::KeyD))
+		{
+			ChangeMotion("JumpRight");
+		}
+		else if (Input::IsPress(Input::KeyS))
+		{
+			ChangeMotion("JumpBack");
+		}
+		else
 		{
 			ChangeMotion("Jump");
 		}
-		else if (Input::IsPress(Input::KeyA) && Input::IsPress(Input::MouseButtonRight))
+	}
+	else if (Input::IsPress(Input::KeyW))
+	{
+		if (Input::IsPress(Input::KeyA) && Input::IsPress(Input::MouseButtonRight))
 		{
 			ChangeMotion("ForwardLeft");
 		}
 		else if (Input::IsPress(Input::KeyD) && Input::IsPress(Input::MouseButtonRight))
+		{
+			ChangeMotion("ForwardRight");
+		}
+		else if (Input::IsPress(Input::KeyQ))
+		{
+			ChangeMotion("ForwardLeft");
+		}
+		else if (Input::IsPress(Input::KeyE))
 		{
 			ChangeMotion("ForwardRight");
 		}
@@ -280,11 +330,7 @@ void Player::MotionUpdate()
 	}	
 	else if (Input::IsPress(Input::KeyS))
 	{
-		if (Input::IsPress(Input::KeySpace))
-		{
-			ChangeMotion("Jump");
-		}
-		else if (Input::IsPress(Input::KeyA) && Input::IsPress(Input::MouseButtonRight))
+		if (Input::IsPress(Input::KeyA) && Input::IsPress(Input::MouseButtonRight))
 		{
 			ChangeMotion("BackLeft");
 		}
@@ -292,15 +338,38 @@ void Player::MotionUpdate()
 		{
 			ChangeMotion("BackRight");
 		}
+		else if (Input::IsPress(Input::KeyQ))
+		{
+			ChangeMotion("BackLeft");
+		}
+		else if (Input::IsPress(Input::KeyE))
+		{
+			ChangeMotion("BackRight");
+		}
 		else
 		{
 			ChangeMotion("Back");
 		}
-
 	}
-	else if (Input::IsPress(Input::KeySpace))
+	else if (Input::IsPress(Input::KeyQ))
 	{
-		ChangeMotion("Jump");
+		ChangeMotion("Left");	
+	}
+	else if (Input::IsPress(Input::KeyE))
+	{
+		ChangeMotion("Right");
+	}
+	else if (Input::IsPress(Input::MouseButtonRight)&& Input::IsPress(Input::KeyA))
+	{
+		ChangeMotion("Left");
+	}
+	else if (Input::IsPress(Input::MouseButtonRight) && Input::IsPress(Input::KeyD))
+	{
+		ChangeMotion("Right");
+	}
+	else if (Input::IsPress(Input::KeyA) || Input::IsPress(Input::KeyD))
+	{
+		ChangeMotion("Rotate");
 	}
 	else
 	{
@@ -311,7 +380,7 @@ void Player::MotionUpdate()
 void Player::TimeUpdate(int limit)
 {
 	m_Timer++;
-	if (m_Timer >= limit)
+	if (m_Timer > limit)
 	{
 		m_Timer = 0;
 		m_EndofMotion = true;

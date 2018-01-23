@@ -5,6 +5,8 @@ class Player {
 public:
 	static void Init();
 	static void Update();
+
+	//Getter
 	static Vector3 GetTra()
 	{
 		return m_Tra;

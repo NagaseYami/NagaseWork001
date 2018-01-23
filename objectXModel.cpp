@@ -239,11 +239,14 @@ void ObjectXModel::Draw()
 
 	D3DXMatrixIdentity(&m_mtxWorld);
 	D3DXMatrixScaling(&m_mtxSca, m_Sca.x * m_SFP.x, m_Sca.y * m_SFP.y, m_Sca.z * m_SFP.z);
-	D3DXMatrixRotationYawPitchRoll(&m_mtxRot, m_Rot.y + m_RFP.y, m_Rot.x + m_RFP.x, m_Rot.z + m_RFP.z);
+	D3DXMatrixRotationYawPitchRoll(&m_mtxRot, m_Rot.y, m_Rot.x, m_Rot.z);
+	D3DXMATRIX mtxRFP;
+	D3DXMatrixRotationYawPitchRoll(&mtxRFP, m_RFP.y, m_RFP.x, m_RFP.z);
 	//D3DXMatrixRotationQuaternion(&m_mtxRot, &m_Quaternion);
 	D3DXMatrixTranslation(&m_mtxTra, m_Tra.x + m_TFP.x, m_Tra.y + m_TFP.y, m_Tra.z + m_TFP.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxSca);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxRot);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRFP);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxTra);
 	if (m_pParent != nullptr)
 	{
@@ -291,7 +294,7 @@ void ObjectXModel::Draw()
 			//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
 			D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 			D3DXVECTOR4 spc = D3DXVECTOR4(1.0f,1.0f,1.0f,1.0f);
-			D3DXVECTOR4 amb = D3DXVECTOR4(0.1f, 0.1f, 0.1f,1.0f);
+			D3DXVECTOR4 amb = D3DXVECTOR4(0.0f, 0.0f, 0.0f,1.0f);
 			pEffect->SetMatrix("World", &m_mtxWorld);
 			pEffect->SetMatrix("WorldViewProj", &WVP);
 			pEffect->SetMatrix("WorldInverse", &WI);

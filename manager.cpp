@@ -24,11 +24,9 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	//Input
 	Input::Init(hInst,hWnd);
 	//Scene
-#ifdef _DEBUG
 	GameStage *Scene = new GameStage;
 	Scene::ToNextScene(Scene);
-	
-#endif // _DEBUG
+
 }
 
 void Manager::Uninit()

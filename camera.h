@@ -39,7 +39,7 @@ protected:
 
 	D3DXMATRIX m_MtxView;
 	Vector3 m_Lookat = Vector3(0.0f, 0.0f, 0.0f);
-	Vector3 m_Eye = Vector3(0.0f, 0.0f, 10.0f);
+	Vector3 m_Eye = Vector3(0.0f, 0.0f, -1000.0f);
 	Vector3 m_VecUp = Vector3(0.0f, 1.0f, 0.0f);
 	float yz = 0.0f;
 	float xz = -D3DX_PI / 2;

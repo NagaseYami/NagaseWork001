@@ -8,7 +8,7 @@
 #include "scene.h"
 #include "gamestage.h"
 #include "player.h"
-
+#include "boss.h"
 
 void GameStage::Init()
 {	
@@ -21,11 +21,14 @@ void GameStage::Init()
 		m_pQuarter[i]->SetTFP(Vector3(0.0f, -5.0f, 0.0f));
 	}
 	Player::Init();
+	m_pBoss = new Boss();
+	m_pBoss->Init();
 }
 
 void GameStage::Update()
 {
 	Player::Update();
+	m_pBoss->UpdateMain();
 }
 
 void GameStage::Uninit()

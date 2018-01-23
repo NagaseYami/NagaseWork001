@@ -30,6 +30,9 @@ void Input::Init(HINSTANCE hInst, HWND hWnd)
 	MAPKEYBOARD(KeyS);
 	MAPKEYBOARD(KeyA);
 	MAPKEYBOARD(KeyD);
+	MAPKEYBOARD(KeyQ);
+	MAPKEYBOARD(KeyE);
+	MAPKEYBOARD(Key1);
 }
 
 void Input::Update()
