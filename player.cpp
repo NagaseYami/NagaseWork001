@@ -46,6 +46,7 @@ void Player::XModelInit()
 	for (int i = 0; i < 10; i++)
 	{
 		pPart[i]->Init();
+		Texture::AddObjectToRenderTargetTexture(pPart[i], "ShadowMap");
 	}
 }
 

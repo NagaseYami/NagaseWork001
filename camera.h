@@ -1,7 +1,8 @@
 #pragma once
 class Camera {
 public:
-	static void SetMtxProjection(void);
+	static void SetPerspectiveMtxProjection(void);
+	static void SetOrthoMtxProjection(void);
 	static void UpdateMainCamera(void);	
 	virtual void Update() = 0;
 

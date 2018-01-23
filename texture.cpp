@@ -2,6 +2,7 @@
 #include "renderer.h"
 #include "object.h"
 #include "texture.h"
+#include "camera.h"
 
 map<string, Texture*> Texture::m_Manager;
 
@@ -36,14 +37,14 @@ Texture * Texture::LoadTextureFromFile(LPCSTR fileName)
 	
 }
 
-Texture * Texture::CreateEmptyTexture(string name, Vector2 size, bool COLORWRITEENABLE)
+Texture * Texture::CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE type, D3DFORMAT format, bool COLORWRITEENABLE)
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	Texture * Tex = new Texture;
 	D3DXCreateTexture(pDevice, (UINT)size.x, (UINT)size.y, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &Tex->m_Texture);
 	Tex->m_Texture->GetSurfaceLevel(0, &Tex->m_Surface);
-	Tex->isRenderTargetTexture = true;
-	Tex->ColorWriteEnable = COLORWRITEENABLE;
+	Tex->m_Type = type;
+	Tex->m_ColorWriteEnable = COLORWRITEENABLE;
 	m_Manager[name] = Tex;
 	return m_Manager[name];
 }
@@ -54,7 +55,6 @@ void Texture::AddObjectToRenderTargetTexture(Object *obj, string name)
 	if (itr != m_Manager.end())
 	{
 		itr->second->m_RenderTargetObj.push_back(obj);
-		obj->SetRenderTarget(true);
 	}
 	else
 	{
@@ -66,7 +66,7 @@ void Texture::DrawAllRenderTargetTexture()
 {
 	for (auto itr = m_Manager.begin(); itr != m_Manager.end(); itr++)
 	{
-		if (itr->second->isRenderTargetTexture)
+		if (itr->second->m_Type != NORMAL)
 		{
 			DrawRenderTargetTextureRecursion(itr->second);
 		}
@@ -123,7 +123,7 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			for (auto i = 0; i < obj->GetTexture().size(); i++)
 			{
 				//RenderTargetTexture
-				if (obj->GetTexture().at(i)->isRenderTargetTexture)
+				if (obj->GetTexture().at(i)->m_Type != NORMAL)
 				{
 					DrawRenderTargetTextureRecursion(obj->GetTexture().at(i));
 				}
@@ -139,11 +139,21 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 	{
 		Object * obj = *itr;
 
-		if (!tex->ColorWriteEnable)
+		if (!tex->m_ColorWriteEnable)
 		{
 			pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
 		}
-		
+
+		D3DXMATRIX Old_MtxView;
+		pDevice->GetTransform(D3DTS_VIEW, &Old_MtxView);
+		if (tex->m_Type == SHADOWMAP && !obj->isDestory())
+		{
+			Camera::SetOrthoMtxProjection();
+			D3DXMATRIX MtxView;
+			D3DXMatrixLookAtLH(&MtxView, (D3DXVECTOR3*)&Vector3(0.0f,100.0f,-100.0f), (D3DXVECTOR3*)&Vector3(0.0f,0.0f,0.0f), (D3DXVECTOR3*)&Vector3(0.0f,1.0f,0.0f));
+			pDevice->SetTransform(D3DTS_VIEW, &MtxView);
+			obj->SetShader("data/Shader/BasicShader.fx","ZShadowShader_Tech","ZShadowShader_Tech");
+		}
 		if (!obj->isDestory())
 		{
 			obj->Draw();
@@ -153,7 +163,14 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			tex->m_RenderTargetObj.erase(itr);
 		}
 
-		pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
+		if (tex->m_Type == SHADOWMAP && !obj->isDestory())
+		{
+			Camera::SetPerspectiveMtxProjection();
+			pDevice->SetTransform(D3DTS_VIEW, &Old_MtxView);
+			obj->SetShader("data/Shader/BasicShader.fx", "BasicShader_TexterTech", "BasicShader_NoTexterTech");
+		}
+
+		if (!tex->m_ColorWriteEnable)pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 	}
 	Renderer::DrawRenderTargetEnd();
 }

@@ -2,11 +2,13 @@ float4x4 World;
 float4x4 WorldInverse;
 float4x4 WorldViewProj;
 float4x4 WorldInverseTranspose;
+float4x4 LightWVP;
 float3 LightDirW;
 float3 EyePosW;
 float4 Diffuse;
 float4 Specular;
 float4 Ambient;
+float Far = 1000.0f;
 
 texture Tex;
 sampler TexSampler = sampler_state
@@ -35,6 +37,14 @@ sampler ToonSampler = sampler_state
     MagFilter = LINEAR;
 };
 
+texture Depth;
+sampler DepthSampler = sampler_state
+{
+    Texture = (Toon);
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
+};
 //BasicShader*****************************************************************************
 
 struct BASICSHADER_IN_VERTEX
@@ -51,6 +61,8 @@ struct BASICSHADER_OUT_VERTEX
     float2 UV : TEXCOORD0;
     float3 PosW : TEXCOORD1;
     float3 NormalW : TEXCOORD2;
+    float4 LightPosH : TEXCOORD3;
+    float DepthWV : TEXCOORD4;
 };
 
 BASICSHADER_OUT_VERTEX BasicShader_VertexShader_Main(BASICSHADER_IN_VERTEX iv)
@@ -61,6 +73,9 @@ BASICSHADER_OUT_VERTEX BasicShader_VertexShader_Main(BASICSHADER_IN_VERTEX iv)
     ov.PosH = mul(float4(iv.PosL, 1.0f), WorldViewProj);
     ov.NormalW = mul(float4(iv.NormalL, 0.0f), WorldInverseTranspose).xyz;
     ov.UV = iv.UV;
+
+    ov.LightPosH = mul(float4(iv.PosL, 1.0f), LightWVP);
+    ov.DepthWV = ov.PosH / Far;
 
     return ov;
 }
@@ -73,9 +88,16 @@ float4 BasicShader_PixelShader_Texture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR0
     float3 normalizeLightDir = normalize(LightDirW);
     float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
 
+    ip.LightPosH.x = ip.LightPosH.x * 0.5f + 0.5f;
+    ip.LightPosH.y = ip.LightPosH.y * (-0.5f) + 0.5f;
+    ip.LightPosH.xy /= ip.LightPosH.w;
+    float lightDepthWV = tex2D(DepthSampler, ip.LightPosH.xy).r;
+    float shadow = (lightDepthWV ) < ip.DepthWV ? 0.0f : 1.0f;
+
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
     float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
+    diff.rgb *= shadow;
 
     return (diff + spec + ambi) * tex2D(TexSampler, ip.UV);
 }
@@ -87,11 +109,18 @@ float4 BasicShader_PixelShader_NoTexture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR
     float3 normalizeLightDir = normalize(LightDirW);
     float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
 
+    ip.LightPosH.x = ip.LightPosH.x * 0.5f + 0.5f;
+    ip.LightPosH.y = ip.LightPosH.y * (-0.5f) + 0.5f;
+    ip.LightPosH.xy /= ip.LightPosH.w;
+    float lightDepthWV = tex2D(DepthSampler, ip.LightPosH.xy).r;
+    float shadow = (lightDepthWV  ) < ip.DepthWV ? 0.0f : 1.0f;
+
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
     float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
+    diff.rgb *= shadow;
 
-    return (diff + spec + ambi);    
+    return diff + spec + ambi;
 }
 
 technique BasicShader_TexterTech
@@ -353,5 +382,39 @@ technique ToonShader_Model_NoTexterTech
     {
         VertexShader = compile vs_3_0 ToonShader_Model_VertexShader_Main();
         PixelShader = compile ps_3_0 ToonShader_Model_PixelShader_NoTexture_Main();
+    }
+}
+
+//ZShadow*****************************************************
+struct ZSHADOWSHADER_IN_VERTEX
+{
+    float3 PosL : POSITION0;
+};
+
+struct ZSHADOWSHADER_OUT_VERTEX
+{
+    float4 PosH : POSITION0;
+    float DepthWV : TEXCOORD0;
+};
+
+ZSHADOWSHADER_OUT_VERTEX ZShadowShader_VertexShader_Main(ZSHADOWSHADER_IN_VERTEX iv)
+{
+    ZSHADOWSHADER_OUT_VERTEX ov;
+    ov.PosH = mul(float4(iv.PosL, 1.0f), LightWVP);
+    ov.DepthWV = ov.PosH.z / Far;
+    return ov;
+}
+
+float4 ZShadowShader_PixelShader_Main(ZSHADOWSHADER_OUT_VERTEX ip) : COLOR0
+{
+    return ip.DepthWV;
+}
+
+technique ZShadowShader_Tech
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 ZShadowShader_VertexShader_Main();
+        PixelShader = compile ps_3_0 ZShadowShader_PixelShader_Main();
     }
 }

@@ -181,7 +181,7 @@
       <Filter>ソース ファイル\Boss</Filter>
     </ClCompile>
     <ClCompile Include="objectXModel.cpp">
-      <Filter>ソース ファイル\Player</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

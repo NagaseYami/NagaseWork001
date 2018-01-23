@@ -43,12 +43,20 @@ public:
 	void SetRenderTarget(bool value) {
 		m_isRenderTarget = value;
 	}
+	void SetShader(string shaderfilepath, string tech_tex, string tech_notex) {
+		m_ShaderFilePath = shaderfilepath;
+		m_Technique_Tex = tech_tex;
+		m_Technique_NoTex = tech_notex;
+	}
 protected:
 	OBJECT_TAG m_Tag = OBJECT_TAG::UNKNOW_TAG;
 	OBJECT_LAYER m_Layer = OBJECT_LAYER::UNKNOW_LAYER;
 	vector<Texture*> m_TextureList;
 	bool m_isRenderTarget = false;
 	bool m_bDestory = false;
+	string m_ShaderFilePath = "data/Shader/BasicShader.fx";
+	string m_Technique_Tex = "BasicShader_TexterTech";
+	string m_Technique_NoTex = "BasicShader_NoTexterTech";
 private:
 	static vector<Object*> m_pManager;
 };

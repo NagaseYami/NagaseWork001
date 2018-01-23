@@ -6,12 +6,13 @@
 D3DXMATRIX Camera::m_MtxProj;
 Camera * Camera::MainCamera = nullptr;
 
-void Camera::SetMtxProjection(void)
+void Camera::SetPerspectiveMtxProjection(void)
 {
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
 	D3DXMATRIX mtxProj;
+	
 	D3DXMatrixPerspectiveFovLH(
 		&mtxProj,
 		D3DX_PI / 3.0f,							//視野角
@@ -19,7 +20,15 @@ void Camera::SetMtxProjection(void)
 		0.1f,									//near(必ず0.0fより大きい数字を入れてください)
 		1000.0f									//far
 	);
+	
+	pDevice->SetTransform(D3DTS_PROJECTION, &mtxProj);
+}
 
+void Camera::SetOrthoMtxProjection(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
+	D3DXMATRIX mtxProj;
+	D3DXMatrixOrthoLH(&mtxProj, SCREEN_WIDTH, SCREEN_HEIGHT, 0.1f, 1000.0f);
 	pDevice->SetTransform(D3DTS_PROJECTION, &mtxProj);
 }
 

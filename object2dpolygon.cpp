@@ -85,7 +85,15 @@ void Object2DPolygon::Draw()
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 
 	//テクスチャの設定
-	pDevice->SetTexture(0, m_TextureList[m_TexNum]->GetDXTexture());
+	if (m_TextureList.size()>0)
+	{
+		pDevice->SetTexture(0, m_TextureList[m_TexNum]->GetDXTexture());
+	}
+	else
+	{
+		pDevice->SetTexture(0, NULL);
+	}
+	
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -96,9 +104,9 @@ void Object2DPolygon::Draw()
 		0,
 		sizeof(VERTEX_2D));
 
-	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/BasicShader.fx");
+	//LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/BasicShader.fx");
 
-	for (int i = 0; i < m_TextureList.size(); i++)
+	/*for (int i = 0; i < m_TextureList.size(); i++)
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
@@ -116,17 +124,16 @@ void Object2DPolygon::Draw()
 	for (UINT iPass = 0; iPass < numPass; iPass++)
 	{
 		pEffect->BeginPass(iPass);
-		pEffect->SetTexture("Tex", m_TextureList[m_TexNum]->GetDXTexture());
-		pEffect->CommitChanges();
+		if (m_TextureList.size()>0)pEffect->SetTexture("Tex", m_TextureList[m_TexNum]->GetDXTexture());
+		pEffect->CommitChanges();*/
 		//ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,
 			0,
 			2);
 		
-		pEffect->EndPass();
-	}
+	//	pEffect->EndPass();
+	//}
 
-	pEffect->End();
-
+	//pEffect->End();
 	
 }

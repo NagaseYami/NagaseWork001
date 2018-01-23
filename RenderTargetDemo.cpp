@@ -21,7 +21,7 @@ void RenderTargetDemo::Init()
 	Object2DPolygon * Toon = new Object2DPolygon;
 	Toon->Init();
 	Toon->SetSize(Vector2(SCREEN_WIDTH, SCREEN_HEIGHT));
-	Toon->AddTexture(Texture::CreateEmptyTexture("ToonShader"));
+	Toon->AddTexture(Texture::CreateEmptyTexture("ToonShader", Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)));
 
 	ObjectXModel * model = new ObjectXModel("data/Model/AKRhead/01_head.x");
 	Texture::AddObjectToRenderTargetTexture(model, "ToonShader");

@@ -15,7 +15,7 @@ void Blur::Init()
 {	
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
-	Texture::CreateEmptyTexture("Screen");
+	Texture::CreateEmptyTexture("Screen", Vector2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	D3DXCreateTexture(pDevice, SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_Texture);
 	m_Texture->GetSurfaceLevel(0, &m_Surface);
 

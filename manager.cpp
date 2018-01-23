@@ -20,9 +20,11 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	//ImGui
 	ImGui_ImplDX9_Init(hWnd,Renderer::GetDevice());
 	//Camera
-	Camera::SetMtxProjection();
+	Camera::SetPerspectiveMtxProjection();
 	//Input
 	Input::Init(hInst,hWnd);
+	//ShadowMap
+	Texture::CreateEmptyTexture("ShadowMap", Vector2(1280.0f, 720.0f), Texture::SHADOWMAP, D3DFMT_R32F);
 	//Scene
 	GameStage *Scene = new GameStage;
 	Scene::ToNextScene(Scene);

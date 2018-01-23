@@ -37,6 +37,7 @@ void Boss::XModelInit()
 	for (int i = 0; i < 7; i++)
 	{
 		pPart[i]->Init();
+		Texture::AddObjectToRenderTargetTexture(pPart[i], "ShadowMap");
 	}
 }
 

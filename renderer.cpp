@@ -134,7 +134,7 @@ void Renderer::DrawRenderTargetBegin(LPDIRECT3DSURFACE9 surface)
 {
 	m_pD3DDevice->SetRenderTarget(0, surface);
 	// バックバッファ＆Ｚバッファのクリア
-	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 255, 255, 0), 1.0f, 0);
+	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 255, 255, 255), 1.0f, 0);
 	// Direct3Dによる描画の開始
 	m_pD3DDevice->BeginScene();
 }

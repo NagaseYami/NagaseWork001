@@ -259,25 +259,37 @@ void ObjectXModel::Draw()
 		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	}
 
-	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/BasicShader.fx");
+	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile(m_ShaderFilePath);
 
 	for (int i = 0; i < m_TextureList.size(); i++)
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
-			pEffect->SetTechnique("BasicShader_TexterTech");
+			pEffect->SetTechnique(m_Technique_Tex.c_str());
 			break;
 		}
 		else
 		{
-			pEffect->SetTechnique("BasicShader_NoTexterTech");
+			pEffect->SetTechnique(m_Technique_NoTex.c_str());
 		}
 	}
 
 	UINT numPass;
 	pEffect->Begin(&numPass, 0);
 
-	D3DXMATRIX proj, view, WVP,WI,WIT;
+	D3DXMATRIX LightView, LightProj, LightWVP;
+
+	D3DXMatrixIdentity(&LightView);
+	D3DXMatrixIdentity(&LightProj);
+	D3DXMatrixIdentity(&LightWVP);
+
+	D3DXMatrixLookAtLH(&LightView, (D3DXVECTOR3*)&Vector3(0.0f, 100.0f, -100.0f), (D3DXVECTOR3*)&Vector3(0.0f, 0.0f, 0.0f), (D3DXVECTOR3*)&Vector3(0.0f, 1.0f, 0.0f));
+	D3DXMatrixOrthoLH(&LightProj, SCREEN_WIDTH, SCREEN_HEIGHT, 0.1f, 1000.0f);
+	//D3DXMatrixPerspectiveFovLH(&LightProj, D3DX_PI / 3.0f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 1000.0f);
+	LightWVP = m_mtxWorld * LightView * LightProj;
+
+
+	D3DXMATRIX proj, view, WVP, WI, WIT;
 	pDevice->GetTransform(D3DTS_PROJECTION, &proj);
 	pDevice->GetTransform(D3DTS_VIEW, &view);
 	WVP = m_mtxWorld*view*proj;
@@ -299,6 +311,7 @@ void ObjectXModel::Draw()
 			pEffect->SetMatrix("WorldViewProj", &WVP);
 			pEffect->SetMatrix("WorldInverse", &WI);
 			pEffect->SetMatrix("WorldInverseTranspose", &WIT);
+			pEffect->SetMatrix("LightWVP", &LightWVP);
 			pEffect->SetVector("LightDirW", &D3DXVECTOR4(0.0f, -1.0f, 1.0f, 0.0f));
 			pEffect->SetVector("EyePosW", &D3DXVECTOR4(Camera::GetMainCameraEye().x, Camera::GetMainCameraEye().y, Camera::GetMainCameraEye().z, 1.0f));
 			pEffect->SetVector("Diffuse", &dif);
@@ -306,7 +319,8 @@ void ObjectXModel::Draw()
 			pEffect->SetVector("Ambient", &amb);
 			pEffect->SetTexture("Tex", m_TextureList[i]->GetDXTexture());	
 			pEffect->SetTexture("Toon", Texture::LoadTextureFromFile("data/Texture/Toon/gray.png")->GetDXTexture());
-			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());			
+			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());
+			pEffect->SetTexture("Depth", Texture::GetTexture("ShadowMap")->GetDXTexture());
 			pEffect->CommitChanges();			
 			m_pMesh->DrawSubset(i);
 		}
