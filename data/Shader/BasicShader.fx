@@ -8,7 +8,7 @@ float3 EyePosW;
 float4 Diffuse;
 float4 Specular;
 float4 Ambient;
-float Far = 1000.0f;
+float Far;
 
 texture Tex;
 sampler TexSampler = sampler_state
@@ -40,7 +40,7 @@ sampler ToonSampler = sampler_state
 texture Depth;
 sampler DepthSampler = sampler_state
 {
-    Texture = (Toon);
+    Texture = (Depth);
     MipFilter = LINEAR;
     MinFilter = LINEAR;
     MagFilter = LINEAR;
@@ -75,7 +75,7 @@ BASICSHADER_OUT_VERTEX BasicShader_VertexShader_Main(BASICSHADER_IN_VERTEX iv)
     ov.UV = iv.UV;
 
     ov.LightPosH = mul(float4(iv.PosL, 1.0f), LightWVP);
-    ov.DepthWV = ov.PosH / Far;
+    ov.DepthWV = ov.LightPosH.z / ov.LightPosH.w;
 
     return ov;
 }
@@ -92,12 +92,13 @@ float4 BasicShader_PixelShader_Texture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR0
     ip.LightPosH.y = ip.LightPosH.y * (-0.5f) + 0.5f;
     ip.LightPosH.xy /= ip.LightPosH.w;
     float lightDepthWV = tex2D(DepthSampler, ip.LightPosH.xy).r;
-    float shadow = (lightDepthWV ) < ip.DepthWV ? 0.0f : 1.0f;
+    float shadow = (lightDepthWV + 0.008f) < ip.DepthWV ? 0.0f : 1.0f;
 
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
     float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
-    diff.rgb *= shadow;
+    diff.rgb *= shadow + 0.1f;
+    spec.rgb *= shadow;
 
     return (diff + spec + ambi) * tex2D(TexSampler, ip.UV);
 }
@@ -113,12 +114,13 @@ float4 BasicShader_PixelShader_NoTexture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR
     ip.LightPosH.y = ip.LightPosH.y * (-0.5f) + 0.5f;
     ip.LightPosH.xy /= ip.LightPosH.w;
     float lightDepthWV = tex2D(DepthSampler, ip.LightPosH.xy).r;
-    float shadow = (lightDepthWV  ) < ip.DepthWV ? 0.0f : 1.0f;
+    float shadow = (lightDepthWV +0.003) < ip.DepthWV ? 0.0f : 1.0f;
 
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
     float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
-    diff.rgb *= shadow;
+    diff.rgb *= shadow + 0.1f;
+    spec.rgb *= shadow;
 
     return diff + spec + ambi;
 }
@@ -401,13 +403,13 @@ ZSHADOWSHADER_OUT_VERTEX ZShadowShader_VertexShader_Main(ZSHADOWSHADER_IN_VERTEX
 {
     ZSHADOWSHADER_OUT_VERTEX ov;
     ov.PosH = mul(float4(iv.PosL, 1.0f), LightWVP);
-    ov.DepthWV = ov.PosH.z / Far;
+    ov.DepthWV = ov.PosH.z / ov.PosH.w;
     return ov;
 }
 
 float4 ZShadowShader_PixelShader_Main(ZSHADOWSHADER_OUT_VERTEX ip) : COLOR0
 {
-    return ip.DepthWV;
+    return float4(ip.DepthWV, 0.0f, 0.0f, 1.0f);
 }
 
 technique ZShadowShader_Tech

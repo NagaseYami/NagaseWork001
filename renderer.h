@@ -25,7 +25,7 @@ public:
 	static HRESULT Init(HWND hWnd);
 	static void Uninit();
 	static void Update();
-	static void DrawRenderTargetBegin(LPDIRECT3DSURFACE9 surface);
+	static void DrawRenderTargetBegin(LPDIRECT3DSURFACE9 surface, LPDIRECT3DSURFACE9 depthsurface = NULL);
 	static void DrawRenderTargetEnd();
 	static void DrawBackBufferBegin();
 	static void DrawBackBufferEnd();
@@ -34,6 +34,7 @@ public:
 private:
 	static LPDIRECT3D9				m_pD3D;			// Direct3Dオブジェクト
 	static LPDIRECT3DDEVICE9		m_pD3DDevice;	// Deviceオブジェクト(描画に必要)
-	static LPDIRECT3DSURFACE9		m_BackBufferSurface;
+	static LPDIRECT3DSURFACE9		m_pBackBufferSurface;
+	static LPDIRECT3DSURFACE9		m_pBackDepthSurface;
 	
 };

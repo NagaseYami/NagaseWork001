@@ -277,16 +277,9 @@ void ObjectXModel::Draw()
 	UINT numPass;
 	pEffect->Begin(&numPass, 0);
 
-	D3DXMATRIX LightView, LightProj, LightWVP;
-
-	D3DXMatrixIdentity(&LightView);
-	D3DXMatrixIdentity(&LightProj);
+	D3DXMATRIX LightWVP;
 	D3DXMatrixIdentity(&LightWVP);
-
-	D3DXMatrixLookAtLH(&LightView, (D3DXVECTOR3*)&Vector3(0.0f, 100.0f, -100.0f), (D3DXVECTOR3*)&Vector3(0.0f, 0.0f, 0.0f), (D3DXVECTOR3*)&Vector3(0.0f, 1.0f, 0.0f));
-	D3DXMatrixOrthoLH(&LightProj, SCREEN_WIDTH, SCREEN_HEIGHT, 0.1f, 1000.0f);
-	//D3DXMatrixPerspectiveFovLH(&LightProj, D3DX_PI / 3.0f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 1000.0f);
-	LightWVP = m_mtxWorld * LightView * LightProj;
+	LightWVP = m_mtxWorld * Camera::GetShadowView() * Camera::GetShadowProj();
 
 
 	D3DXMATRIX proj, view, WVP, WI, WIT;
@@ -317,6 +310,7 @@ void ObjectXModel::Draw()
 			pEffect->SetVector("Diffuse", &dif);
 			pEffect->SetVector("Specular", &spc);
 			pEffect->SetVector("Ambient", &amb);
+			pEffect->SetFloat("Far", Camera::GetShadowFar());
 			pEffect->SetTexture("Tex", m_TextureList[i]->GetDXTexture());	
 			pEffect->SetTexture("Toon", Texture::LoadTextureFromFile("data/Texture/Toon/gray.png")->GetDXTexture());
 			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());

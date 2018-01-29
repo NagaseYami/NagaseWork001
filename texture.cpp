@@ -41,10 +41,17 @@ Texture * Texture::CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE ty
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	Texture * Tex = new Texture;
-	D3DXCreateTexture(pDevice, (UINT)size.x, (UINT)size.y, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &Tex->m_Texture);
+	D3DXCreateTexture(pDevice, (UINT)size.x, (UINT)size.y, 1, D3DUSAGE_RENDERTARGET, format, D3DPOOL_DEFAULT, &Tex->m_Texture);
 	Tex->m_Texture->GetSurfaceLevel(0, &Tex->m_Surface);
 	Tex->m_Type = type;
 	Tex->m_ColorWriteEnable = COLORWRITEENABLE;
+	if (type == SHADOWMAP)
+	{
+		if (FAILED(pDevice->CreateDepthStencilSurface((UINT)size.x, (UINT)size.y, D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &Tex->m_DepthSurface, NULL)))
+		{
+			MessageBox(NULL, "CreateDepthStencilSurfaceが失敗しました。", "ERROR from texture.cpp", MB_OK | MB_DEFBUTTON1);
+		}
+	}
 	m_Manager[name] = Tex;
 	return m_Manager[name];
 }
@@ -134,7 +141,14 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			tex->m_RenderTargetObj.erase(itr);
 		}
 	}
-	Renderer::DrawRenderTargetBegin(tex->m_Surface);
+	if (tex->m_Type == SHADOWMAP)
+	{
+		Renderer::DrawRenderTargetBegin(tex->m_Surface,tex->m_DepthSurface);
+	}
+	else
+	{
+		Renderer::DrawRenderTargetBegin(tex->m_Surface);
+	}	
 	for (auto itr = tex->m_RenderTargetObj.begin(); itr != tex->m_RenderTargetObj.end(); itr++)
 	{
 		Object * obj = *itr;
@@ -144,14 +158,20 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
 		}
 
+		
 		D3DXMATRIX Old_MtxView;
 		pDevice->GetTransform(D3DTS_VIEW, &Old_MtxView);
+		D3DVIEWPORT9 Old_vp;
+		pDevice->GetViewport(&Old_vp);
+		LPDIRECT3DSURFACE9 Old_DepthSurface;
+		pDevice->GetDepthStencilSurface(&Old_DepthSurface);
+
 		if (tex->m_Type == SHADOWMAP && !obj->isDestory())
 		{
 			Camera::SetOrthoMtxProjection();
-			D3DXMATRIX MtxView;
-			D3DXMatrixLookAtLH(&MtxView, (D3DXVECTOR3*)&Vector3(0.0f,100.0f,-100.0f), (D3DXVECTOR3*)&Vector3(0.0f,0.0f,0.0f), (D3DXVECTOR3*)&Vector3(0.0f,1.0f,0.0f));
-			pDevice->SetTransform(D3DTS_VIEW, &MtxView);
+			Camera::SetShadowCamera();			
+			D3DVIEWPORT9 vp{ 0,0,4096,4096,0.0f,1.0f };
+			pDevice->SetViewport(&vp);
 			obj->SetShader("data/Shader/BasicShader.fx","ZShadowShader_Tech","ZShadowShader_Tech");
 		}
 		if (!obj->isDestory())
@@ -167,6 +187,8 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 		{
 			Camera::SetPerspectiveMtxProjection();
 			pDevice->SetTransform(D3DTS_VIEW, &Old_MtxView);
+			pDevice->SetViewport(&Old_vp);
+			pDevice->SetDepthStencilSurface(Old_DepthSurface);
 			obj->SetShader("data/Shader/BasicShader.fx", "BasicShader_TexterTech", "BasicShader_NoTexterTech");
 		}
 

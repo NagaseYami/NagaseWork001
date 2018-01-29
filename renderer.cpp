@@ -3,7 +3,8 @@
 
 LPDIRECT3D9				Renderer::m_pD3D = NULL;
 LPDIRECT3DDEVICE9		Renderer::m_pD3DDevice = NULL;
-LPDIRECT3DSURFACE9		Renderer::m_BackBufferSurface = NULL;
+LPDIRECT3DSURFACE9		Renderer::m_pBackBufferSurface = NULL;
+LPDIRECT3DSURFACE9		Renderer::m_pBackDepthSurface = NULL;
 
 HRESULT Renderer::Init(HWND hWnd)
 {
@@ -97,7 +98,8 @@ HRESULT Renderer::Init(HWND hWnd)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);		// ２番目のアルファ引数(初期値はD3DTA_CURRENT)
 
 	
-	m_pD3DDevice->GetRenderTarget(0, &m_BackBufferSurface);
+	m_pD3DDevice->GetRenderTarget(0, &m_pBackBufferSurface);
+	m_pD3DDevice->GetDepthStencilSurface(&m_pBackDepthSurface);
 
 	return S_OK;
 }
@@ -118,10 +120,16 @@ void Renderer::Uninit()
 		m_pD3D = NULL;
 	}
 
-	if (m_BackBufferSurface)
+	if (m_pBackBufferSurface)
 	{
-		m_BackBufferSurface->Release();
-		m_BackBufferSurface = NULL;
+		m_pBackBufferSurface->Release();
+		m_pBackBufferSurface = NULL;
+	}
+
+	if (m_pBackDepthSurface)
+	{
+		m_pBackDepthSurface->Release();
+		m_pBackDepthSurface = NULL;
 	}
 }
 
@@ -130,9 +138,17 @@ void Renderer::Update()
 
 }
 
-void Renderer::DrawRenderTargetBegin(LPDIRECT3DSURFACE9 surface)
+void Renderer::DrawRenderTargetBegin(LPDIRECT3DSURFACE9 surface, LPDIRECT3DSURFACE9 depthsurface)
 {
 	m_pD3DDevice->SetRenderTarget(0, surface);
+	if (depthsurface == NULL)
+	{
+		m_pD3DDevice->SetDepthStencilSurface(m_pBackDepthSurface);
+	}
+	else
+	{
+		m_pD3DDevice->SetDepthStencilSurface(depthsurface);
+	}
 	// バックバッファ＆Ｚバッファのクリア
 	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 255, 255, 255), 1.0f, 0);
 	// Direct3Dによる描画の開始
@@ -147,7 +163,8 @@ void Renderer::DrawRenderTargetEnd()
 
 void Renderer::DrawBackBufferBegin()
 {
-	m_pD3DDevice->SetRenderTarget(0, m_BackBufferSurface);
+	m_pD3DDevice->SetRenderTarget(0, m_pBackBufferSurface);
+	m_pD3DDevice->SetDepthStencilSurface(m_pBackDepthSurface);
 	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 0, 0, 255), 1.0f, 0);
 	m_pD3DDevice->BeginScene();
 }

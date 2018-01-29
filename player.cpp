@@ -7,7 +7,7 @@
 #include <fstream>
 
 ObjectXModel * Player::pPart[10];
-Vector3 Player::m_Tra = Vector3(0.0f, 5.8f, -90.0f);
+Vector3 Player::m_Tra = Vector3(0.0f, 5.6f, -90.0f);
 Vector3 Player::m_Dir = Vector3(0.0f, 0.0f, 1.0f);
 map<string, Player::PlayerMotion> Player::m_Motion;
 int Player::m_Timer = 0;

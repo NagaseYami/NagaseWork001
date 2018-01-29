@@ -40,5 +40,6 @@ private:
 	bool m_ColorWriteEnable = true;
 	LPDIRECT3DTEXTURE9 m_Texture = NULL;
 	LPDIRECT3DSURFACE9 m_Surface = NULL;
+	LPDIRECT3DSURFACE9 m_DepthSurface = NULL;
 	list<Object*> m_RenderTargetObj;
 };

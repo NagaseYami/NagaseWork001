@@ -3,6 +3,7 @@ class Camera {
 public:
 	static void SetPerspectiveMtxProjection(void);
 	static void SetOrthoMtxProjection(void);
+	static void SetShadowCamera(void);
 	static void UpdateMainCamera(void);	
 	virtual void Update() = 0;
 
@@ -15,6 +16,15 @@ public:
 	}
 	static float GetMainCameraxz(void) {
 		return MainCamera->xz;
+	}
+	static D3DXMATRIX GetShadowProj(void) {
+		return m_ShadowProj;
+	}
+	static D3DXMATRIX GetShadowView(void) {
+		return m_ShadowView;
+	}
+	static float GetShadowFar(void) {
+		return m_ShadowFar;
 	}
 	//Setter
 	static void SetMainCamera(Camera * camera) {
@@ -40,11 +50,17 @@ protected:
 
 	D3DXMATRIX m_MtxView;
 	Vector3 m_Lookat = Vector3(0.0f, 0.0f, 0.0f);
-	Vector3 m_Eye = Vector3(0.0f, 0.0f, -1000.0f);
+	Vector3 m_Eye = Vector3(0.0f, 0.0f, -200.0f);
 	Vector3 m_VecUp = Vector3(0.0f, 1.0f, 0.0f);
 	float yz = 0.0f;
 	float xz = -D3DX_PI / 2;
 private:
 	static D3DXMATRIX m_MtxProj;
 	static Camera * MainCamera;
+	static Vector3 m_ShadowLookat;
+	static Vector3 m_ShadowEye;
+	static Vector3 m_ShadowVecUp;
+	static D3DXMATRIX m_ShadowProj;
+	static D3DXMATRIX m_ShadowView;
+	static float m_ShadowFar;
 };
