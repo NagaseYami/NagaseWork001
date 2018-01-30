@@ -1,11 +1,13 @@
 #pragma once
-class Light{
+class Light
+{
 public:
-	static int CreateLight(D3DLIGHT9 dxlight, int number = 99);
-	static void ReleaseLight(int number);
-
+	Light();
+	static Vector3 GetSun() {
+		return m_Sun;
+	}
 private:
-	static Light * m_Manager[10];
-	D3DLIGHT9 m_LightDX;
-	int m_ID;
+	static Vector3 m_Sun;
+	Vector3 m_Tra = Vector3(0.0f, 0.0f, 0.0f);
+	Vector3 m_Color = Vector3(0.0f, 0.0f, 0.0f);
 };

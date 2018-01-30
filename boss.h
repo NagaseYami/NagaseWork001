@@ -13,6 +13,7 @@ protected:
 	void ParentInit();
 	void TransformInit();
 	void MotionInit();
+	void PointLightInit();
 	void LoadMotionFromFile(string filename, bool canbebreak);
 	void ChangeMotion(string motionname);
 

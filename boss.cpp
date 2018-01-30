@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "objectXModel.h"
 #include "player.h"
+#include "light.h"
 #include "boss.h"
 #include <fstream>
 
@@ -69,6 +70,10 @@ void Boss::MotionInit()
 {
 	LoadMotionFromFile("data/Model/Boss/Neutral.txt", true);
 	LoadMotionFromFile("data/Model/Boss/Attack1.txt", false);
+}
+
+void Boss::PointLightInit()
+{
 }
 
 void Boss::LoadMotionFromFile(string filename, bool canbebreak)

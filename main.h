@@ -4,6 +4,7 @@
 //*****************************************************************************
 #define SCREEN_WIDTH	(1280)		// ウインドウの幅
 #define SCREEN_HEIGHT	(720)		// ウインドウの高さ
+#define SHADOWMAP_SIZE	(2048)
 #define SAFE_RELEASE(x) { if(x) { (x) -> Release(); (x) = NULL; } } //セーフリリースマクロ
 #define LOG(...) {char buf[256]; sprintf(buf, __VA_ARGS__); OutputDebugStringA(buf); }
 

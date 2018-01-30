@@ -170,7 +170,7 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 		{
 			Camera::SetOrthoMtxProjection();
 			Camera::SetShadowCamera();			
-			D3DVIEWPORT9 vp{ 0,0,4096,4096,0.0f,1.0f };
+			D3DVIEWPORT9 vp{ 0,0,SHADOWMAP_SIZE,SHADOWMAP_SIZE,0.0f,1.0f };
 			pDevice->SetViewport(&vp);
 			obj->SetShader("data/Shader/BasicShader.fx","ZShadowShader_Tech","ZShadowShader_Tech");
 		}

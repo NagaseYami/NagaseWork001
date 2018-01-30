@@ -55,12 +55,6 @@
     <Filter Include="ソース ファイル\Camera">
       <UniqueIdentifier>{54d0a1cc-20b3-4e1c-9ff0-62412af80ae2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Light">
-      <UniqueIdentifier>{97abd5e3-67b2-49a8-9ef4-084d629939ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Light">
-      <UniqueIdentifier>{a3356c14-b189-4a01-9f7c-ae64f10c6f87}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Shader">
       <UniqueIdentifier>{eab877dd-d7b6-44b8-b347-c3ed3561057a}</UniqueIdentifier>
     </Filter>
@@ -138,9 +132,6 @@
     <ClCompile Include="objectstencilshadow.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="light.cpp">
-      <Filter>ソース ファイル\Light</Filter>
-    </ClCompile>
     <ClCompile Include="blur.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
@@ -182,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="objectXModel.cpp">
       <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,9 +239,6 @@
     <ClInclude Include="objectstencilshadow.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>ヘッダー ファイル\Light</Filter>
-    </ClInclude>
     <ClInclude Include="blur.h">
       <Filter>ヘッダー ファイル\Renderer</Filter>
     </ClInclude>
@@ -292,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="boss.h">
       <Filter>ヘッダー ファイル\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>ヘッダー ファイル\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

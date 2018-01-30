@@ -5,6 +5,7 @@
 #include "objectXModel.h"
 #include "texture.h"
 #include "effect.h"
+#include "light.h"
 
 ObjectXModel::ObjectXModel(LPCSTR filepath)
 {
@@ -305,7 +306,7 @@ void ObjectXModel::Draw()
 			pEffect->SetMatrix("WorldInverse", &WI);
 			pEffect->SetMatrix("WorldInverseTranspose", &WIT);
 			pEffect->SetMatrix("LightWVP", &LightWVP);
-			pEffect->SetVector("LightDirW", &D3DXVECTOR4(0.0f, -1.0f, 1.0f, 0.0f));
+			pEffect->SetVector("LightDirW", &D3DXVECTOR4(Light::GetSun().x, Light::GetSun().y, Light::GetSun().z, 0.0f));
 			pEffect->SetVector("EyePosW", &D3DXVECTOR4(Camera::GetMainCameraEye().x, Camera::GetMainCameraEye().y, Camera::GetMainCameraEye().z, 1.0f));
 			pEffect->SetVector("Diffuse", &dif);
 			pEffect->SetVector("Specular", &spc);

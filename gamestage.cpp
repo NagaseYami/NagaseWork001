@@ -25,11 +25,6 @@ void GameStage::Init()
 	Player::Init();
 	m_pBoss = new Boss();
 	m_pBoss->Init();
-
-	Object2DPolygon * polygon2d = new Object2DPolygon();
-	polygon2d->SetSize(Vector2(640.0f, 360.0f));
-	polygon2d->AddTexture(Texture::GetTexture("ShadowMap"));
-	polygon2d->Init();
 }
 
 void GameStage::Update()

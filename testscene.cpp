@@ -8,7 +8,6 @@
 #include "objectparticle.h"
 #include "objectstencilshadow.h"
 #include "camera.h"
-#include "light.h"
 #include "includeallcameras.h"
 #include "scene.h"
 #include "includeallscenes.h"
@@ -20,7 +19,7 @@ void TestScene::Init()
 	light.Type = D3DLIGHT_DIRECTIONAL;
 	light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	light.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
-	Light::CreateLight(light);
+	//Light::CreateLight(light);
 
 	//ObjectParticle * particle = new ObjectParticle;
 	//particle->AddTexture(Texture::LoadTextureFromFile("data/Texture/Test/test1.png"));

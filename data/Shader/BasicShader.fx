@@ -92,20 +92,43 @@ float4 BasicShader_PixelShader_Texture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR0
     ip.LightPosH.y = ip.LightPosH.y * (-0.5f) + 0.5f;
     ip.LightPosH.xy /= ip.LightPosH.w;
     float lightDepthWV = tex2D(DepthSampler, ip.LightPosH.xy).r;
-    float shadow = (lightDepthWV + 0.008f) < ip.DepthWV ? 0.0f : 1.0f;
+    float shadow = (lightDepthWV + 0.008f) < ip.DepthWV && dot(ip.NormalW, -normalizeLightDir) >= 0.145f ? 0.0f : 1.0f;
 
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
     float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
-    diff.rgb *= shadow + 0.1f;
+    diff.rgb *= min(shadow + 0.1f, 1.0f);
     spec.rgb *= shadow;
 
-    return (diff + spec + ambi) * tex2D(TexSampler, ip.UV);
+    float3 PointLightW[4];
+    float3 PointLightColor[4];
+    float4 LightColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    PointLightW[0] = float3(30.0f, 3.0f, 0.0f);
+    PointLightW[1] = float3(-30.0f, 3.0f, 0.0f);
+    PointLightW[2] = float3(0.0f, 3.0f, 30.0f);
+    PointLightW[3] = float3(0.0f, 3.0f, -30.0f);
+
+    PointLightColor[0] = float3(1.0f, 1.0f, 0.0f);
+    PointLightColor[1] = float3(0.0f, 1.0f, 1.0f);
+    PointLightColor[2] = float3(1.0f, 0.0f, 1.0f);
+    PointLightColor[3] = float3(0.0f, 1.0f, 0.0f);
+
+    for (int i = 0; i < 4; i++)
+    {
+        float d = distance(ip.PosW, PointLightW[i]) / 10.0f;
+        float3 vecPointLightW = normalize(ip.PosW - PointLightW[i]);
+        float l = max(dot(ip.NormalW, -vecPointLightW), 0.0f);
+        LightColor += float4(PointLightColor[i] * l / d, 0.0f);
+    }
+
+    return (diff + spec + ambi + LightColor) * tex2D(TexSampler, ip.UV);
 }
 
 float4 BasicShader_PixelShader_NoTexture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR0
 {
     ip.NormalW = normalize(ip.NormalW);
+
     float3 PostoCamera = normalize(EyePosW - ip.PosW);
     float3 normalizeLightDir = normalize(LightDirW);
     float3 reflectLight = normalize(reflect(normalizeLightDir, ip.NormalW));
@@ -114,15 +137,37 @@ float4 BasicShader_PixelShader_NoTexture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR
     ip.LightPosH.y = ip.LightPosH.y * (-0.5f) + 0.5f;
     ip.LightPosH.xy /= ip.LightPosH.w;
     float lightDepthWV = tex2D(DepthSampler, ip.LightPosH.xy).r;
-    float shadow = (lightDepthWV +0.003) < ip.DepthWV ? 0.0f : 1.0f;
+    float shadow = (lightDepthWV + 0.008f) < ip.DepthWV && dot(ip.NormalW, -normalizeLightDir) >= 0.145f ? 0.0f : 1.0f;
 
     float4 diff = Diffuse * (dot(ip.NormalW, -normalizeLightDir) / 2 + 0.5f);
     float4 spec = Specular * pow(max(dot(reflectLight, PostoCamera), 0.0f), 100);
     float4 ambi = Ambient;
-    diff.rgb *= shadow + 0.1f;
+    diff.rgb *= min(shadow + 0.1f, 1.0f);
     spec.rgb *= shadow;
 
-    return diff + spec + ambi;
+    float3 PointLightW[4];
+    float3 PointLightColor[4];
+    float4 LightColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    PointLightW[0] = float3(30.0f, 3.0f, 0.0f);
+    PointLightW[1] = float3(-30.0f, 3.0f, 0.0f);
+    PointLightW[2] = float3(0.0f, 3.0f, 30.0f);
+    PointLightW[3] = float3(0.0f, 3.0f, -30.0f);
+
+    PointLightColor[0] = float3(1.0f, 1.0f, 0.0f);
+    PointLightColor[1] = float3(0.0f, 1.0f, 1.0f);
+    PointLightColor[2] = float3(1.0f, 0.0f, 1.0f);
+    PointLightColor[3] = float3(0.0f, 1.0f, 0.0f);
+
+    for (int i = 0; i < 4; i++)
+    {
+        float d = distance(ip.PosW, PointLightW[i])/10.0f;
+        float3 vecPointLightW = normalize(ip.PosW - PointLightW[i]);
+        float l = max(dot(ip.NormalW, -vecPointLightW), 0.0f);
+        LightColor += float4(PointLightColor[i] * l , 0.0f);
+    }
+
+    return diff + spec + ambi + LightColor;
 }
 
 technique BasicShader_TexterTech
