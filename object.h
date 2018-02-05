@@ -43,10 +43,13 @@ public:
 	void SetRenderTarget(bool value) {
 		m_isRenderTarget = value;
 	}
-	void SetShader(string shaderfilepath, string tech_tex, string tech_notex) {
+	void SetShader(string shaderfilepath, string tech_tex, string tech_notex ) {
 		m_ShaderFilePath = shaderfilepath;
 		m_Technique_Tex = tech_tex;
 		m_Technique_NoTex = tech_notex;
+	}
+	void SetVariableToShaderFn(function<void(LPD3DXEFFECT)> fn) {
+		m_VariableToShaderFn = fn;
 	}
 protected:
 	OBJECT_TAG m_Tag = OBJECT_TAG::UNKNOW_TAG;
@@ -57,6 +60,7 @@ protected:
 	string m_ShaderFilePath = "data/Shader/BasicShader.fx";
 	string m_Technique_Tex = "BasicShader_TexterTech";
 	string m_Technique_NoTex = "BasicShader_NoTexterTech";
+	function<void(LPD3DXEFFECT)> m_VariableToShaderFn = nullptr;
 private:
 	static vector<Object*> m_pManager;
 };

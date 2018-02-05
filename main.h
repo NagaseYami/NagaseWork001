@@ -28,6 +28,5 @@
 #include "input.h"
 #include "imgui.h"
 
-
 using namespace Kuma;
 using namespace std;

@@ -131,19 +131,19 @@ void Player::LoadMotionFromFile(string filename ,bool canbebreak)
 
 		//TRA ROT FRAME
 		getline(ifs, str);
-		float f1 = atof(str.c_str());
+		float f1 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f2 = atof(str.c_str());
+		float f2 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f3 = atof(str.c_str());
+		float f3 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f4 = atof(str.c_str());
+		float f4 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f5 = atof(str.c_str());
+		float f5 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f6 = atof(str.c_str());
+		float f6 = (float)atof(str.c_str());
 		getline(ifs, str);
-		int frame = atof(str.c_str());
+		int frame = atoi(str.c_str());
 
 		KEY key = { frame,Vector3(f1,f2,f3),Vector3(f4,f5,f6),Vector3(1.0f,1.0f,1.0f) };
 

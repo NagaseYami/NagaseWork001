@@ -1,4 +1,5 @@
 #pragma once
+#include "light.h"
 class Boss {
 public:
 	void Init();
@@ -14,10 +15,12 @@ protected:
 	void TransformInit();
 	void MotionInit();
 	void PointLightInit();
+	void ShaderInit();
 	void LoadMotionFromFile(string filename, bool canbebreak);
 	void ChangeMotion(string motionname);
 
 	void MotionUpdate();
+	static void UpdateShaderVariable(LPD3DXEFFECT pEffect);
 	void TimeUpdate(int limit);
 	void SetModelTimer(int time);
 
@@ -27,4 +30,5 @@ protected:
 	string m_PlayingMotion = "Null";
 	int m_Timer = 0;
 	bool m_EndofMotion = true;
+	static Light m_Light[4];
 };

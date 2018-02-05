@@ -8,7 +8,9 @@ float3 EyePosW;
 float4 Diffuse;
 float4 Specular;
 float4 Ambient;
-float Far;
+float3 PointLightW[4];
+float3 PointLightColor[4];
+float PointLightAttenuation[4];
 
 texture Tex;
 sampler TexSampler = sampler_state
@@ -100,23 +102,11 @@ float4 BasicShader_PixelShader_Texture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR0
     diff.rgb *= min(shadow + 0.1f, 1.0f);
     spec.rgb *= shadow;
 
-    float3 PointLightW[4];
-    float3 PointLightColor[4];
     float4 LightColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-
-    PointLightW[0] = float3(30.0f, 3.0f, 0.0f);
-    PointLightW[1] = float3(-30.0f, 3.0f, 0.0f);
-    PointLightW[2] = float3(0.0f, 3.0f, 30.0f);
-    PointLightW[3] = float3(0.0f, 3.0f, -30.0f);
-
-    PointLightColor[0] = float3(1.0f, 1.0f, 0.0f);
-    PointLightColor[1] = float3(0.0f, 1.0f, 1.0f);
-    PointLightColor[2] = float3(1.0f, 0.0f, 1.0f);
-    PointLightColor[3] = float3(0.0f, 1.0f, 0.0f);
 
     for (int i = 0; i < 4; i++)
     {
-        float d = distance(ip.PosW, PointLightW[i]) / 10.0f;
+        float d = distance(ip.PosW, PointLightW[i]) / PointLightAttenuation[i];
         float3 vecPointLightW = normalize(ip.PosW - PointLightW[i]);
         float l = max(dot(ip.NormalW, -vecPointLightW), 0.0f);
         LightColor += float4(PointLightColor[i] * l / d, 0.0f);
@@ -145,26 +135,14 @@ float4 BasicShader_PixelShader_NoTexture_Main(BASICSHADER_OUT_VERTEX ip) : COLOR
     diff.rgb *= min(shadow + 0.1f, 1.0f);
     spec.rgb *= shadow;
 
-    float3 PointLightW[4];
-    float3 PointLightColor[4];
     float4 LightColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-
-    PointLightW[0] = float3(30.0f, 3.0f, 0.0f);
-    PointLightW[1] = float3(-30.0f, 3.0f, 0.0f);
-    PointLightW[2] = float3(0.0f, 3.0f, 30.0f);
-    PointLightW[3] = float3(0.0f, 3.0f, -30.0f);
-
-    PointLightColor[0] = float3(1.0f, 1.0f, 0.0f);
-    PointLightColor[1] = float3(0.0f, 1.0f, 1.0f);
-    PointLightColor[2] = float3(1.0f, 0.0f, 1.0f);
-    PointLightColor[3] = float3(0.0f, 1.0f, 0.0f);
 
     for (int i = 0; i < 4; i++)
     {
-        float d = distance(ip.PosW, PointLightW[i])/10.0f;
+        float d = distance(ip.PosW, PointLightW[i]) / PointLightAttenuation[i];
         float3 vecPointLightW = normalize(ip.PosW - PointLightW[i]);
         float l = max(dot(ip.NormalW, -vecPointLightW), 0.0f);
-        LightColor += float4(PointLightColor[i] * l , 0.0f);
+        LightColor += float4(PointLightColor[i] * l / d, 0.0f);
     }
 
     return diff + spec + ambi + LightColor;

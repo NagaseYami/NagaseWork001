@@ -179,9 +179,9 @@ void ObjectXModel::LateUpdate()
 					}
 				}
 			}
-			m_Rot = m_Old_Rot + (m_Target_Rot - m_Old_Rot) / 6.0f*m_FrameTimer;
-			m_Tra = m_Old_Tra + (m_Target_Tra - m_Old_Tra) / 6.0f*m_FrameTimer;
-			m_Sca = m_Old_Sca + (m_Target_Sca - m_Old_Sca) / 6.0f*m_FrameTimer;
+			m_Rot = m_Old_Rot + (m_Target_Rot - m_Old_Rot) / 6.0f*(float)m_FrameTimer;
+			m_Tra = m_Old_Tra + (m_Target_Tra - m_Old_Tra) / 6.0f*(float)m_FrameTimer;
+			m_Sca = m_Old_Sca + (m_Target_Sca - m_Old_Sca) / 6.0f*(float)m_FrameTimer;
 			return;
 		}
 		else if (m_KeyList.size() == 1)
@@ -243,7 +243,6 @@ void ObjectXModel::Draw()
 	D3DXMatrixRotationYawPitchRoll(&m_mtxRot, m_Rot.y, m_Rot.x, m_Rot.z);
 	D3DXMATRIX mtxRFP;
 	D3DXMatrixRotationYawPitchRoll(&mtxRFP, m_RFP.y, m_RFP.x, m_RFP.z);
-	//D3DXMatrixRotationQuaternion(&m_mtxRot, &m_Quaternion);
 	D3DXMatrixTranslation(&m_mtxTra, m_Tra.x + m_TFP.x, m_Tra.y + m_TFP.y, m_Tra.z + m_TFP.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxSca);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxRot);
@@ -254,7 +253,6 @@ void ObjectXModel::Draw()
 		D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_pParent->GetWorldMtx());
 	}
 
-	//pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);	
 	if (!m_bLight)
 	{
 		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -262,7 +260,7 @@ void ObjectXModel::Draw()
 
 	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile(m_ShaderFilePath);
 
-	for (int i = 0; i < m_TextureList.size(); i++)
+	for (unsigned int i = 0; i < m_TextureList.size(); i++)
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
@@ -282,25 +280,26 @@ void ObjectXModel::Draw()
 	D3DXMatrixIdentity(&LightWVP);
 	LightWVP = m_mtxWorld * Camera::GetShadowView() * Camera::GetShadowProj();
 
-
 	D3DXMATRIX proj, view, WVP, WI, WIT;
 	pDevice->GetTransform(D3DTS_PROJECTION, &proj);
 	pDevice->GetTransform(D3DTS_VIEW, &view);
 	WVP = m_mtxWorld*view*proj;
 	D3DXMatrixInverse(&WI, nullptr, &m_mtxWorld);
 	D3DXMatrixTranspose(&WIT, &WI);
+
+	D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	D3DXVECTOR4 spc = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	D3DXVECTOR4 amb = D3DXVECTOR4(0.0f, 0.0f, 0.0f, 1.0f);
+	//D3DXVECTOR4 dif = D3DXVECTOR4(pMat[i].MatD3D.Diffuse.r, pMat[i].MatD3D.Diffuse.g, pMat[i].MatD3D.Diffuse.b, pMat[i].MatD3D.Diffuse.a);			
+	//D3DXVECTOR4 spc = D3DXVECTOR4(pMat[i].MatD3D.Specular.r, pMat[i].MatD3D.Specular.g, pMat[i].MatD3D.Specular.b, pMat[i].MatD3D.Specular.a);
+	//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
+
 	for (UINT iPass = 0; iPass < numPass; iPass++)
 	{
 		pEffect->BeginPass(iPass);
 		for (int i = 0; i < (int)m_nNumMat; i++) {
 			D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_BuffMat->GetBufferPointer();
-			pDevice->SetMaterial(&pMat->MatD3D);			
-			//D3DXVECTOR4 dif = D3DXVECTOR4(pMat[i].MatD3D.Diffuse.r, pMat[i].MatD3D.Diffuse.g, pMat[i].MatD3D.Diffuse.b, pMat[i].MatD3D.Diffuse.a);			
-			//D3DXVECTOR4 spc = D3DXVECTOR4(pMat[i].MatD3D.Specular.r, pMat[i].MatD3D.Specular.g, pMat[i].MatD3D.Specular.b, pMat[i].MatD3D.Specular.a);
-			//D3DXVECTOR4 amb = D3DXVECTOR4(pMat[i].MatD3D.Ambient.r, pMat[i].MatD3D.Ambient.g, pMat[i].MatD3D.Ambient.b, pMat[i].MatD3D.Ambient.a);
-			D3DXVECTOR4 dif = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-			D3DXVECTOR4 spc = D3DXVECTOR4(1.0f,1.0f,1.0f,1.0f);
-			D3DXVECTOR4 amb = D3DXVECTOR4(0.0f, 0.0f, 0.0f,1.0f);
+			pDevice->SetMaterial(&pMat->MatD3D);						
 			pEffect->SetMatrix("World", &m_mtxWorld);
 			pEffect->SetMatrix("WorldViewProj", &WVP);
 			pEffect->SetMatrix("WorldInverse", &WI);
@@ -311,21 +310,15 @@ void ObjectXModel::Draw()
 			pEffect->SetVector("Diffuse", &dif);
 			pEffect->SetVector("Specular", &spc);
 			pEffect->SetVector("Ambient", &amb);
-			pEffect->SetFloat("Far", Camera::GetShadowFar());
 			pEffect->SetTexture("Tex", m_TextureList[i]->GetDXTexture());	
-			pEffect->SetTexture("Toon", Texture::LoadTextureFromFile("data/Texture/Toon/gray.png")->GetDXTexture());
-			pEffect->SetTexture("Bump", Texture::LoadTextureFromFile("data/Model/Sphere/NormalMap.dds")->GetDXTexture());
 			pEffect->SetTexture("Depth", Texture::GetTexture("ShadowMap")->GetDXTexture());
+			if(m_VariableToShaderFn)m_VariableToShaderFn(pEffect);			
 			pEffect->CommitChanges();			
 			m_pMesh->DrawSubset(i);
 		}
 		pEffect->EndPass();
 	}
-
 	pEffect->End();
-
-	
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 bool operator<(const KEY & left, const KEY & right)

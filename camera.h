@@ -28,6 +28,11 @@ public:
 	}
 	//Setter
 	static void SetMainCamera(Camera * camera) {
+		if (MainCamera)
+		{
+			delete MainCamera;
+			MainCamera = nullptr;
+		}
 		MainCamera = camera;
 	}
 	static void SetmainCameraxz(float value) {

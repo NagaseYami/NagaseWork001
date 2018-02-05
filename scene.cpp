@@ -23,6 +23,8 @@ void Scene::ToNextScene(Scene * nextscene)
 	if (ThisScene)
 	{
 		ThisScene->Uninit();
+		delete ThisScene;
+		ThisScene = nullptr;
 	}	
 	ThisScene = nextscene;
 	ThisScene->Init();

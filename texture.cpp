@@ -127,7 +127,7 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 		if (!obj->isDestory())
 		{
 			//RenderTargetObj's tex
-			for (auto i = 0; i < obj->GetTexture().size(); i++)
+			for (unsigned int i = 0; i < obj->GetTexture().size(); i++)
 			{
 				//RenderTargetTexture
 				if (obj->GetTexture().at(i)->m_Type != NORMAL)

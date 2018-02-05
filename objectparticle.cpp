@@ -35,7 +35,7 @@ void ObjectParticle::Init()
 
 	pDevice->CreateVertexDeclaration(elements,&m_pVertexDeclaration);	
 	
-	for (int i = 0; i < m_Dir.size(); i++)
+	for (unsigned int i = 0; i < m_Dir.size(); i++)
 	{
 		m_Dir[i] = Vector3(float(rand() % 1000)*0.001f - 0.5f, float(rand() % 1000)*0.001f, float(rand() % 1000)*0.001f - 0.5f).Normalize()*float(rand() % 10000)*0.0001f;
 		m_Color[i] = Vector4(float(rand() % 255), float(rand() % 255), float(rand() % 255), 255);
@@ -43,7 +43,7 @@ void ObjectParticle::Init()
 
 	VERTEX_POINT* pVtx;
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-	for (int i = 0; i < m_Pos.size(); i++)
+	for (unsigned int i = 0; i < m_Pos.size(); i++)
 	{
 		pVtx[i].pos = Vector3(m_Pos[i].x, m_Pos[i].y, m_Pos[i].z);
 		pVtx[i].color = D3DCOLOR_ARGB((int)m_Color[i].w, (int)m_Color[i].x, (int)m_Color[i].y, (int)m_Color[i].z);
@@ -126,7 +126,7 @@ void ObjectParticle::Draw()
 
 	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/ParticleShader.fx");
 
-	for (int i = 0; i < m_TextureList.size(); i++)
+	for (unsigned int i = 0; i < m_TextureList.size(); i++)
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{

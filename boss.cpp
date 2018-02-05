@@ -3,9 +3,10 @@
 #include "texture.h"
 #include "objectXModel.h"
 #include "player.h"
-#include "light.h"
 #include "boss.h"
 #include <fstream>
+
+Light Boss::m_Light[4];
 
 void Boss::Init()
 {
@@ -13,6 +14,8 @@ void Boss::Init()
 	ParentInit();
 	TransformInit();
 	MotionInit();
+	PointLightInit();
+	ShaderInit();
 	ChangeMotion("Attack1");
 	m_Dir = Vector3(0.0f, 0.0f, -1.0f);
 	pPart[0]->SetRFP(Vector3(0.0f, 0.0f, 0.0f));
@@ -74,6 +77,23 @@ void Boss::MotionInit()
 
 void Boss::PointLightInit()
 {
+	m_Light[0].SetColor(Vector3(1.0f, 0.0f, 0.0f));
+	m_Light[1].SetColor(Vector3(0.0f, 1.0f, 0.0f));
+	m_Light[2].SetColor(Vector3(0.0f, 0.0f, 1.0f));
+	m_Light[3].SetColor(Vector3(1.0f, 1.0f, 0.0f));
+
+	m_Light[0].SetTra(Vector3(30.0f, 5.0f, 0.0f));
+	m_Light[1].SetTra(Vector3(-30.0f, 5.0f, 0.0f));
+	m_Light[2].SetTra(Vector3(0.0f, 5.0f, 30.0f));
+	m_Light[3].SetTra(Vector3(0.0f, 5.0f, -30.0f));
+}
+
+void Boss::ShaderInit()
+{
+	for (auto i = 0; i < 7; i++)
+	{
+		pPart[i]->SetVariableToShaderFn(UpdateShaderVariable);
+	}
 }
 
 void Boss::LoadMotionFromFile(string filename, bool canbebreak)
@@ -111,19 +131,19 @@ void Boss::LoadMotionFromFile(string filename, bool canbebreak)
 
 		//TRA ROT FRAME
 		getline(ifs, str);
-		float f1 = atof(str.c_str());
+		float f1 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f2 = atof(str.c_str());
+		float f2 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f3 = atof(str.c_str());
+		float f3 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f4 = atof(str.c_str());
+		float f4 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f5 = atof(str.c_str());
+		float f5 = (float)atof(str.c_str());
 		getline(ifs, str);
-		float f6 = atof(str.c_str());
+		float f6 = (float)atof(str.c_str());
 		getline(ifs, str);
-		int frame = atof(str.c_str());
+		int frame = atoi(str.c_str());
 
 		KEY key = { frame,Vector3(f1,f2,f3),Vector3(f4,f5,f6),Vector3(1.0f,1.0f,1.0f) };
 
@@ -163,6 +183,18 @@ void Boss::ChangeMotion(string motionname)
 
 void Boss::MotionUpdate()
 {
+}
+
+void Boss::UpdateShaderVariable(LPD3DXEFFECT pEffect)
+{
+	D3DXVECTOR3 PointLightPos[4] = { m_Light[0].GetTra() ,m_Light[1].GetTra() ,m_Light[2].GetTra() ,m_Light[3].GetTra() };
+	pEffect->SetValue("PointLightW", (D3DXVECTOR3*)&PointLightPos[0], sizeof(D3DXVECTOR3) * 4);
+
+	D3DXVECTOR3 PointLightColor[4] = { m_Light[0].GetColor() ,m_Light[1].GetColor() ,m_Light[2].GetColor() ,m_Light[3].GetColor() };
+	pEffect->SetValue("PointLightColor", (D3DXVECTOR3*)&PointLightColor[0], sizeof(D3DXVECTOR3) * 4);
+
+	float  PointLightAttenuation[4] = { m_Light[0].GetAttenuation() ,m_Light[1].GetAttenuation() ,m_Light[2].GetAttenuation() ,m_Light[3].GetAttenuation() };
+	pEffect->SetValue("PointLightAttenuation", &PointLightAttenuation[0], sizeof(float) * 4);
 }
 
 void Boss::TimeUpdate(int limit)
