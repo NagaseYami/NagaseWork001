@@ -25,18 +25,18 @@ texture Bump;
 sampler BumpSampler = sampler_state
 {
     Texture = (Bump);
-    MipFilter = LINEAR;
-    MinFilter = LINEAR;
-    MagFilter = LINEAR;
+    MipFilter = NONE;
+    MinFilter = POINT;
+    MagFilter = POINT;
 };
 
 texture Toon;
 sampler ToonSampler = sampler_state
 {
     Texture = (Toon);
-    MipFilter = LINEAR;
-    MinFilter = LINEAR;
-    MagFilter = LINEAR;
+    MipFilter = NONE;
+    MinFilter = POINT;
+    MagFilter = POINT;
 };
 
 texture Depth;

@@ -59,7 +59,7 @@ void Object::DrawAllBackBufferObject()
 	for (auto itr = copy.begin(); itr != copy.end(); itr++)
 	{
 		Object * pObj = *itr;
-		if (!pObj->m_isRenderTarget && !pObj->m_bDestory)
+		if (!pObj->m_DontDrawThisOnBackBuffer && !pObj->m_bDestory)
 		{
 			pObj->Draw();
 		}		

@@ -26,7 +26,7 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	//ShadowMap
 	Texture::CreateEmptyTexture("ShadowMap", Vector2(SHADOWMAP_SIZE, SHADOWMAP_SIZE), Texture::SHADOWMAP, D3DFMT_R32F);
 	//Scene
-	GameStage *Scene = new GameStage;
+	TestScene2 *Scene = new TestScene2;
 	Scene::ToNextScene(Scene);
 
 }

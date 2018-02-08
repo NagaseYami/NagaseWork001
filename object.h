@@ -40,8 +40,8 @@ public:
 		return m_TextureList;
 	}
 	//Setter
-	void SetRenderTarget(bool value) {
-		m_isRenderTarget = value;
+	void DontDrawThisOnBackBuffer(bool value) {
+		m_DontDrawThisOnBackBuffer = value;
 	}
 	void SetShader(string shaderfilepath, string tech_tex, string tech_notex ) {
 		m_ShaderFilePath = shaderfilepath;
@@ -55,7 +55,7 @@ protected:
 	OBJECT_TAG m_Tag = OBJECT_TAG::UNKNOW_TAG;
 	OBJECT_LAYER m_Layer = OBJECT_LAYER::UNKNOW_LAYER;
 	vector<Texture*> m_TextureList;
-	bool m_isRenderTarget = false;
+	bool m_DontDrawThisOnBackBuffer = false;
 	bool m_bDestory = false;
 	string m_ShaderFilePath = "data/Shader/BasicShader.fx";
 	string m_Technique_Tex = "BasicShader_TexterTech";

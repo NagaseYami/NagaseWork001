@@ -25,7 +25,7 @@ void RenderTargetDemo::Init()
 
 	ObjectXModel * model = new ObjectXModel("data/Model/AKRhead/01_head.x");
 	Texture::AddObjectToRenderTargetTexture(model, "ToonShader");
-	model->SetRenderTarget(false);
+	model->DontDrawThisOnBackBuffer(false);
 	model->SetSFP(Vector3(0.1f, 0.1f, 0.1f));
 	model->Init();
 }

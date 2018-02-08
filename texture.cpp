@@ -52,6 +52,10 @@ Texture * Texture::CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE ty
 			MessageBox(NULL, "CreateDepthStencilSurfaceが失敗しました。", "ERROR from texture.cpp", MB_OK | MB_DEFBUTTON1);
 		}
 	}
+	else
+	{
+		Tex->m_DepthSurface = Renderer::GetBackDepthSurface();
+	}
 	m_Manager[name] = Tex;
 	return m_Manager[name];
 }
@@ -141,14 +145,11 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			tex->m_RenderTargetObj.erase(itr);
 		}
 	}
-	if (tex->m_Type == SHADOWMAP)
-	{
-		Renderer::DrawRenderTargetBegin(tex->m_Surface,tex->m_DepthSurface);
-	}
-	else
-	{
-		Renderer::DrawRenderTargetBegin(tex->m_Surface);
-	}	
+
+	pDevice->SetRenderTarget(0, tex->m_Surface);
+	pDevice->SetDepthStencilSurface(tex->m_DepthSurface);
+	Renderer::DrawRenderTargetBegin();	
+
 	for (auto itr = tex->m_RenderTargetObj.begin(); itr != tex->m_RenderTargetObj.end(); itr++)
 	{
 		Object * obj = *itr;
@@ -157,8 +158,7 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 		{
 			pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
 		}
-
-		
+				
 		D3DXMATRIX Old_MtxView;
 		pDevice->GetTransform(D3DTS_VIEW, &Old_MtxView);
 		D3DVIEWPORT9 Old_vp;

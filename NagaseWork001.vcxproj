@@ -175,6 +175,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2dpolygon.cpp" />
     <ClCompile Include="object3dpolygon.cpp" />
+    <ClCompile Include="objectattractionparticle.cpp" />
     <ClCompile Include="objectparticle.cpp" />
     <ClCompile Include="objectstencilshadow.cpp" />
     <ClCompile Include="objectXModel.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="object2dpolygon.h" />
     <ClInclude Include="object3dpolygon.h" />
+    <ClInclude Include="objectattractionparticle.h" />
     <ClInclude Include="objectparticle.h" />
     <ClInclude Include="objectXModel.h" />
     <ClInclude Include="player.h" />
@@ -233,6 +235,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Shader\ParticleShader.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Shader\AttractionParticleShader.fx">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

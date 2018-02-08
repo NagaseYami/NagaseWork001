@@ -4,6 +4,7 @@
 #include "object2dpolygon.h"
 #include "objectXModel.h"
 #include "object3dpolygon.h"
+#include "objectattractionparticle.h"
 #include "camera.h"
 #include "tpscamera.h"
 #include "scene.h"
@@ -25,6 +26,8 @@ void GameStage::Init()
 	Player::Init();
 	m_pBoss = new Boss();
 	m_pBoss->Init();
+	ObjectAttractionParticle * pParticle = new ObjectAttractionParticle();
+	pParticle->Init();
 }
 
 void GameStage::Update()

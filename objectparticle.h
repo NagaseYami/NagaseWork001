@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class ObjectParticle :public Object {
+class ObjectParticle : public Object {
 public:
 	struct VERTEX_POINT{
 		Vector3 pos;
@@ -62,11 +62,11 @@ private:
 	Vector3					m_Tra = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3					m_Sca = Vector3(1.0f, 1.0f, 1.0f);
 
-	array<Vector4, 100000>	m_Pos;
-	array<Vector3, 100000>	m_Dir;
-	array<Vector4, 100000>	m_Color;
+	array<Vector4, 1000000>	m_Pos;
+	array<Vector3, 1000000>	m_Dir;
+	array<Vector4, 1000000>	m_Color;
 
 	int						m_TexNum = 0;
 	bool					m_bLight = true;
-	static float			m_Timer;
+	float					m_Timer = 0.0f;
 };

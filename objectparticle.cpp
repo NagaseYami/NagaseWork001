@@ -5,8 +5,6 @@
 #include "object.h"
 #include "objectparticle.h"
 
-float ObjectParticle::m_Timer = 0.0f;
-
 void ObjectParticle::Init()
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();	
@@ -80,10 +78,9 @@ void ObjectParticle::Update()
 
 void ObjectParticle::LateUpdate()
 {	
-	if (Input::IsPress(Input::KeySpace))
-	{
-		m_Timer += 1.0f;
-	}	
+
+	m_Timer += 1.0f;
+
 }
 
 void ObjectParticle::Draw()
@@ -120,22 +117,22 @@ void ObjectParticle::Draw()
 	//ライトオフ
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//Zバッファへの書き込み禁止
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	//Colorの書き込みを許可
 	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 
-	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/ParticleShader.fx");
+	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile(m_ShaderFilePath);
 
 	for (unsigned int i = 0; i < m_TextureList.size(); i++)
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
-			pEffect->SetTechnique("BasicShader_TexterTech");
+			pEffect->SetTechnique(m_Technique_Tex.c_str());
 			break;
 		}
 		else
 		{
-			pEffect->SetTechnique("BasicShader_NoTexterTech");
+			pEffect->SetTechnique(m_Technique_NoTex.c_str());
 		}
 	}
 

@@ -177,6 +177,9 @@
     <ClCompile Include="light.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="objectattractionparticle.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -287,12 +290,18 @@
     <ClInclude Include="light.h">
       <Filter>ヘッダー ファイル\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="objectattractionparticle.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Shader\BasicShader.fx">
       <Filter>ヘッダー ファイル\Shader</Filter>
     </None>
     <None Include="data\Shader\ParticleShader.fx">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </None>
+    <None Include="data\Shader\AttractionParticleShader.fx">
       <Filter>ヘッダー ファイル\Shader</Filter>
     </None>
   </ItemGroup>
