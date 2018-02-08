@@ -2,6 +2,7 @@
 #include "renderer.h"
 #include "texture.h"
 #include "effect.h"
+#include "object2dpolygon.h"
 #include "objectattractionparticle.h"
 
 void ObjectAttractionParticle::Init()
@@ -63,9 +64,20 @@ void ObjectAttractionParticle::Init()
 	//InfoTexture
 	for (int i = 0; i < 4; i++)
 	{
-		D3DXCreateTexture(pDevice, (UINT)1024, (UINT)1024, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_InfoTexture[i]);
-		m_InfoTexture[i]->GetSurfaceLevel(0, &m_Surface[i]);
+		m_InfoTexture[i] = Texture::CreateEmptyTexture("AttractionParticleInfoTexture" + i, Vector2(1024.0f, 1024.0f), Texture::RENDERTARGET,D3DFMT_A32B32G32R32F);
 	}
+
+	m_TestPolygon[0] = new Object2DPolygon();
+	m_TestPolygon[0]->Init();
+	m_TestPolygon[0]->SetPos(Vector2(0.0f, 0.0f));
+	m_TestPolygon[0]->SetSize(Vector2(320.0f, 180.0f));
+	m_TestPolygon[0]->AddTexture(m_InfoTexture[2]);
+
+	m_TestPolygon[1] = new Object2DPolygon();
+	m_TestPolygon[1]->Init();
+	m_TestPolygon[1]->SetPos(Vector2(0.0f, 180.0f));
+	m_TestPolygon[1]->SetSize(Vector2(320.0f, 180.0f));
+	m_TestPolygon[1]->AddTexture(m_InfoTexture[3]);
 }
 
 void ObjectAttractionParticle::Uninit()
@@ -93,8 +105,14 @@ void ObjectAttractionParticle::Update()
 
 void ObjectAttractionParticle::LateUpdate()
 {
+		
+}
+
+void ObjectAttractionParticle::Draw()
+{
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	D3DXMatrixIdentity(&m_mtxWorld);
+	//pDevice->EndScene();
 
 	//テクスチャ
 	if (m_TextureList.size() > 0)
@@ -114,113 +132,88 @@ void ObjectAttractionParticle::LateUpdate()
 		0,
 		sizeof(VERTEX_POINT));
 
-	//加算合成
-	//pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	// ポイントスケールの設定
 	pDevice->SetRenderState(D3DRS_POINTSCALEENABLE, FALSE);
 	// ポイントスプライト有効化
 	pDevice->SetRenderState(D3DRS_POINTSPRITEENABLE, TRUE);
-	//pDevice->SetRenderState(D3DRS_POINTSIZE_MIN, (DWORD)0.0f);
+	pDevice->SetRenderState(D3DRS_POINTSIZE_MIN, (DWORD)0.1f);
 	//ライトオフ
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//Zバッファへの書き込み禁止
-	//pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	//Colorの書き込みを許可
-	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 
-	//LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/AttractionParticleShader.fx");
-	//pEffect->SetTechnique("AttractionShader");
+	D3DXMATRIX proj, view, VP, WVP;
+	pDevice->GetTransform(D3DTS_PROJECTION, &proj);
+	pDevice->GetTransform(D3DTS_VIEW, &view);
+	VP = view*proj;
+	WVP = m_mtxWorld*view*proj;
 
-	//UINT numPass;
-	//pEffect->Begin(&numPass, 0);
-
-	//D3DXMATRIX proj, view, VP;
-	//pDevice->GetTransform(D3DTS_PROJECTION, &proj);
-	//pDevice->GetTransform(D3DTS_VIEW, &view);
-	//VP = view*proj;
-
-	//pDevice->SetRenderTarget(0, m_Surface[2]);
-	//pDevice->SetRenderTarget(1, m_Surface[3]);
-
-	//Renderer::DrawRenderTargetBegin();
-
-	//
-	//pEffect->BeginPass(0);
-	//pEffect->SetMatrix("World", &m_mtxWorld);
-	//pEffect->SetMatrix("ViewProj", &VP);
-	//pEffect->SetTexture("PosInput", m_InfoTexture[0]);
-	//pEffect->SetTexture("SpeedInput", m_InfoTexture[1]);
-	//pEffect->SetTexture("PosOutput", m_InfoTexture[2]);
-	//pEffect->SetTexture("SpeedOutput", m_InfoTexture[3]);
-	//pEffect->SetTexture("Tex", NULL);
-	//pEffect->CommitChanges();
-	////ポリゴンの描画
-	//pDevice->DrawPrimitive(D3DPT_POINTLIST,
-	//	0,
-	//	m_Pos.size());
-	//pEffect->EndPass();
-
-	//Renderer::DrawRenderTargetEnd();
-
-	//pDevice->SetRenderTarget(0, Renderer::GetBackBufferSurface());
-	//pDevice->SetRenderTarget(1, NULL);
-
-	//Renderer::DrawRenderTargetBegin();
-
-
-	//pEffect->BeginPass(1);
-	//pEffect->SetMatrix("World", &m_mtxWorld);
-	//pEffect->SetMatrix("ViewProj", &VP);
-	//pEffect->SetTexture("PosInput", m_InfoTexture[0]);
-	//pEffect->SetTexture("SpeedInput", m_InfoTexture[1]);
-	//pEffect->SetTexture("PosOutput", m_InfoTexture[2]);
-	//pEffect->SetTexture("SpeedOutput", m_InfoTexture[3]);
-	//pEffect->SetTexture("Tex", NULL);
-	//pEffect->CommitChanges();
-	//ポリゴンの描画
-	pDevice->DrawPrimitive(D3DPT_POINTLIST,
-		0,
-		m_Pos.size());
-	//pEffect->EndPass();
-
-	//pEffect->End();
-
-	Renderer::DrawRenderTargetEnd();
-
-	// レンダリングステートの設定を元に戻す
-	//pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-
-	//pDevice->SetRenderState(D3DRS_POINTSCALEENABLE, FALSE);
-	pDevice->SetRenderState(D3DRS_POINTSPRITEENABLE, FALSE);
+	//Effect
+	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/AttractionParticleShader.fx");
+	pEffect->SetTechnique("AttractionShader");
+	//Pass
+	UINT numPass;
+	pEffect->Begin(&numPass, 0);
 
 	
-}
+	/////////////////////////一回目/////////////////////////////////
 
-void ObjectAttractionParticle::Draw()
-{
-	LPDIRECT3DTEXTURE9 tex;
-	LPDIRECT3DSURFACE9 sur;
+	//RenderTarget
+	//pDevice->SetRenderTarget(0, Renderer::GetBackBufferSurface());
+	
+	pDevice->SetRenderTarget(0, m_InfoTexture[2]->GetDXSurface());
+	pDevice->SetRenderTarget(1, m_InfoTexture[3]->GetDXSurface());
+	//BeginScene
+	//pDevice->BeginScene();
+	//BeginPass
+	pEffect->BeginPass(0);
+	pEffect->SetMatrix("World", &m_mtxWorld);
+	pEffect->SetMatrix("ViewProj", &VP);
+	pEffect->SetTexture("PosInput", m_InfoTexture[0]->GetDXTexture());
+	pEffect->SetTexture("SpeedInput", m_InfoTexture[1]->GetDXTexture());
+	pEffect->SetTexture("PosOutput", m_InfoTexture[2]->GetDXTexture());
+	pEffect->SetTexture("SpeedOutput", m_InfoTexture[3]->GetDXTexture());
+	pEffect->SetTexture("Tex", NULL);
+	pEffect->CommitChanges();
+	pDevice->DrawPrimitive(D3DPT_POINTLIST, 0, m_Pos.size());
+	pEffect->EndPass();
+	//EndScene
+	//pDevice->EndScene();
+	////////////////////////二回目//////////////////////////////////
+	
+	//RenderTarget
+	pDevice->SetRenderTarget(0, Renderer::GetBackBufferSurface());
+	pDevice->SetRenderTarget(1, NULL);
+	//BeginScene
+	//pDevice->BeginScene();
+	//BeginPass
+	pEffect->BeginPass(1);
+	pEffect->SetMatrix("World", &m_mtxWorld);
+	pEffect->SetMatrix("ViewProj", &VP);
+	pEffect->SetTexture("PosInput", m_InfoTexture[0]->GetDXTexture());
+	pEffect->SetTexture("SpeedInput", m_InfoTexture[1]->GetDXTexture());
+	pEffect->SetTexture("PosOutput", m_InfoTexture[2]->GetDXTexture());
+	pEffect->SetTexture("SpeedOutput", m_InfoTexture[3]->GetDXTexture());
+	pEffect->SetTexture("Tex", NULL);
+	pEffect->CommitChanges();
+	pDevice->DrawPrimitive(D3DPT_POINTLIST, 0, m_Pos.size());
+	pEffect->EndPass();	
+	//EffectEnd3
+	pEffect->End();
+	//EndScene
+	//pDevice->EndScene();
 
-	sur = m_Surface[0];
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	pDevice->SetRenderState(D3DRS_POINTSPRITEENABLE, FALSE);
+
+	////////////////////////////テクスチャ交換///////////////////////////////
+	Texture * tex;
+
 	tex = m_InfoTexture[0];
-
-	m_Surface[0] = m_Surface[2];
 	m_InfoTexture[0] = m_InfoTexture[2];
-
-	m_Surface[2] = sur;
 	m_InfoTexture[2] = tex;
 
-	sur = m_Surface[1];
 	tex = m_InfoTexture[1];
-
-	m_Surface[1] = m_Surface[3];
 	m_InfoTexture[1] = m_InfoTexture[3];
-
-	m_Surface[3] = sur;
 	m_InfoTexture[3] = tex;
+
+	//pDevice->BeginScene();
 }

@@ -14,10 +14,10 @@
 void TestScene2::Init()
 {
 	Camera::SetMainCamera(&m_Camera);
-	//ObjectAttractionParticle * pParticle = new ObjectAttractionParticle();
-	//pParticle->Init();
-	ObjectParticle * pPart = new ObjectParticle();
-	pPart->Init();
+	ObjectAttractionParticle * pParticle = new ObjectAttractionParticle();
+	pParticle->Init();
+	/*ObjectParticle * pPart = new ObjectParticle();
+	pPart->Init();*/
 
 }
 

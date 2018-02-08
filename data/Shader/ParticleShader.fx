@@ -39,7 +39,6 @@ BASICSHADER_OUT_VERTEX BasicShader_VertexShader_Main(BASICSHADER_IN_VERTEX iv)
     BASICSHADER_OUT_VERTEX ov;
     ov.Color = iv.Color;   
     iv.DirL *= 0.1f;
-    iv.DirL.y -= 0.001f * Time;
     ov.PosH = mul(float4(iv.PosL + iv.DirL * Time, 1.0f), WorldViewProj);
     ov.PSize = iv.PSize;
     return ov;

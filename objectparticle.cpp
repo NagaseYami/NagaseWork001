@@ -121,18 +121,18 @@ void ObjectParticle::Draw()
 	//Colorの書き込みを許可
 	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 
-	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile(m_ShaderFilePath);
+	LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/ParticleShader.fx");
 
 	for (unsigned int i = 0; i < m_TextureList.size(); i++)
 	{
 		if (m_TextureList[i]->GetDXTexture() != NULL)
 		{
-			pEffect->SetTechnique(m_Technique_Tex.c_str());
+			pEffect->SetTechnique("BasicShader_TexterTech");
 			break;
 		}
 		else
 		{
-			pEffect->SetTechnique(m_Technique_NoTex.c_str());
+			pEffect->SetTechnique("BasicShader_NoTexterTech");
 		}
 	}
 

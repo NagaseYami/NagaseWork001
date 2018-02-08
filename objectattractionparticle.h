@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "object.h"
+class Object2DPolygon;
 class ObjectAttractionParticle : public Object{
 public:
 	struct VERTEX_POINT {
@@ -71,6 +72,7 @@ private:
 	int						m_TexNum = 0;
 	bool					m_bLight = true;
 
-	LPDIRECT3DTEXTURE9 m_InfoTexture[4] = { NULL };
-	LPDIRECT3DSURFACE9 m_Surface[4] = { NULL };
+	Texture * m_InfoTexture[4];
+
+	Object2DPolygon * m_TestPolygon[2];
 };

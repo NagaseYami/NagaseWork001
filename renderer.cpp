@@ -156,7 +156,7 @@ void Renderer::DrawBackBufferBegin()
 {
 	m_pD3DDevice->SetRenderTarget(0, m_pBackBufferSurface);
 	m_pD3DDevice->SetDepthStencilSurface(m_pBackDepthSurface);
-	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 0, 0, 255), 1.0f, 0);
+	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 0, 255, 0), 1.0f, 0);
 	m_pD3DDevice->BeginScene();
 }
 
