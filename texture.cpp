@@ -37,11 +37,18 @@ Texture * Texture::LoadTextureFromFile(LPCSTR fileName)
 	
 }
 
-Texture * Texture::CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE type, D3DFORMAT format, bool COLORWRITEENABLE)
+Texture * Texture::CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE type, D3DFORMAT format, D3DPOOL memory, bool COLORWRITEENABLE)
 {
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	Texture * Tex = new Texture;
-	D3DXCreateTexture(pDevice, (UINT)size.x, (UINT)size.y, 1, D3DUSAGE_RENDERTARGET, format, D3DPOOL_DEFAULT, &Tex->m_Texture);
+	if (type == DYNAMIC)
+	{
+		pDevice->CreateTexture((UINT)size.x, (UINT)size.y, 1, D3DUSAGE_DYNAMIC, format, memory, &Tex->m_Texture, NULL);
+	}
+	else
+	{
+		D3DXCreateTexture(pDevice, (UINT)size.x, (UINT)size.y, 1, D3DUSAGE_RENDERTARGET, format, memory, &Tex->m_Texture);
+	}	
 	Tex->m_Texture->GetSurfaceLevel(0, &Tex->m_Surface);
 	Tex->m_Type = type;
 	Tex->m_ColorWriteEnable = COLORWRITEENABLE;
@@ -77,7 +84,9 @@ void Texture::DrawAllRenderTargetTexture()
 {
 	for (auto itr = m_Manager.begin(); itr != m_Manager.end(); itr++)
 	{
-		if (itr->second->m_Type != NORMAL)
+		if (itr->second->m_Type == RENDERTARGET ||
+			itr->second->m_Type == SHADOWMAP 
+			)
 		{
 			DrawRenderTargetTextureRecursion(itr->second);
 		}

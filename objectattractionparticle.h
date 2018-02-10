@@ -7,7 +7,6 @@ public:
 		Vector3 pos;
 		D3DCOLOR color;
 		float size;
-		Vector3 speed;
 		Vector2 InfoUV;
 	};
 
@@ -51,9 +50,13 @@ public:
 		m_bLight = value;
 	}
 private:
+	void CreatePointSprite();
+	void CreateInfoPolygon();
+	void CreateInfoTexture();
 
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
-	LPDIRECT3DVERTEXDECLARATION9 m_pVertexDeclaration = NULL;
+	LPDIRECT3DVERTEXBUFFER9	m_pVtxBuff_InfoPolygon = NULL;
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff_PointSprite = NULL;		// 頂点バッファへのポインタ
+	LPDIRECT3DVERTEXDECLARATION9 m_pVertex_Declaration_PointSprite = NULL;
 
 	D3DXMATRIX				m_mtxWorld;
 	D3DXMATRIX				m_mtxRot;
@@ -73,6 +76,7 @@ private:
 	bool					m_bLight = true;
 
 	Texture * m_InfoTexture[4];
-
-	Object2DPolygon * m_TestPolygon[2];
+	Texture * m_InitInfoTexture[2];
+	bool m_InitInfoTextureFlag = true;
+	Object2DPolygon * m_TestPolygon[4];
 };

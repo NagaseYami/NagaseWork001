@@ -6,11 +6,12 @@ public:
 	{
 		NORMAL = 0,
 		RENDERTARGET,
+		DYNAMIC,
 		SHADOWMAP
 	};
 	Texture();
 	static Texture * LoadTextureFromFile(LPCSTR fileName);
-	static Texture * CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE type = RENDERTARGET, D3DFORMAT format = D3DFMT_A8R8G8B8, bool COLORWRITEENABLE = true);
+	static Texture * CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE type = RENDERTARGET, D3DFORMAT format = D3DFMT_A8R8G8B8, D3DPOOL memory = D3DPOOL_DEFAULT, bool COLORWRITEENABLE = true);
 	static void AddObjectToRenderTargetTexture(Object *obj, string name);
 	static void DrawAllRenderTargetTexture();
 	static void DestoryAllTexture();

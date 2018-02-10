@@ -24,6 +24,7 @@ void Object2DPolygon::Init()
 	))) {
 		MessageBox(NULL, "頂点バッファの生成に問題が発生しました", "ERROR from object2dpolygon.cpp", MB_OK | MB_ICONWARNING);
 	}
+	m_ShaderFilePath = "Null";
 }
 
 void Object2DPolygon::Uninit()
@@ -104,36 +105,39 @@ void Object2DPolygon::Draw()
 		0,
 		sizeof(VERTEX_2D));
 
-	//LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile("data/Shader/BasicShader.fx");
-
-	/*for (int i = 0; i < m_TextureList.size(); i++)
+	if (m_ShaderFilePath != "Null")
 	{
-		if (m_TextureList[i]->GetDXTexture() != NULL)
+		LPD3DXEFFECT pEffect = Effect::LoadEffectFromFile(m_ShaderFilePath);
+
+		for (int i = 0; i < m_TextureList.size(); i++)
 		{
-			pEffect->SetTechnique("ToonShader_2d_TexterTech");
-			break;
+			if (m_TextureList[i]->GetDXTexture() != NULL)
+			{
+				pEffect->SetTechnique(m_Technique_Tex.c_str());
+				break;
+			}
+			else
+			{
+				pEffect->SetTechnique(m_Technique_NoTex.c_str());
+			}
 		}
-		else
+
+		UINT numPass;
+		pEffect->Begin(&numPass, 0);
+		for (UINT iPass = 0; iPass < numPass; iPass++)
 		{
-			pEffect->SetTechnique("ToonShader_2d_NoTexterTech");
+			pEffect->BeginPass(iPass);
+			if (m_TextureList.size()>0)pEffect->SetTexture("Tex", m_TextureList[m_TexNum]->GetDXTexture());
+			if (m_VariableToShaderFn)m_VariableToShaderFn(pEffect);
+			pEffect->CommitChanges();
+			//ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+			pEffect->EndPass();
 		}
+		pEffect->End();
 	}
-
-	UINT numPass;
-	pEffect->Begin(&numPass, 0);
-	for (UINT iPass = 0; iPass < numPass; iPass++)
+	else
 	{
-		pEffect->BeginPass(iPass);
-		if (m_TextureList.size()>0)pEffect->SetTexture("Tex", m_TextureList[m_TexNum]->GetDXTexture());
-		pEffect->CommitChanges();*/
-		//ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP,
-			0,
-			2);
-		
-	//	pEffect->EndPass();
-	//}
-
-	//pEffect->End();
-	
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+	}
 }
