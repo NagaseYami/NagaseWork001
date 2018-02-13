@@ -18,6 +18,69 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceCode\Blur\blur.cpp" />
+    <ClCompile Include="SourceCode\Boss\boss.cpp" />
+    <ClCompile Include="SourceCode\Camera\camera.cpp" />
+    <ClCompile Include="SourceCode\Camera\tpscamera.cpp" />
+    <ClCompile Include="SourceCode\Effect\effect.cpp" />
+    <ClCompile Include="SourceCode\Imgui\imgui.cpp" />
+    <ClCompile Include="SourceCode\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="SourceCode\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="SourceCode\Imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="SourceCode\Input\dxinput.cpp" />
+    <ClCompile Include="SourceCode\Input\input.cpp" />
+    <ClCompile Include="SourceCode\KMlib\KM_Math.cpp" />
+    <ClCompile Include="SourceCode\Light\light.cpp" />
+    <ClCompile Include="SourceCode\Main\main.cpp" />
+    <ClCompile Include="SourceCode\Manager\manager.cpp" />
+    <ClCompile Include="SourceCode\Object\object.cpp" />
+    <ClCompile Include="SourceCode\Object\object2dpolygon.cpp" />
+    <ClCompile Include="SourceCode\Object\object3dpolygon.cpp" />
+    <ClCompile Include="SourceCode\Object\objectattractionparticle.cpp" />
+    <ClCompile Include="SourceCode\Object\objectparticle.cpp" />
+    <ClCompile Include="SourceCode\Object\objectstencilshadow.cpp" />
+    <ClCompile Include="SourceCode\Object\objectXModel.cpp" />
+    <ClCompile Include="SourceCode\Player\player.cpp" />
+    <ClCompile Include="SourceCode\Renderer\renderer.cpp" />
+    <ClCompile Include="SourceCode\Scene\gamestage.cpp" />
+    <ClCompile Include="SourceCode\Scene\scene.cpp" />
+    <ClCompile Include="SourceCode\Scene\testscene.cpp" />
+    <ClCompile Include="SourceCode\Texture\texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceCode\Blur\blur.h" />
+    <ClInclude Include="SourceCode\Boss\boss.h" />
+    <ClInclude Include="SourceCode\Camera\camera.h" />
+    <ClInclude Include="SourceCode\Camera\tpscamera.h" />
+    <ClInclude Include="SourceCode\Effect\effect.h" />
+    <ClInclude Include="SourceCode\Imgui\imconfig.h" />
+    <ClInclude Include="SourceCode\Imgui\imgui.h" />
+    <ClInclude Include="SourceCode\Imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="SourceCode\Imgui\imgui_internal.h" />
+    <ClInclude Include="SourceCode\Imgui\stb_rect_pack.h" />
+    <ClInclude Include="SourceCode\Imgui\stb_textedit.h" />
+    <ClInclude Include="SourceCode\Imgui\stb_truetype.h" />
+    <ClInclude Include="SourceCode\Input\dxinput.h" />
+    <ClInclude Include="SourceCode\Input\input.h" />
+    <ClInclude Include="SourceCode\KMlib\KM_Math.h" />
+    <ClInclude Include="SourceCode\Light\light.h" />
+    <ClInclude Include="SourceCode\Main\main.h" />
+    <ClInclude Include="SourceCode\Manager\manager.h" />
+    <ClInclude Include="SourceCode\Object\object.h" />
+    <ClInclude Include="SourceCode\Object\object2dpolygon.h" />
+    <ClInclude Include="SourceCode\Object\object3dpolygon.h" />
+    <ClInclude Include="SourceCode\Object\objectattractionparticle.h" />
+    <ClInclude Include="SourceCode\Object\objectparticle.h" />
+    <ClInclude Include="SourceCode\Object\objectstencilshadow.h" />
+    <ClInclude Include="SourceCode\Object\objectXModel.h" />
+    <ClInclude Include="SourceCode\Player\player.h" />
+    <ClInclude Include="SourceCode\Renderer\renderer.h" />
+    <ClInclude Include="SourceCode\Scene\gamestage.h" />
+    <ClInclude Include="SourceCode\Scene\scene.h" />
+    <ClInclude Include="SourceCode\Scene\testscene.h" />
+    <ClInclude Include="SourceCode\Texture\texture.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C7B65D99-03A4-411E-B050-99EEC0352348}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -156,93 +219,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="blur.cpp" />
-    <ClCompile Include="boss.cpp" />
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="dxinput.cpp" />
-    <ClCompile Include="gamestage.cpp" />
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_demo.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_impl_dx9.cpp" />
-    <ClCompile Include="input.cpp" />
-    <ClCompile Include="KMlib\KM_Logic.cpp" />
-    <ClCompile Include="KMlib\KM_Math.cpp" />
-    <ClCompile Include="light.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="manager.cpp" />
-    <ClCompile Include="object.cpp" />
-    <ClCompile Include="object2dpolygon.cpp" />
-    <ClCompile Include="object3dpolygon.cpp" />
-    <ClCompile Include="objectattractionparticle.cpp" />
-    <ClCompile Include="objectparticle.cpp" />
-    <ClCompile Include="objectstencilshadow.cpp" />
-    <ClCompile Include="objectXModel.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="RenderTargetDemo.cpp" />
-    <ClCompile Include="scene.cpp" />
-    <ClCompile Include="effect.cpp" />
-    <ClCompile Include="testscene.cpp" />
-    <ClCompile Include="testscene2.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="tpscamera.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="blur.h" />
-    <ClInclude Include="boss.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="dxinput.h" />
-    <ClInclude Include="gamestage.h" />
-    <ClInclude Include="imconfig.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_impl_dx9.h" />
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="includeallcameras.h" />
-    <ClInclude Include="includeallscenes.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="kadaicube.h" />
-    <ClInclude Include="KMlib\KM_Logic.h" />
-    <ClInclude Include="KMlib\KM_Math.h" />
-    <ClInclude Include="light.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="manager.h" />
-    <ClInclude Include="object.h" />
-    <ClInclude Include="object2dpolygon.h" />
-    <ClInclude Include="object3dpolygon.h" />
-    <ClInclude Include="objectattractionparticle.h" />
-    <ClInclude Include="objectparticle.h" />
-    <ClInclude Include="objectXModel.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="renderer.h" />
-    <ClInclude Include="RenderTargetDemo.h" />
-    <ClInclude Include="scene.h" />
-    <ClInclude Include="objectstencilshadow.h" />
-    <ClInclude Include="effect.h" />
-    <ClInclude Include="stb_rect_pack.h" />
-    <ClInclude Include="stb_textedit.h" />
-    <ClInclude Include="stb_truetype.h" />
-    <ClInclude Include="testscene.h" />
-    <ClInclude Include="testscene2.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="tpscamera.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\Shader\BasicShader.fx">
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\Shader\ParticleShader.fx">
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\Shader\AttractionParticleShader.fx">
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

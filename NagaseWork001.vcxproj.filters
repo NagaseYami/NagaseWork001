@@ -5,304 +5,231 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\Main">
-      <UniqueIdentifier>{81bb22da-230b-4a7c-99bf-82dcc1d72e3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Main">
-      <UniqueIdentifier>{7762e768-c518-47c2-810f-9b47c673673c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Renderer">
-      <UniqueIdentifier>{aafda844-39a9-43b5-8a29-9b5ff31f0e73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Renderer">
-      <UniqueIdentifier>{3836135a-5986-4ee2-9ee2-e60dca2617d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\KumaLib">
-      <UniqueIdentifier>{a1ea7a44-6c30-40fd-9a0a-04fcd15c2d5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\KumaLib">
-      <UniqueIdentifier>{b204c583-2ce4-4ded-af4a-c3eea1dd1e5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Object">
-      <UniqueIdentifier>{8bf5b44f-2e3e-48f7-a4b9-44e0bbd4b9a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object">
-      <UniqueIdentifier>{4337a443-4a58-4ef5-b42f-0cb1de28ca50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Input">
-      <UniqueIdentifier>{44f97e44-5277-4d12-82af-cd41b143732e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Input">
-      <UniqueIdentifier>{4bc70cfb-f14a-4b26-95a3-a6d5ce028ef7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Scenes">
-      <UniqueIdentifier>{795cd1d7-2972-4963-a323-c4362fb724cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scenes">
-      <UniqueIdentifier>{00969313-768b-448f-a921-8957f705260b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Camera">
-      <UniqueIdentifier>{10057691-3a0d-40c1-b559-4870e58b4a0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Camera">
-      <UniqueIdentifier>{54d0a1cc-20b3-4e1c-9ff0-62412af80ae2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Shader">
-      <UniqueIdentifier>{eab877dd-d7b6-44b8-b347-c3ed3561057a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Shader">
-      <UniqueIdentifier>{4e96f467-744d-473b-a060-9be470d868bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\ImGui">
-      <UniqueIdentifier>{1f526a4f-fdc8-49bb-930e-4b53e68aa881}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\ImGui">
-      <UniqueIdentifier>{9b73c153-208b-465f-a03c-9329d1ff2f23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Kadai">
-      <UniqueIdentifier>{e9f51de1-37c0-42b2-8ef4-0863c31aceb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Kadai">
-      <UniqueIdentifier>{0091cdef-2277-4e55-a1a9-67655e72ddce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Player">
-      <UniqueIdentifier>{f4750775-09fc-4af3-a3f2-5abc324bb9da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Player">
-      <UniqueIdentifier>{df74349a-bc86-4c14-806f-4b07f71f0d3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Boss">
-      <UniqueIdentifier>{8c671559-1d5a-4bf9-80a5-923aee89f0c2}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Blur">
+      <UniqueIdentifier>{ed54d6d6-27bc-45f0-a8a5-fed87eae9b45}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Boss">
-      <UniqueIdentifier>{dee5ed0b-34f5-4f24-99bd-224b01614773}</UniqueIdentifier>
+      <UniqueIdentifier>{e1533dc8-1f76-4ce3-97ec-5b17f50b768d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{efb45ebf-33c7-4ae2-877e-da02c6d2ccf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{5576df73-fb0e-4f92-9db2-9ebbf21589e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Imgui">
+      <UniqueIdentifier>{40a597ca-2234-40a1-9fd6-827241059c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\KMlib">
+      <UniqueIdentifier>{3c4d42a0-6ad7-4988-abc4-b6aa741d5fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Light">
+      <UniqueIdentifier>{49e8fa08-1866-443f-8aed-882f88c2d5c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Main">
+      <UniqueIdentifier>{59f004b7-e762-4adf-a463-5626679a41a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{f7e89d5b-966d-4498-b144-05206a6fa3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{91af99bd-0fdb-4c82-ac9a-1083cef981ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{162bdb0f-cc33-4b38-897e-95c3b5c3bd9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Renderer">
+      <UniqueIdentifier>{34dbb491-e479-45b1-9411-a21aa30fa020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{0a16087e-e9ce-44b7-be9f-6eee9a74bdf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Texture">
+      <UniqueIdentifier>{8e55ad10-e7b1-4af5-9713-7b2f2f7bee9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{a4cbff35-c241-4e21-bb17-892286c6a860}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル\Main</Filter>
+    <ClCompile Include="SourceCode\Blur\blur.cpp">
+      <Filter>ソース ファイル\Blur</Filter>
     </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>ソース ファイル\Renderer</Filter>
+    <ClCompile Include="SourceCode\Imgui\imgui_demo.cpp">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="KMlib\KM_Logic.cpp">
-      <Filter>ソース ファイル\KumaLib</Filter>
+    <ClCompile Include="SourceCode\Imgui\imgui_draw.cpp">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="KMlib\KM_Math.cpp">
-      <Filter>ソース ファイル\KumaLib</Filter>
+    <ClCompile Include="SourceCode\Imgui\imgui_impl_dx9.cpp">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="object.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+    <ClCompile Include="SourceCode\Imgui\imgui.cpp">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="object2dpolygon.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="manager.cpp">
-      <Filter>ソース ファイル\Main</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>ソース ファイル\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="testscene.cpp">
-      <Filter>ソース ファイル\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="testscene2.cpp">
-      <Filter>ソース ファイル\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="object3dpolygon.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="tpscamera.cpp">
-      <Filter>ソース ファイル\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="dxinput.cpp">
-      <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="objectstencilshadow.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="blur.cpp">
-      <Filter>ソース ファイル\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderTargetDemo.cpp">
-      <Filter>ソース ファイル\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="effect.cpp">
-      <Filter>ソース ファイル\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>ソース ファイル\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_dx9.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_demo.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_draw.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="objectparticle.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="gamestage.cpp">
-      <Filter>ソース ファイル\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="boss.cpp">
+    <ClCompile Include="SourceCode\Boss\boss.cpp">
       <Filter>ソース ファイル\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="objectXModel.cpp">
+    <ClCompile Include="SourceCode\Camera\tpscamera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Camera\camera.cpp">
+      <Filter>ソース ファイル\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Effect\effect.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Input\dxinput.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Input\input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\KMlib\KM_Math.cpp">
+      <Filter>ソース ファイル\KMlib</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Light\light.cpp">
+      <Filter>ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Main\main.cpp">
+      <Filter>ソース ファイル\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Manager\manager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Object\object3dpolygon.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="light.cpp">
+    <ClCompile Include="SourceCode\Object\objectattractionparticle.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Object\objectparticle.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Object\objectstencilshadow.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Object\objectXModel.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Object\object.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Object\object2dpolygon.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Player\player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Renderer\renderer.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="objectattractionparticle.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+    <ClCompile Include="SourceCode\Scene\scene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Scene\gamestage.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Texture\texture.cpp">
+      <Filter>ソース ファイル\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\Scene\testscene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>ヘッダー ファイル\Main</Filter>
+    <ClInclude Include="SourceCode\Blur\blur.h">
+      <Filter>ソース ファイル\Blur</Filter>
     </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>ヘッダー ファイル\Renderer</Filter>
+    <ClInclude Include="SourceCode\Imgui\imgui_impl_dx9.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="KMlib\KM_Logic.h">
-      <Filter>ヘッダー ファイル\KumaLib</Filter>
+    <ClInclude Include="SourceCode\Imgui\imgui_internal.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="KMlib\KM_Math.h">
-      <Filter>ヘッダー ファイル\KumaLib</Filter>
+    <ClInclude Include="SourceCode\Imgui\stb_rect_pack.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
+    <ClInclude Include="SourceCode\Imgui\stb_textedit.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="object2dpolygon.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
+    <ClInclude Include="SourceCode\Imgui\stb_truetype.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="manager.h">
-      <Filter>ヘッダー ファイル\Main</Filter>
+    <ClInclude Include="SourceCode\Imgui\imconfig.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>ヘッダー ファイル\Main</Filter>
+    <ClInclude Include="SourceCode\Imgui\imgui.h">
+      <Filter>ソース ファイル\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>ヘッダー ファイル\Renderer</Filter>
+    <ClInclude Include="SourceCode\Boss\boss.h">
+      <Filter>ソース ファイル\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="testscene.h">
-      <Filter>ヘッダー ファイル\Scenes</Filter>
+    <ClInclude Include="SourceCode\Camera\camera.h">
+      <Filter>ソース ファイル\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="includeallscenes.h">
-      <Filter>ヘッダー ファイル\Scenes</Filter>
+    <ClInclude Include="SourceCode\Camera\tpscamera.h">
+      <Filter>ソース ファイル\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="testscene2.h">
-      <Filter>ヘッダー ファイル\Scenes</Filter>
+    <ClInclude Include="SourceCode\Effect\effect.h">
+      <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
+    <ClInclude Include="SourceCode\Input\dxinput.h">
+      <Filter>ソース ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="object3dpolygon.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
+    <ClInclude Include="SourceCode\Input\input.h">
+      <Filter>ソース ファイル\Input</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ヘッダー ファイル\Main</Filter>
+    <ClInclude Include="SourceCode\KMlib\KM_Math.h">
+      <Filter>ソース ファイル\KMlib</Filter>
     </ClInclude>
-    <ClInclude Include="tpscamera.h">
-      <Filter>ヘッダー ファイル\Camera</Filter>
+    <ClInclude Include="SourceCode\Light\light.h">
+      <Filter>ソース ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="includeallcameras.h">
-      <Filter>ヘッダー ファイル\Camera</Filter>
+    <ClInclude Include="SourceCode\Main\main.h">
+      <Filter>ソース ファイル\Main</Filter>
     </ClInclude>
-    <ClInclude Include="dxinput.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
+    <ClInclude Include="SourceCode\Manager\manager.h">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="objectXModel.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="objectstencilshadow.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="blur.h">
-      <Filter>ヘッダー ファイル\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderTargetDemo.h">
-      <Filter>ヘッダー ファイル\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="effect.h">
-      <Filter>ヘッダー ファイル\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_dx9.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_rect_pack.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_textedit.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_truetype.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imconfig.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_internal.h">
-      <Filter>ヘッダー ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="objectparticle.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="kadaicube.h">
-      <Filter>ヘッダー ファイル\Kadai</Filter>
-    </ClInclude>
-    <ClInclude Include="gamestage.h">
-      <Filter>ヘッダー ファイル\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="boss.h">
-      <Filter>ヘッダー ファイル\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="light.h">
-      <Filter>ヘッダー ファイル\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="objectattractionparticle.h">
+    <ClInclude Include="SourceCode\Object\object2dpolygon.h">
       <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\Shader\BasicShader.fx">
-      <Filter>ヘッダー ファイル\Shader</Filter>
-    </None>
-    <None Include="data\Shader\ParticleShader.fx">
-      <Filter>ヘッダー ファイル\Shader</Filter>
-    </None>
-    <None Include="data\Shader\AttractionParticleShader.fx">
-      <Filter>ヘッダー ファイル\Shader</Filter>
-    </None>
+    <ClInclude Include="SourceCode\Object\object3dpolygon.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Object\objectattractionparticle.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Object\objectparticle.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Object\objectstencilshadow.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Object\objectXModel.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Object\object.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Player\player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Renderer\renderer.h">
+      <Filter>ソース ファイル\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Scene\scene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Scene\gamestage.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Texture\texture.h">
+      <Filter>ソース ファイル\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\Scene\testscene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
