@@ -23,9 +23,12 @@ void GameStage::Init()
 		m_pQuarter[i]->SetRFP(Vector3(0.0f, D3DX_PI / 2.0f * i, 0.0f));
 		m_pQuarter[i]->SetTFP(Vector3(0.0f, -5.0f, 0.0f));
 	}
+
 	Player::Init();
+
 	m_pBoss = new Boss();
 	m_pBoss->Init();
+
 	ObjectAttractionParticle * pParticle = new ObjectAttractionParticle();
 	pParticle->Init();
 }

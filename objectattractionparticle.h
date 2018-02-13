@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "object.h"
+#define ATTRACTION_PARTICLE_AMOUNT 450000
 class Object2DPolygon;
 class ObjectAttractionParticle : public Object{
 public:
@@ -67,16 +68,16 @@ private:
 	Vector3					m_Tra = Vector3(0.0f, 0.0f, 0.0f);
 	Vector3					m_Sca = Vector3(1.0f, 1.0f, 1.0f);
 
-	array<Vector3, 100000>	m_Pos;
-	array<Vector3, 100000>	m_Speed;
-	array<Vector2, 100000>	m_InfoUV;
-	array<Vector4, 100000>	m_Color;
+	array<Vector3, ATTRACTION_PARTICLE_AMOUNT>	m_Pos;
+	array<Vector3, ATTRACTION_PARTICLE_AMOUNT>	m_Speed;
+	array<Vector2, ATTRACTION_PARTICLE_AMOUNT>	m_InfoUV;
+	array<Vector4, ATTRACTION_PARTICLE_AMOUNT>	m_Color;
 
 	int						m_TexNum = 0;
 	bool					m_bLight = true;
 
-	Texture * m_InfoTexture[4];
-	Texture * m_InitInfoTexture[2];
+	array<Texture*, 4> m_InfoTexture;
+	array<Texture*, 2> m_InitInfoTexture;
 	bool m_InitInfoTextureFlag = true;
-	Object2DPolygon * m_TestPolygon[4];
+	array<Object2DPolygon*, 2> m_TestPolygon;
 };

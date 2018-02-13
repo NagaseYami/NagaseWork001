@@ -31,6 +31,7 @@ Texture * Texture::LoadTextureFromFile(LPCSTR fileName)
 		}
 		m_Manager[name] = new Texture;
 		m_Manager[name]->m_Texture = pTex;
+		m_Manager[name]->m_Name = name;
 		m_Manager[name]->m_RenderTargetObj.clear();
 		return m_Manager[name];
 	}
@@ -63,6 +64,7 @@ Texture * Texture::CreateEmptyTexture(string name, Vector2 size, TEXTURE_TYPE ty
 	{
 		Tex->m_DepthSurface = Renderer::GetBackDepthSurface();
 	}
+	Tex->m_Name = name;
 	m_Manager[name] = Tex;
 	return m_Manager[name];
 }
@@ -84,9 +86,7 @@ void Texture::DrawAllRenderTargetTexture()
 {
 	for (auto itr = m_Manager.begin(); itr != m_Manager.end(); itr++)
 	{
-		if (itr->second->m_Type == RENDERTARGET ||
-			itr->second->m_Type == SHADOWMAP 
-			)
+		if (itr->second->m_RenderTargetObj.size() != 0)
 		{
 			DrawRenderTargetTextureRecursion(itr->second);
 		}
@@ -154,6 +154,8 @@ void Texture::DrawRenderTargetTextureRecursion(Texture * tex)
 			tex->m_RenderTargetObj.erase(itr);
 		}
 	}
+
+	if (tex->m_RenderTargetObj.size() == 0)return;
 
 	pDevice->SetRenderTarget(0, tex->m_Surface);
 	pDevice->SetDepthStencilSurface(tex->m_DepthSurface);

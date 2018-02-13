@@ -37,6 +37,7 @@ private:
 
 	static map<string, Texture*> m_Manager;
 
+	string m_Name;
 	TEXTURE_TYPE m_Type = NORMAL;
 	bool m_ColorWriteEnable = true;
 	LPDIRECT3DTEXTURE9 m_Texture = NULL;

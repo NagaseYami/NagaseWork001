@@ -13,12 +13,12 @@ void ObjectAttractionParticle::Init()
 	CreateInfoPolygon();
 	CreateInfoTexture();
 
-	for (size_t i = 0; i < 4; i++)
+	for (size_t i = 0; i < m_TestPolygon.size(); i++)
 	{
 		m_TestPolygon[i] = new Object2DPolygon();
 		m_TestPolygon[i]->Init();
 		m_TestPolygon[i]->SetPos(Vector2(0.0f, 180.0f*(float)i));
-		m_TestPolygon[i]->SetSize(Vector2(320.0f, 180.0f));
+		m_TestPolygon[i]->SetSize(Vector2(320.0f, 180.0f));	
 		m_TestPolygon[i]->AddTexture(m_InfoTexture[i]);
 	}
 }
@@ -49,6 +49,7 @@ void ObjectAttractionParticle::Update()
 
 void ObjectAttractionParticle::LateUpdate()
 {
+	
 	LPDIRECT3DDEVICE9 pDevice = Renderer::GetDevice();
 	////////////////////////////////////InfoPolygon描画////////////////////////////////////////////
 	//RenderTarget
@@ -56,6 +57,7 @@ void ObjectAttractionParticle::LateUpdate()
 	pDevice->SetRenderTarget(1, m_InfoTexture[3]->GetDXSurface());
 
 	//BeginScene
+	pDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(255, 255, 255, 255), 1.0f, 0);
 	pDevice->BeginScene();
 
 	//頂点フォーマットの設定
@@ -96,6 +98,9 @@ void ObjectAttractionParticle::LateUpdate()
 		pEffect->SetTexture("PosOutput", m_InfoTexture[2]->GetDXTexture());
 		pEffect->SetTexture("SpeedOutput", m_InfoTexture[3]->GetDXTexture());
 		pEffect->SetTexture("Tex", NULL);
+		static float time = 0.0f;
+		pEffect->SetValue("AttractionTargetPoint",(D3DXVECTOR3*)&Vector3(50.0f*cosf(time), 50.0f*sinf(time),0.0f),sizeof(D3DXVECTOR3));
+		time += 0.01f;
 
 		pEffect->CommitChanges();
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
@@ -105,6 +110,8 @@ void ObjectAttractionParticle::LateUpdate()
 	pEffect->End();
 	//EndScene
 	pDevice->EndScene();
+
+	pDevice->SetRenderTarget(1, NULL);
 }
 
 void ObjectAttractionParticle::Draw()
@@ -117,8 +124,6 @@ void ObjectAttractionParticle::Draw()
 	pDevice->SetVertexDeclaration(m_pVertex_Declaration_PointSprite);
 	//パイプラインの設定
 	pDevice->SetStreamSource(0,	m_pVtxBuff_PointSprite,	0,	sizeof(VERTEX_POINT));
-	// ポイントスケールの設定
-	pDevice->SetRenderState(D3DRS_POINTSCALEENABLE, FALSE);
 	// ポイントスプライト有効化
 	pDevice->SetRenderState(D3DRS_POINTSPRITEENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_POINTSIZE_MIN, (DWORD)0.1f);
@@ -127,11 +132,8 @@ void ObjectAttractionParticle::Draw()
 	//加算合成
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	// アルファテストの有効化
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
-	// 不透明にする値の設定
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	//zバッファへの書き込み
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	//Wolrd View Proj　マトリクス計算
 	D3DXMATRIX proj, view, VP, WVP;
@@ -169,6 +171,7 @@ void ObjectAttractionParticle::Draw()
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 	//////////////////////////////テクスチャ交換///////////////////////////////
 	Texture * tex;
@@ -216,12 +219,12 @@ void ObjectAttractionParticle::CreatePointSprite()
 		m_Speed[i] = Vector3(0.0f, 0.0f, 0.0f);
 		m_Color[i] = Vector4(255, 255, 255, 255);
 	}
-	for (unsigned int i = 0; i < 100; i++)
+	for (unsigned int i = 0; i < m_Pos.size()/1000; i++)
 	{
 		for (unsigned int o = 0; o < 1000; o++)
 		{
-			m_InfoUV[i * 1000 + o].x = (float)i / 1024.0f;
-			m_InfoUV[i * 1000 + o].y = (float)o / 1024.0f;
+			m_InfoUV[i * 1000 + o].x = (float)(o) / 1024.0f;
+			m_InfoUV[i * 1000 + o].y = (float)(i) / 1024.0f;
 		}
 	}
 
@@ -232,7 +235,7 @@ void ObjectAttractionParticle::CreatePointSprite()
 	{
 		pVtx[i].pos = m_Pos[i];
 		pVtx[i].color = D3DCOLOR_ARGB((int)m_Color[i].w, (int)m_Color[i].x, (int)m_Color[i].y, (int)m_Color[i].z);
-		pVtx[i].size = 10.0f;
+		pVtx[i].size = 1.0f;
 		pVtx[i].InfoUV = m_InfoUV[i];
 	}
 	m_pVtxBuff_PointSprite->Unlock();
@@ -294,12 +297,12 @@ void ObjectAttractionParticle::CreateInfoTexture()
 {
 	auto pDevice = Renderer::GetDevice();
 	//PosとSpeedを保存用のテクスチャをCreate　入力と出力両方合計4枚
-	for (int i = 0; i < 4; i++)
+	for (unsigned int i = 0; i < m_InfoTexture.size(); i++)
 	{
 		m_InfoTexture[i] = Texture::CreateEmptyTexture("AttractionParticleInfoTexture" + i, Vector2(1024.0f, 1024.0f), Texture::RENDERTARGET, D3DFMT_A32B32G32R32F);
 	}
 	//初期値を保存するテクスチャ
-	for (size_t i = 0; i < 2; i++)
+	for (unsigned int i = 0; i < m_InitInfoTexture.size(); i++)
 	{
 		m_InitInfoTexture[i] = Texture::CreateEmptyTexture("AttractionParticleInitInfoTexture" + i, Vector2(1024.0f, 1024.0f), Texture::DYNAMIC, D3DFMT_A32B32G32R32F);
 	}
@@ -314,7 +317,7 @@ void ObjectAttractionParticle::CreateInfoTexture()
 
 	//書き込む
 	auto startaddress = (Vector4*)lock_rect.pBits;
-	for (size_t count = 0; count < 100; ++count)
+	for (size_t count = 0; count < m_Pos.size() / 1000; ++count)
 	{
 		for (size_t i = 0; i < 1000; i++)
 		{
@@ -332,7 +335,7 @@ void ObjectAttractionParticle::CreateInfoTexture()
 
 	//書き込む
 	startaddress = (Vector4*)lock_rect.pBits;
-	for (size_t count = 0; count < 100; ++count)
+	for (size_t count = 0; count < m_Pos.size() / 1000; ++count)
 	{
 		for (size_t i = 0; i < 1000; i++)
 		{

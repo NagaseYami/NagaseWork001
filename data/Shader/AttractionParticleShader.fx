@@ -56,6 +56,7 @@ struct ATTRACTIONSHADER_STEP1_OUT_PIXEL
 {
     float4 PosW : COLOR0;
     float4 Speed : COLOR1;
+    float4 Force : COLOR2;
 };
 
 ATTRACTIONSHADER_STEP1_OUT_PIXEL AttractionShader_PixelShader_Step1_Main(ATTRACTIONSHADER_STEP1_IN_PIXEL ip)
@@ -64,10 +65,15 @@ ATTRACTIONSHADER_STEP1_OUT_PIXEL AttractionShader_PixelShader_Step1_Main(ATTRACT
     float3 pos_old = tex2D(PosInputSampler, ip.UV).xyz;
     float3 speed_old = tex2D(SpeedInputSampler, ip.UV).xyz;
 
-    float3 acc = (AttractionTargetPoint - pos_old)/1000.0f;
-    op.Speed = float4(speed_old + acc, 1.0f);
-    op.PosW = float4(pos_old, 1.0f);
-    op.PosW.xyz += op.Speed.xyz;
+    float3 dir = AttractionTargetPoint - pos_old;
+    float dirlen = sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+    
+    float pct = max(1 - dirlen / 100.0f, 0.3f);
+    float scale = 0.1f;
+    dir = normalize(dir);
+    op.Force = float4( dir * scale * pct, 1.0f);
+    op.Speed = float4(speed_old + op.Force.xyz, 1.0f);
+    op.PosW = float4(pos_old + op.Speed.xyz, 1.0f);
 
     return op;
 }
