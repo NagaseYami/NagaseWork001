@@ -169,7 +169,6 @@ void ObjectAttractionParticle::Draw()
 	pDevice->SetRenderState(D3DRS_POINTSPRITEENABLE, FALSE);
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 	//////////////////////////////テクスチャ交換///////////////////////////////
@@ -308,6 +307,7 @@ void ObjectAttractionParticle::CreateInfoTexture()
 
 	D3DLOCKED_RECT lock_rect;
 	if (m_InitInfoTexture[0]->GetDXSurface()->LockRect(&lock_rect, NULL, D3DLOCK_DISCARD) == D3DERR_INVALIDCALL) {
+		MessageBox(NULL, "LockRectに問題が発生しました", "ObjectAttractionParticle", MB_OK | MB_ICONWARNING);
 		return;
 	}
 

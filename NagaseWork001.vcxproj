@@ -81,6 +81,17 @@
     <ClInclude Include="SourceCode\Scene\testscene.h" />
     <ClInclude Include="SourceCode\Texture\texture.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Shader\AttractionParticleShader.fx">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="data\Shader\BasicShader.fx">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="data\Shader\ParticleShader.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C7B65D99-03A4-411E-B050-99EEC0352348}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -135,8 +146,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
-    <IncludePath>D:\Tools\gainput\include;$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Tools\gainput\lib;$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>gainput\include;$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
+    <LibraryPath>gainput\lib\Debug;$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -144,8 +155,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
-    <IncludePath>D:\Tools\gainput\include;$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Tools\gainput\lib;$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>gainput\include;$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
+    <LibraryPath>gainput\lib\Release;$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

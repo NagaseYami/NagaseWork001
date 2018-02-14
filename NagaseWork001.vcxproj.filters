@@ -50,6 +50,9 @@
     <Filter Include="ソース ファイル\Input">
       <UniqueIdentifier>{a4cbff35-c241-4e21-bb17-892286c6a860}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Shader">
+      <UniqueIdentifier>{a2a0bbbc-9948-4ec4-8691-47aa524c99dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\Blur\blur.cpp">
@@ -231,5 +234,16 @@
     <ClInclude Include="SourceCode\Scene\testscene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Shader\AttractionParticleShader.fx">
+      <Filter>ソース ファイル\Shader</Filter>
+    </None>
+    <None Include="data\Shader\BasicShader.fx">
+      <Filter>ソース ファイル\Shader</Filter>
+    </None>
+    <None Include="data\Shader\ParticleShader.fx">
+      <Filter>ソース ファイル\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

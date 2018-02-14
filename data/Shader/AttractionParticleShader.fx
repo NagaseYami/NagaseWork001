@@ -3,7 +3,7 @@ float4x4 ViewProj;
 float3 AttractionTargetPoint;
 
 texture Tex;
-sampler2D TexSampler = sampler_state
+sampler TexSampler = sampler_state
 {
     Texture = (Tex);
     MipFilter = LINEAR;
@@ -12,7 +12,7 @@ sampler2D TexSampler = sampler_state
 };
 
 texture PosInput;
-sampler2D PosInputSampler = sampler_state
+sampler PosInputSampler = sampler_state
 {
     Texture = (PosInput);
     MipFilter = NONE;
@@ -21,7 +21,7 @@ sampler2D PosInputSampler = sampler_state
 };
 
 texture PosOutput;
-sampler2D PosOutputSampler = sampler_state
+sampler PosOutputSampler = sampler_state
 {
     Texture = (PosOutput);
     MipFilter = NONE;
@@ -30,7 +30,7 @@ sampler2D PosOutputSampler = sampler_state
 };
 
 texture SpeedInput;
-sampler2D SpeedInputSampler = sampler_state
+sampler SpeedInputSampler = sampler_state
 {
     Texture = (SpeedInput);
     MipFilter = NONE;
@@ -39,7 +39,7 @@ sampler2D SpeedInputSampler = sampler_state
 };
 
 texture SpeedOutput; 
-sampler2D SpeedOutputSampler = sampler_state
+sampler SpeedOutputSampler = sampler_state
 {
     Texture = (SpeedOutput);
     MipFilter = NONE;
@@ -72,8 +72,11 @@ ATTRACTIONSHADER_STEP1_OUT_PIXEL AttractionShader_PixelShader_Step1_Main(ATTRACT
     float scale = 0.1f;
     dir = normalize(dir);
     op.Force = float4( dir * scale * pct, 1.0f);
-    op.Speed = float4(speed_old + op.Force.xyz, 1.0f);
-    op.PosW = float4(pos_old + op.Speed.xyz, 1.0f);
+    //op.Speed = float4(speed_old + op.Force.xyz, 1.0f);
+    //op.PosW = float4(pos_old + op.Speed.xyz, 1.0f);
+
+    op.Speed = float4(speed_old, 1.0f);
+    op.PosW = float4(pos_old, 1.0f);
 
     return op;
 }

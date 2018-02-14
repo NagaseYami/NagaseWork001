@@ -3,6 +3,7 @@
 #include "../Input/dxinput.h"
 #include "../Object/object.h"
 #include "../Renderer/renderer.h"
+#include "../Scene/gamestage.h"
 #include "../Scene/testscene.h"
 #include "../Texture/texture.h"
 #include "manager.h"
@@ -23,7 +24,6 @@ void Manager::Init(HINSTANCE hInst, HWND hWnd)
 	//Scene
 	TestScene *Scene = new TestScene;
 	Scene::ToNextScene(Scene);
-
 }
 
 void Manager::Uninit()

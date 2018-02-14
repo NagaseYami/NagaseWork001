@@ -3,6 +3,7 @@
 #include "../Camera/tpscamera.h"
 #include "../Main/main.h"
 #include "../Object/objectattractionparticle.h"
+#include "../Object/object2dpolygon.h"
 #include "../Object/objectXModel.h"
 #include "../Player/player.h"
 #include "../Texture/texture.h"
@@ -27,6 +28,12 @@ void GameStage::Init()
 
 	ObjectAttractionParticle * pParticle = new ObjectAttractionParticle();
 	pParticle->Init();
+
+	Object2DPolygon * pPolygon = new Object2DPolygon();
+	pPolygon->Init();
+	pPolygon->SetPos(Vector2(800.0f, 0.0f));
+	pPolygon->SetSize(Vector2(800.0f, 450.0f));
+	pPolygon->AddTexture(Texture::GetTexture("ShadowMap"));
 }
 
 void GameStage::Update()
@@ -37,4 +44,5 @@ void GameStage::Update()
 
 void GameStage::Uninit()
 {
+
 }
