@@ -12,7 +12,7 @@ sampler TexSampler = sampler_state
 };
 
 texture PosInput;
-sampler PosInputSampler = sampler_state
+sampler2D PosInputSampler = sampler_state
 {
     Texture = (PosInput);
     MipFilter = NONE;
@@ -72,11 +72,8 @@ ATTRACTIONSHADER_STEP1_OUT_PIXEL AttractionShader_PixelShader_Step1_Main(ATTRACT
     float scale = 0.1f;
     dir = normalize(dir);
     op.Force = float4( dir * scale * pct, 1.0f);
-    //op.Speed = float4(speed_old + op.Force.xyz, 1.0f);
-    //op.PosW = float4(pos_old + op.Speed.xyz, 1.0f);
-
-    op.Speed = float4(speed_old, 1.0f);
-    op.PosW = float4(pos_old, 1.0f);
+    op.Speed = float4(speed_old + op.Force.xyz, 1.0f);
+    op.PosW = float4(pos_old + op.Speed.xyz, 1.0f);
 
     return op;
 }
